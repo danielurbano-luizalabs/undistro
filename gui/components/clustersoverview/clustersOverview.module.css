@@ -1,0 +1,81 @@
+.clustersOverviewContainer {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.clustersOverviewTableContainer {
+    height: 100%;
+    margin: 16px
+}
+
+table.clustersOverviewTable {
+    width: 100%;
+    border: none;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+table.clustersOverviewTable tr {
+    background-color: var(--background-strong);
+}
+
+table.clustersOverviewTable tr:nth-child(even) {
+    background-color: var(--background-weak);
+}
+
+table.clustersOverviewTable th {
+    font-style: normal;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: -0.01em;
+    color: var(--text-strong);
+    background-color: var(--background-strong);
+    margin: 0;
+    padding: 0;
+    text-transform: capitalize;
+    height: 36px;
+    border-right: 2px solid var(--background-default);
+    border-bottom: 2px solid var(--background-default);
+    text-align: left;
+    white-space: nowrap;
+}
+
+table.clustersOverviewTable td {
+    font-style: normal;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: -0.01em;
+    color: var(--text-default);
+    margin: 0;
+    padding: 0;
+    text-transform: capitalize;
+    height: 36px;
+    border-right: 2px solid var(--background-default);
+    text-align: left;
+    white-space: nowrap;
+}
+
+table.clustersOverviewTable tr:hover {
+    background-color: var(--background-light);
+}
+
+table.clustersOverviewTable tr:hover td {
+    color: var(--text-strong);
+}
+
+.responsiveTh {
+    width: 100%;
+}
+
+.tableHeaderTitle {
+    padding: 0 12px 0 12px;
+    white-space: nowrap;
+    letter-spacing: 0.06em;
+}
+
+.tableIconCol {
+    width: 36px;
+}

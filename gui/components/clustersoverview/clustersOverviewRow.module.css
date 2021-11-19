@@ -1,0 +1,55 @@
+.tableCellTitle {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    padding: 0 12px 0 12px;
+    white-space: nowrap;
+}
+
+.tableCellTitleWarning {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 0 12px 0 12px;
+    white-space: nowrap;
+    color: var(--text-warning);
+}
+
+.tableCellTitleSuccess {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 0 12px 0 12px;
+    white-space: nowrap;
+    color: var(--text-success);
+}
+
+.tableActionsIconContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.actionsIcon {
+    min-width: 20px;
+    height: 20px;
+    background-image: url("/img/actionsIcon.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.actionsIcon:hover {
+    background-image: url("/img/actionsIconHover.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.actionsIconDisabled {
+    min-width: 20px;
+    height: 20px;
+    background-image: url("/img/actionsIconDisabled.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+}
