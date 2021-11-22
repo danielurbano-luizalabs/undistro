@@ -1,23 +1,17 @@
-import "../styles/globals.css";
-import type { AppProps } from "next/app";
+import '../styles/globals.css'
 import { ThemeProvider } from "next-themes";
-import Workspace from "../components/workspace/workspace";
-import Head from "next/head";
+import type { AppProps } from 'next/app'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <>
 
-      <Head>
-        <meta name="viewport" content="width=device-width,initial-scale=1" />
-      </Head>
-      <ThemeProvider defaultTheme="dark-mode" themes={["dark-mode"]}>
-        <Workspace>
-          <Component {...pageProps} />
-        </Workspace>
-      </ThemeProvider>
-    </>
+    <ThemeProvider defaultTheme="dark-mode" themes={["dark-mode"]}>
+      <div className="backgroundDefault responsiveScreenHeight">   
+        <Component {...pageProps} />
+      </div>
+    </ThemeProvider>
+    
   );
 }
 
-export default MyApp;
+export default MyApp

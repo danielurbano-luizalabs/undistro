@@ -36,31 +36,38 @@ const Topbar = (props: Props) => {
           </div>
 
           <div className={topBarMenuAreaClasses}>
-            <Link href="">
-              <TopbarMenuItemButton title="create" id="menuCreateButton" />
+
+            <TopbarMenuItemButton title="create" id="menuCreateButton" />
+            <TopbarMenuItemButton title="modify" id="menuModifyButton" />
+            <TopbarMenuItemButton title="manage" id="menuManageButton" />
+            <TopbarMenuItemButton title="preferences" id="menuPreferencesButton"/>
+            <TopbarMenuItemButton title="about" id="menuAboutButton" />
+
+            {/*<Link href="/" passHref>
+              
             </Link>
-            <Link href="">
-              <TopbarMenuItemButton title="modify" id="menuModifyButton" />
+            <Link href="/" passHref>
+              
             </Link>
-            <Link href="">
-              <TopbarMenuItemButton title="manage" id="menuManageButton" />
+            <Link href="/" passHref>
+              
             </Link>
-            <Link href="">
-              <TopbarMenuItemButton title="preferences" id="menuPreferencesButton"
-              />
+            <Link href="/" passHref>
+              
             </Link>
-            <Link href="">
-              <TopbarMenuItemButton title="about" id="menuAboutButton" />
-            </Link>
+            <Link href="/" passHref>
+              
+            </Link>*/}
+
           </div>
 
 
           {/* LOGOUT */}
 
           <div className={classes.logoutArea}>
-            <Link href="#">
+            <Link href="/" passHref>
               <div className={classes.logoutMenu}>
-                <a href="#" className={classes.logoutText}>
+                <a className={classes.logoutText}>
                   logout
                 </a>
               </div>

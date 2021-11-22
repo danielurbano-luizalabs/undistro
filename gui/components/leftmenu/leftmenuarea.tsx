@@ -12,10 +12,7 @@ const Leftmenuarea = (props: Props) => {
         <>
 
             <div className={classes.leftNav}>
-                <Link href="">
-                    <LeftMenuItemButton title="cluster" id="menuClusterButton" />
-                </Link>
-
+                <LeftMenuItemButton title="clusters" id="menuClusterButton" />
             </div>
 
         </>

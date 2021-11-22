@@ -2,6 +2,7 @@ import * as React from "react";
 import classes from "./workarea.module.css";
 import Leftmenuarea from "../leftmenu/leftmenuarea"
 import Clustersoverview from "../clustersoverview/clustersOverview";
+import Nodepoolsoverview from "../nodepoolsoverview/nodepoolsOverview";
 import Page404message from "../page404/page404message";
 import Link from "next/link";
 

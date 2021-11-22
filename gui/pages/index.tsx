@@ -1,12 +1,19 @@
-import { leftButton } from "../components/leftmenu/leftMenuItemButton";
+import type { NextPage } from 'next'
+import Workspace from '../components/workspace/workspace'
+import Head from 'next/head'
+import Image from 'next/image'
+import styles from '../styles/Home.module.css'
 
-const Home = () => {
+type Props = {
+  
+};
+
+const Home: NextPage = (props: Props) => {
   return (
-    <>
-      <div className="app">
-      </div>
-    </>
-  );
+    
+    <Workspace />
+
+  )
 }
 
-export default Home;
+export default Home

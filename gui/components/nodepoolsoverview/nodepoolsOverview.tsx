@@ -1,16 +1,16 @@
 import * as React from "react";
-import classes from "./clustersOverview.module.css";
-import Clustersoverviewrow from "./clustersOverviewRow";
-import Clustersoverviewnavfooter from "./clustersOverviewNavFooter";
+import classes from "./nodepoolsOverview.module.css";
+import Nodepooloverviewinfranoderow from "./nodepoolsOverviewInfranodeRow";
+import Nodepoolsoverviewnavfooter from "./nodepoolsOverviewNavFooter";
 import Link from "next/link";
 
 type Props = {};
 
-const Clustersoverview = (props: Props) => {
-    let tableCellTitleCentered = [classes.tableCellTitle, "textCentered"].join(" ");
+const Nodepoolsoverview = (props: Props) => {
+    {/*let tableCellTitleCentered = [classes.tableCellTitle, "textCentered"].join(" ");
     let tableCellTitleUpperCase = [classes.tableCellTitle, "upperCase"].join(" ");
     let tableCellTitleWarningCentered = [classes.tableCellTitleWarning, "textCentered"].join(" ");
-    let tableCellTitleSuccessCentered = [classes.tableCellTitleSuccess, "textCentered"].join(" ");
+    let tableCellTitleSuccessCentered = [classes.tableCellTitleSuccess, "textCentered"].join(" ");*/}
     return (
         <>
 
@@ -37,17 +37,17 @@ const Clustersoverview = (props: Props) => {
                                 </th>
                                 <th className={classes.responsiveTh}>
                                     <div className={classes.tableHeaderTitle}>
-                                        clusters
+                                        nodepool
                                     </div>
                                 </th>
                                 <th>
                                     <div className={classes.tableHeaderTitle}>
-                                        provider
+                                        type
                                     </div>
                                 </th>
                                 <th>
                                     <div className={classes.tableHeaderTitle}>
-                                        flavor
+                                        replicas
                                     </div>
                                 </th>
                                 <th>
@@ -57,12 +57,12 @@ const Clustersoverview = (props: Props) => {
                                 </th>
                                 <th>
                                     <div className={classes.tableHeaderTitle}>
-                                        cluster group
+                                        labels
                                     </div>
                                 </th>
                                 <th>
                                     <div className={classes.tableHeaderTitle}>
-                                        machines
+                                        taints
                                     </div>
                                 </th>
                                 <th>
@@ -81,7 +81,7 @@ const Clustersoverview = (props: Props) => {
 
                         <tbody>
 
-                        <Clustersoverviewrow />
+                        <Nodepooloverviewinfranoderow />
 
                         </tbody>
 
@@ -89,7 +89,7 @@ const Clustersoverview = (props: Props) => {
 
                 </div>
 
-                <Clustersoverviewnavfooter />
+                <Nodepoolsoverviewnavfooter />
 
             </div>
 
@@ -100,4 +100,4 @@ const Clustersoverview = (props: Props) => {
     );
 }
 
-export default Clustersoverview;
+export default Nodepoolsoverview;

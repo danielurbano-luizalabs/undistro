@@ -1,14 +1,15 @@
 import * as React from "react";
-import classes from "./clustersOverviewRow.module.css";
+import classes from "./nodepoolsOverviewInfranodeRow.module.css";
 import Link from "next/link";
 
 type Props = {};
 
-const Clustersoverviewrow = (props: Props) => {
+const Nodepooloverviewinfranoderow = (props: Props) => {
     let tableCellTitleCentered = [classes.tableCellTitle, "textCentered"].join(" ");
     let tableCellTitleUpperCaseCentered = [classes.tableCellTitle, "upperCase", "textCentered"].join(" ");
     let tableCellTitleWarningCentered = [classes.tableCellTitleWarning, "textCentered"].join(" ");
     let tableCellTitleSuccessCentered = [classes.tableCellTitleSuccess, "textCentered"].join(" ");
+    let tableCellTitleCriticalCentered = [classes.tableCellTitleCritical, "textCentered"].join(" ");
     return (
         <>
 
@@ -27,17 +28,17 @@ const Clustersoverviewrow = (props: Props) => {
                 </td>
                 <td>
                     <div className={classes.tableCellTitle}>
-                        ztk-supzema-staging-02
+                        nodepool-01
                     </div>
                 </td>
                 <td>
                     <div className={classes.tableCellTitle}>
-                        google cloud
+                        infranode
                     </div>
                 </td>
                 <td>
-                    <div className={tableCellTitleUpperCaseCentered}>
-                        gke
+                    <div className={tableCellTitleCentered}>
+                        3
                     </div>
                 </td>
                 <td>
@@ -46,13 +47,13 @@ const Clustersoverviewrow = (props: Props) => {
                     </div>
                 </td>
                 <td>
-                    <div className={classes.tableCellTitle}>
-                        Staging
+                    <div className={tableCellTitleCentered}>
+                        1
                     </div>
                 </td>
                 <td>
                     <div className={tableCellTitleCentered}>
-                        4
+                        2
                     </div>
                 </td>
                 <td>
@@ -71,4 +72,4 @@ const Clustersoverviewrow = (props: Props) => {
     );
 }
 
-export default Clustersoverviewrow;
+export default Nodepooloverviewinfranoderow;

@@ -11,7 +11,7 @@ const Navbar = (props: Props) => {
   return (
     <>
       <div className={navbarContainerClasses}>
-        <a href="" className={classes.navbarHomeButtonArea}>
+        <a className={classes.navbarHomeButtonArea}>
           <div className={classes.navbarHomeIconArea}></div>
         </a>
         <div className={navbarBreadCrumbAreaClasses}>

@@ -10,7 +10,7 @@ type Props = {
 const TopbarMenuItemButton = (props: Props) => {
   return (
     <>
-      <a href=""
+      <div
         id={props.id}
         title={props.title}
         className={classes.menuTopItemButton}
@@ -19,7 +19,7 @@ const TopbarMenuItemButton = (props: Props) => {
         <div className={classes.menuTopItemTextArea}>
           <div className={classes.menuTopItemText}>{props.title}</div>
         </div>
-      </a>
+      </div>
     </>
   );
 };
