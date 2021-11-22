@@ -136,7 +136,7 @@ input[type="checkbox"].tableCheckboxAll {
     height: 18px;
     display: grid;
     place-content: center;
-    background-color: var(--background-medium);
+    background-color: var(--background-default);
 }
 
 input[type="checkbox"].tableCheckboxAll::before {
