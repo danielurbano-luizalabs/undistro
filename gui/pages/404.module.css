@@ -52,7 +52,7 @@
     line-height: 32px;
     letter-spacing: 0.06em;
     text-align: center;
-    color: var(--text-danger);
+    color: var(--text-critical);
 }
 .page404MainTextLine2 {
     width: 476px;
@@ -63,7 +63,7 @@
     line-height: 32px;
     letter-spacing: -0.03em;
     text-align: center;
-    color: var(--text-danger);
+    color: var(--text-critical);
     margin-bottom: 16px;
 }
 

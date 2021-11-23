@@ -4,20 +4,24 @@ import Link from "next/link";
 import TopbarMenuItemButton from "./topbarMenuItemButton";
 import Navbar from "./navbar";
 
-type Props = {};
+type Props = {
+  seletedClusters?: string[];
+};
 
 const Topbar = (props: Props) => {
-  let topBarContainerClasses = [classes.topBarContainer, "responsiveWidth"].join(" ");
-  let topBarMenuAreaClasses = [classes.topBarMenuArea, "responsiveWidth"].join(" ");
+  let topBarContainerClasses = [
+    classes.topBarContainer,
+    "responsiveWidth",
+  ].join(" ");
+  let topBarMenuAreaClasses = [classes.topBarMenuArea, "responsiveWidth"].join(
+    " "
+  );
   return (
     <>
       <header className={classes.teste}>
-
         {/* TOPBAR CONTAINER */}
 
         <div className={topBarContainerClasses}>
-
-
           {/* LOGO */}
 
           <div className={classes.topBarLogoArea}>
@@ -25,7 +29,6 @@ const Topbar = (props: Props) => {
               <img src="/img/logo-topbar.svg" />
             </div>
           </div>
-
 
           {/* TOP MENU */}
 
@@ -36,48 +39,28 @@ const Topbar = (props: Props) => {
           </div>
 
           <div className={topBarMenuAreaClasses}>
-
             <TopbarMenuItemButton title="create" id="menuCreateButton" />
             <TopbarMenuItemButton title="modify" id="menuModifyButton" />
             <TopbarMenuItemButton title="manage" id="menuManageButton" />
-            <TopbarMenuItemButton title="preferences" id="menuPreferencesButton"/>
+            <TopbarMenuItemButton
+              title="preferences"
+              id="menuPreferencesButton"
+            />
             <TopbarMenuItemButton title="about" id="menuAboutButton" />
-
-            {/*<Link href="/" passHref>
-              
-            </Link>
-            <Link href="/" passHref>
-              
-            </Link>
-            <Link href="/" passHref>
-              
-            </Link>
-            <Link href="/" passHref>
-              
-            </Link>
-            <Link href="/" passHref>
-              
-            </Link>*/}
-
           </div>
-
 
           {/* LOGOUT */}
 
           <div className={classes.logoutArea}>
-            <Link href="/" passHref>
+            <Link href="/">
               <div className={classes.logoutMenu}>
-                <a className={classes.logoutText}>
-                  logout
-                </a>
+                <a className={classes.logoutText}>logout</a>
               </div>
             </Link>
           </div>
-
         </div>
 
-        <Navbar />
-
+        <Navbar selectedClusters={props.seletedClusters} />
       </header>
     </>
   );

@@ -1,32 +1,22 @@
 import * as React from "react";
 import classes from "./workarea.module.css";
-import Leftmenuarea from "../leftmenu/leftmenuarea"
-import Clustersoverview from "../clustersoverview/clustersOverview";
-import Nodepoolsoverview from "../nodepoolsoverview/nodepoolsOverview";
-import Page404message from "../page404/page404message";
-import Link from "next/link";
+import Leftmenuarea from "../leftmenu/leftmenuarea";
 
-type Props = {};
+type Props = {
+  children?: React.ReactNode;
+};
 
 const Workarea = (props: Props) => {
-    {/*let navbarContainerClasses = [classes.navbarContainer, "responsiveWidth"].join(" ");*/ }
-    return (
-        <>
-
-            <div className={classes.mainWorkspaceArea}>
-
-                <div className={classes.leftMenuArea}>
-                    <Leftmenuarea />
-                </div>
-                <div className={classes.mainDisplayArea}>
-                    {/*<Page404message />*/}
-                    <Clustersoverview />
-                </div>
-
-            </div>
-
-        </>
-    );
-}
+  return (
+    <>
+      <div className={classes.mainWorkspaceArea}>
+        <div className={classes.leftMenuArea}>
+          <Leftmenuarea />
+        </div>
+        <div className={classes.mainDisplayArea}>{props.children}</div>
+      </div>
+    </>
+  );
+};
 
 export default Workarea;
