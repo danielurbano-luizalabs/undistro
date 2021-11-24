@@ -49,7 +49,7 @@ const Navbar = (props: Props) => {
     classes.navbarBreadCrumbArea,
     "responsiveWidth",
   ].join(" ");
-  let selectedMessage = `${props.selectedClusters?.length} clusters selected`;
+  let selectedMessage = `multiple clusters selected`;
   if (props.selectedClusters?.length === 1) {
     selectedMessage = props.selectedClusters[0];
   } else if (
@@ -66,18 +66,21 @@ const Navbar = (props: Props) => {
         </a>
         <div className={navbarBreadCrumbAreaClasses}>
           <ol className={breadCrumbClasses}>
-            <li className={classes.breadCrumb}>
+            <li key="1" className={classes.breadCrumb}>
               <Link href="/">
                 <a className={classes.breadCrumb}>clusters</a>
               </Link>
             </li>
-            <li>
+            <li key="2">
               <a className={classes.breadCrumbSelObject}>{selectedMessage}</a>
             </li>
             {breadcrumbs.map((breadcrumb, index) => {
+              if (index == 0 && breadcrumb.breadcrumb == "") {
+                return;
+              }
               if (index === breadcrumbs.length - 1) {
                 return (
-                  <li>
+                  <li key={index + 3}>
                     <a>{breadcrumb.breadcrumb}</a>
                   </li>
                 );

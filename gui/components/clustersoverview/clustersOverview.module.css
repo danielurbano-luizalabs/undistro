@@ -51,7 +51,6 @@ table.clustersOverviewTable td {
     color: var(--text-default);
     margin: 0;
     padding: 0;
-    text-transform: capitalize;
     height: 36px;
     border-right: 2px solid var(--background-default);
     text-align: left;

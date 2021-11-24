@@ -2,12 +2,37 @@ import * as React from "react";
 import classes from "./clustersOverview.module.css";
 import Clustersoverviewrow from "./clustersOverviewRow";
 import Clustersoverviewnavfooter from "./clustersOverviewNavFooter";
+import { Cluster } from "../../lib/cluster";
+import { useEffect, useState } from "react";
 
 type Props = {
-  selectCluster: (cluster: string) => void;
+  selectCluster: (cluster: string, checked: boolean) => void;
+  clusters?: Cluster[];
 };
 
 const Clustersoverview = (props: Props) => {
+  const [count, setCount] = useState<number>(0);
+  const [checked, setChecked] = useState<boolean>(false);
+  const changeCheckbox = () => {
+    setChecked(!checked);
+    if (!checked) {
+      setCount(0);
+    }
+  };
+  useEffect(() => {
+    if (count == props.clusters?.length) {
+      setChecked(true);
+    }
+  }, [count]);
+  const updateTable = (checked: boolean) => {
+    if (props.clusters) {
+      if (checked) {
+        setCount(count + 1);
+      } else {
+        setCount(count - 1);
+      }
+    }
+  };
   return (
     <>
       <div className={classes.clustersOverviewContainer}>
@@ -20,8 +45,10 @@ const Clustersoverview = (props: Props) => {
                     <label className={classes.tableCheckboxControlAll}>
                       <input
                         className={classes.tableCheckboxAll}
+                        onChange={() => changeCheckbox()}
                         type="checkbox"
                         name="checkbox"
+                        checked={checked}
                       />
                     </label>
                   </div>
@@ -59,7 +86,17 @@ const Clustersoverview = (props: Props) => {
             </thead>
 
             <tbody>
-              <Clustersoverviewrow selectCluster={props.selectCluster} />
+              {props.clusters?.map((r, index) => {
+                return (
+                  <Clustersoverviewrow
+                    key={index + 1}
+                    cluster={r}
+                    selectCluster={props.selectCluster}
+                    checkedAll={checked}
+                    updateTable={updateTable}
+                  />
+                );
+              })}
             </tbody>
           </table>
         </div>
