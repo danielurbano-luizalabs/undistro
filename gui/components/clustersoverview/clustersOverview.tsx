@@ -28,6 +28,8 @@ const Clustersoverview = (props: Props) => {
   useEffect(() => {
     if (clusters?.length == props.clusters?.length) {
       setChecked(true);
+    } else {
+      setChecked(false);
     }
   }, [clusters]);
   return (
