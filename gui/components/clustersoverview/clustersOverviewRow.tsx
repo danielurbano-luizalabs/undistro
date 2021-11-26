@@ -1,17 +1,17 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import { Cluster } from "../../lib/cluster";
+import { useClusters } from "../workspace/clusterctx";
 import classes from "./clustersOverviewRow.module.css";
 
 type Props = {
-  selectCluster: (cluster: string, checked: boolean) => void;
-  updateTable: (checked: boolean) => void;
   cluster: Cluster;
   key: number;
-  checkedAll: boolean;
 };
 
 const Clustersoverviewrow = (props: Props) => {
+  const { clusters, setClusters } = useClusters();
+
   let tableCellTitleCentered = [classes.tableCellTitle, "textCentered"].join(
     " "
   );
@@ -43,15 +43,14 @@ const Clustersoverviewrow = (props: Props) => {
   ) {
     statusClass = tableCellTitleWarningCentered;
   }
-  const [checked, setChecked] = useState<boolean>(props.checkedAll);
-  useEffect(() => {
-    props.selectCluster(props.cluster.name, props.checkedAll);
-    setChecked(props.checkedAll);
-  }, [props.checkedAll]);
-  const selectFn = (name: string) => {
-    props.updateTable(!checked);
-    props.selectCluster(name, !checked);
-    setChecked(!checked);
+  const changeCheckbox = (name: string, checked: boolean) => {
+    let cls = new Set<string>(clusters);
+    if (checked) {
+      cls.add(name);
+    } else if (cls.has(name)) {
+      cls.delete(name);
+    }
+    setClusters(Array.from(cls.values()));
   };
   return (
     <>
@@ -60,11 +59,13 @@ const Clustersoverviewrow = (props: Props) => {
           <div className={classes.tableCheckboxIconContainer}>
             <label className={classes.tableCheckboxControl}>
               <input
-                onChange={() => selectFn(props.cluster.name)}
                 className={classes.tableCheckbox}
+                onChange={(e) =>
+                  changeCheckbox(props.cluster.name, e.target.checked)
+                }
                 type="checkbox"
                 name="checkbox"
-                checked={checked}
+                checked={clusters.includes(props.cluster.name)}
               />
             </label>
           </div>

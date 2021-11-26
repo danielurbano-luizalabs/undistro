@@ -4,9 +4,7 @@ import Link from "next/link";
 import TopbarMenuItemButton from "./topbarMenuItemButton";
 import Navbar from "./navbar";
 
-type Props = {
-  seletedClusters?: string[];
-};
+type Props = {};
 
 const Topbar = (props: Props) => {
   let topBarContainerClasses = [
@@ -60,7 +58,7 @@ const Topbar = (props: Props) => {
           </div>
         </div>
 
-        <Navbar selectedClusters={props.seletedClusters} />
+        <Navbar />
       </header>
     </>
   );

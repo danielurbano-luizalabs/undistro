@@ -51,22 +51,9 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 };
 
 const Home: NextPage = (props: Props) => {
-  const [seletedClusters, setSelectedClusters] = useState<Set<string>>();
-  let selected: Set<string> = new Set<string>(seletedClusters);
-  const selectCluster = (cluster: string, checked: boolean): void => {
-    if (!checked) {
-      selected.delete(cluster);
-    } else {
-      selected.add(cluster);
-    }
-    setSelectedClusters(selected);
-  };
   return (
-    <Workspace selectedClusters={Array.from(selected.values())}>
-      <Clustersoverview
-        clusters={props.clusters}
-        selectCluster={selectCluster}
-      />
+    <Workspace selectedClusters={[]}>
+      <Clustersoverview clusters={props.clusters} />
     </Workspace>
   );
 };

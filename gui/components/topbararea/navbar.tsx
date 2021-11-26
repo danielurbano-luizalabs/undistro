@@ -2,10 +2,9 @@ import classes from "./navbar.module.css";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { useClusters } from "../workspace/clusterctx";
 
-type Props = {
-  selectedClusters?: string[];
-};
+type Props = {};
 
 export interface Breadcrumb {
   /** Breadcrumb title. Example: 'blog-entries' */
@@ -17,11 +16,16 @@ export interface Breadcrumb {
 
 const Navbar = (props: Props) => {
   const router = useRouter();
+  const { clusters, setClusters } = useClusters();
   const [breadcrumbs, setBreadcrumbs] = useState<Array<Breadcrumb> | null>(
     null
   );
+  const [clustersName, setClustersName] = useState<string[]>(clusters);
 
   useEffect(() => {
+    if (clusters) {
+      setClustersName(clusters);
+    }
     if (router) {
       const linkPath = router.pathname.split("/");
       linkPath.shift();
@@ -35,7 +39,7 @@ const Navbar = (props: Props) => {
 
       setBreadcrumbs(pathArray);
     }
-  }, [router]);
+  }, [router, clusters]);
 
   if (!breadcrumbs) {
     return null;
@@ -50,12 +54,9 @@ const Navbar = (props: Props) => {
     "responsiveWidth",
   ].join(" ");
   let selectedMessage = `multiple clusters selected`;
-  if (props.selectedClusters?.length === 1) {
-    selectedMessage = props.selectedClusters[0];
-  } else if (
-    props.selectedClusters?.length === 0 ||
-    props.selectedClusters == undefined
-  ) {
+  if (clustersName?.length === 1) {
+    selectedMessage = clustersName[0];
+  } else if (clustersName?.length === 0 || clustersName == undefined) {
     selectedMessage = "Select a cluster to begin";
   }
   return (

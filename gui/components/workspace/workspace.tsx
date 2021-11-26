@@ -1,17 +1,22 @@
 import * as React from "react";
+import { useState } from "react";
 import Topbar from "../topbararea/topbar";
 import Workarea from "../workarea/workarea";
+import { ClusterContext } from "./clusterctx";
 
 type Props = {
   children?: React.ReactNode;
-  selectedClusters?: string[];
+  selectedClusters: string[];
 };
 
 const Workspace = (props: Props) => {
+  const [clusters, setClusters] = useState<string[]>(props.selectedClusters);
   return (
     <>
-      <Topbar seletedClusters={props.selectedClusters} />
-      <Workarea>{props.children}</Workarea>
+      <ClusterContext.Provider value={{ clusters, setClusters }}>
+        <Topbar />
+        <Workarea>{props.children}</Workarea>
+      </ClusterContext.Provider>
     </>
   );
 };

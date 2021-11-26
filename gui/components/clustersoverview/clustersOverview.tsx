@@ -4,35 +4,32 @@ import Clustersoverviewrow from "./clustersOverviewRow";
 import Clustersoverviewnavfooter from "./clustersOverviewNavFooter";
 import { Cluster } from "../../lib/cluster";
 import { useEffect, useState } from "react";
+import { useClusters } from "../workspace/clusterctx";
 
 type Props = {
-  selectCluster: (cluster: string, checked: boolean) => void;
   clusters?: Cluster[];
 };
 
 const Clustersoverview = (props: Props) => {
-  const [count, setCount] = useState<number>(0);
+  const { clusters, setClusters } = useClusters();
   const [checked, setChecked] = useState<boolean>(false);
-  const changeCheckbox = () => {
-    setChecked(!checked);
-    if (!checked) {
-      setCount(0);
+  const changeCheckbox = (checked: boolean) => {
+    if (checked) {
+      let cls: string[] = [];
+      props.clusters?.forEach((c) => {
+        cls.push(c.name);
+      });
+      setClusters(cls);
+    } else {
+      setClusters([]);
+      setChecked(false);
     }
   };
   useEffect(() => {
-    if (count == props.clusters?.length) {
+    if (clusters?.length == props.clusters?.length) {
       setChecked(true);
     }
-  }, [count]);
-  const updateTable = (checked: boolean) => {
-    if (props.clusters) {
-      if (checked) {
-        setCount(count + 1);
-      } else {
-        setCount(count - 1);
-      }
-    }
-  };
+  }, [clusters]);
   return (
     <>
       <div className={classes.clustersOverviewContainer}>
@@ -45,7 +42,7 @@ const Clustersoverview = (props: Props) => {
                     <label className={classes.tableCheckboxControlAll}>
                       <input
                         className={classes.tableCheckboxAll}
-                        onChange={() => changeCheckbox()}
+                        onChange={(e) => changeCheckbox(e.target.checked)}
                         type="checkbox"
                         name="checkbox"
                         checked={checked}
@@ -87,15 +84,7 @@ const Clustersoverview = (props: Props) => {
 
             <tbody>
               {props.clusters?.map((r, index) => {
-                return (
-                  <Clustersoverviewrow
-                    key={index + 1}
-                    cluster={r}
-                    selectCluster={props.selectCluster}
-                    checkedAll={checked}
-                    updateTable={updateTable}
-                  />
-                );
+                return <Clustersoverviewrow key={index + 1} cluster={r} />;
               })}
             </tbody>
           </table>
