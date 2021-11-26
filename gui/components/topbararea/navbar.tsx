@@ -23,7 +23,7 @@ const Navbar = (props: Props) => {
 
   useEffect(() => {
     if (router) {
-      const linkPath = router.asPath.split("/");
+      const linkPath = router.pathname.split("/");
       linkPath.shift();
 
       const pathArray = linkPath.map((path, i) => {
