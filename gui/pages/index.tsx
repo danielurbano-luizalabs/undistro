@@ -4,15 +4,26 @@ import Clustersoverview from "../components/clustersoverview/clustersOverview";
 import React, { useState } from "react";
 import * as k8s from "@kubernetes/client-node";
 import { Cluster, getAge, getStatusFromConditions } from "../lib/cluster";
+import { useRouter } from "next/router";
 
 type Props = {
   clusters?: Cluster[];
+  selectedClusters?: string[];
   children?: React.ReactNode;
 };
 
 export const getServerSideProps: GetServerSideProps<Props> = async (
   context
 ) => {
+  let selectedClusters: string[] = [];
+  const { cluster } = context.query;
+  if (cluster != undefined) {
+    if (!(cluster instanceof Array)) {
+      selectedClusters = [cluster];
+    } else {
+      selectedClusters = cluster;
+    }
+  }
   let clusters: Cluster[] = [];
   const kc = new k8s.KubeConfig();
   kc.loadFromFile("/home/felipeweb/projects/undistro/demos/cluster.kubeconfig");
@@ -47,12 +58,17 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
       status: getStatusFromConditions(conditions),
     };
   });
-  return { props: { clusters: clusters } };
+  return {
+    props: {
+      clusters: clusters,
+      selectedClusters: selectedClusters,
+    },
+  };
 };
 
 const Home: NextPage = (props: Props) => {
   return (
-    <Workspace selectedClusters={[]}>
+    <Workspace selectedClusters={props.selectedClusters || []}>
       <Clustersoverview clusters={props.clusters} />
     </Workspace>
   );
