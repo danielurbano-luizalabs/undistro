@@ -1,10 +1,9 @@
-import type { NextPage, GetServerSideProps } from "next";
-import Workspace from "../components/workspace/workspace";
-import Clustersoverview from "../components/clustersoverview/clustersOverview";
-import React, { useState } from "react";
 import * as k8s from "@kubernetes/client-node";
+import type { GetServerSideProps, NextPage } from "next";
+import React from "react";
+import Clustersoverview from "../components/clustersoverview/clustersOverview";
+import Workspace from "../components/workspace/workspace";
 import { Cluster, getAge, getStatusFromConditions } from "../lib/cluster";
-import { useRouter } from "next/router";
 
 type Props = {
   clusters?: Cluster[];
