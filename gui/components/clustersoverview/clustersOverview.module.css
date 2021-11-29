@@ -6,7 +6,8 @@
 
 .clustersOverviewTableContainer {
     height: 100%;
-    margin: 16px
+    margin: 16px;
+    position: relative;
 }
 
 table.clustersOverviewTable {
@@ -42,6 +43,10 @@ table.clustersOverviewTable th {
     white-space: nowrap;
 }
 
+table.clustersOverviewTable th:last-child {
+    border-right: none;
+}
+
 table.clustersOverviewTable td {
     font-style: normal;
     font-size: 14px;
@@ -55,6 +60,10 @@ table.clustersOverviewTable td {
     border-right: 2px solid var(--background-default);
     text-align: left;
     white-space: nowrap;
+}
+
+table.clustersOverviewTable td:last-child {
+    border-right: none;
 }
 
 table.clustersOverviewTable tr:hover {

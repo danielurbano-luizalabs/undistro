@@ -9,13 +9,18 @@ type Props = {
   clusters?: Cluster[];
   selectedClusters?: string[];
   children?: React.ReactNode;
+  page?: string;
 };
 
 export const getServerSideProps: GetServerSideProps<Props> = async (
   context
 ) => {
   let selectedClusters: string[] = [];
-  const { cluster } = context.query;
+  const { cluster, page } = context.query;
+  let pageVar = "1";
+  if (page != undefined) {
+    pageVar = page as string;
+  }
   if (cluster != undefined) {
     if (!(cluster instanceof Array)) {
       selectedClusters = [cluster];
@@ -61,6 +66,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
     props: {
       clusters: clusters,
       selectedClusters: selectedClusters,
+      page: pageVar,
     },
   };
 };
@@ -68,7 +74,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 const Home: NextPage = (props: Props) => {
   return (
     <Workspace selectedClusters={props.selectedClusters || []}>
-      <Clustersoverview clusters={props.clusters} />
+      <Clustersoverview clusters={props.clusters} page={props.page!} />
     </Workspace>
   );
 };

@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useEffect, useState } from "react";
 import { Cluster } from "../../lib/cluster";
 import { useClusters } from "../workspace/clusterctx";
 import classes from "./clustersOverviewRow.module.css";
@@ -7,6 +6,7 @@ import classes from "./clustersOverviewRow.module.css";
 type Props = {
   cluster: Cluster;
   key: number;
+  disabled: boolean;
 };
 
 const Clustersoverviewrow = (props: Props) => {
@@ -52,6 +52,10 @@ const Clustersoverviewrow = (props: Props) => {
     }
     setClusters(Array.from(cls.values()));
   };
+  let machineStr = "";
+  if (!props.disabled) {
+    machineStr = props.cluster.machines.toString();
+  }
   return (
     <>
       <tr>
@@ -66,6 +70,7 @@ const Clustersoverviewrow = (props: Props) => {
                 type="checkbox"
                 name="checkbox"
                 checked={clusters.includes(props.cluster.name)}
+                disabled={props.disabled}
               />
             </label>
           </div>
@@ -99,7 +104,7 @@ const Clustersoverviewrow = (props: Props) => {
           </div>
         </td>
         <td>
-          <div className={tableCellTitleCentered}>{props.cluster.machines}</div>
+          <div className={tableCellTitleCentered}>{machineStr}</div>
         </td>
         <td>
           <div className={tableCellTitleCentered}>{props.cluster.age}</div>
