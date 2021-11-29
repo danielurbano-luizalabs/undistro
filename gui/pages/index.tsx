@@ -28,8 +28,13 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
       selectedClusters = cluster;
     }
   }
-  let clusters: Cluster[] = [];
-  const kc = new k8s.KubeConfig();
+  let clusters: Cluster[] = [
+    { name: "cluster01", provider: "aws", flavor: "ec2", k8sVersion: "v1.21.2", clusterGroup: "undistro-system", machines: 4, age: "2d4h", status: "ready" },
+    { name: "cluster01", provider: "aws", flavor: "ec2", k8sVersion: "v1.21.2", clusterGroup: "undistro-system", machines: 4, age: "2d4h", status: "ready" },
+    { name: "cluster01", provider: "aws", flavor: "ec2", k8sVersion: "v1.21.2", clusterGroup: "undistro-system", machines: 4, age: "2d4h", status: "ready" },
+    { name: "cluster01", provider: "aws", flavor: "ec2", k8sVersion: "v1.21.2", clusterGroup: "undistro-system", machines: 4, age: "2d4h", status: "ready" }
+  ];
+  {/*const kc = new k8s.KubeConfig();
   kc.loadFromFile("/home/felipeweb/projects/undistro/demos/cluster.kubeconfig");
   const k8sClient = kc.makeApiClient(k8s.CustomObjectsApi);
   const obj = await k8sClient.listClusterCustomObject(
@@ -61,7 +66,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
       age: getAge(cl.metadata.creationTimestamp as string),
       status: getStatusFromConditions(conditions),
     };
-  });
+  });*/}
   return {
     props: {
       clusters: clusters,

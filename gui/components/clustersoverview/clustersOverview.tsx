@@ -36,16 +36,17 @@ const Clustersoverview = (props: Props) => {
       setChecked(false);
     }
     distanceCalc();
-  }, [clusters]);
+  }, [clusters, props.clusters?.length]);
   let pageNumber = parseInt(props.page);
   const distanceCalc = () => {
+    console.log(props.clusters)
     let table = document.getElementById("table") as HTMLTableElement;
     let pageFooter = document.getElementById("pageFooter");
     let tableTop = table?.offsetTop;
     let pageFooterTop = pageFooter?.offsetTop;
-    let height = table?.offsetHeight - pageFooter?.offsetHeight!;
+    let height = props.clusters?.length! * rowHeight;
     let diff = pageFooterTop! - tableTop!;
-    diff = diff - height;
+    diff = diff - 36;
     let pageSize = Math.trunc(diff / rowHeight);
     let pages = Math.ceil(props.clusters?.length! / pageSize);
     if (pages > 0) {
@@ -53,7 +54,7 @@ const Clustersoverview = (props: Props) => {
     }
     let rows =
       Math.trunc(diff / rowHeight) - Math.trunc(props.clusters!.length);
-    rows = rows + 1; // plus header row
+    {/*rows = rows + 1; // plus header row*/}
     for (let index = 0; index < rows; index++) {
       let row = table.insertRow(-1); // append
       for (let index = 0; index < columns; index++) {
