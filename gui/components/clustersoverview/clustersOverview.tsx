@@ -3,10 +3,11 @@ import classes from "./clustersOverview.module.css";
 import Clustersoverviewrow from "./clustersOverviewRow";
 import { Clusteroverviewfooter } from "./clustersOverviewNavFooter";
 import { Cluster, empty } from "../../lib/cluster";
-import { createRef, useEffect, useLayoutEffect, useState } from "react";
+import { createRef, useEffect, useState } from "react";
 import { useClusters } from "../workspace/clusterctx";
 import { useResizeDetector } from "react-resize-detector";
 import { paginate } from "../../lib/pagination";
+import Clustersoverviewemptyrow from "./clustersOverviewEmptyRow";
 
 type Props = {
   clusters?: Cluster[];
@@ -15,7 +16,6 @@ type Props = {
 
 const Clustersoverview = (props: Props) => {
   const rowHeight = 36;
-  const columns = 10;
   const tableContainerRef = createRef<HTMLDivElement>();
   const tableRef = createRef<HTMLTableElement>() || undefined;
   const pageFooterRef = createRef<HTMLDivElement>();
@@ -158,14 +158,17 @@ const Clustersoverview = (props: Props) => {
 
             <tbody>
               {clustersList?.map((r, index) => {
-                return (
-                  <Clustersoverviewrow
-                    key={index + 1}
-                    cluster={r}
-                    disabled={false}
-                  ></Clustersoverviewrow>
-                  
-                );
+                if (r.name != "") {
+                  return (
+                    <Clustersoverviewrow
+                      key={index + 1}
+                      cluster={r}
+                      disabled={false}
+                    />
+                  );
+                } else {
+                  return <Clustersoverviewemptyrow key={index + 1} />;
+                }
               })}
             </tbody>
           </table>
