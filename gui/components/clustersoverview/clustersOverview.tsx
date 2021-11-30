@@ -61,7 +61,7 @@ const Clustersoverview = (props: Props) => {
         pagesCalc();
       }
     }
-  }, [clusters, height, initialContainerSize, qtyPages, isValidPage]);
+  }, [clusters, height, initialContainerSize, qtyPages, isValidPage, router]);
   let pageNumber = parseInt(props.page);
   const pagesCalc = () => {
     let pageFooter = pageFooterRef?.current;
