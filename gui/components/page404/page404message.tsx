@@ -35,11 +35,7 @@ const Page404message = (props: Props) => {
           </div>
 
           <div className={page404SecondaryTextLine1UpperCase}>
-            you can go to the{" "}
-            <Link href="/">
-              <a>home page</a>
-            </Link>{" "}
-            while
+            you can go to the <a href="/">home page</a> while
           </div>
           <div className={page404SecondaryTextLine2UpperCase}>
             we look for someone to blame
