@@ -1,6 +1,16 @@
 import * as k8s from "@kubernetes/client-node";
 import { formatDuration, getTimeDiffFromNow } from "./time";
 
+export const empty: Cluster = {
+    name: "",
+    provider: "",
+    flavor: "",
+    k8sVersion: "",
+    clusterGroup: "",
+    machines: 0,
+    status: "",
+    age: ""
+}
 export interface Cluster {
     name: string;
     provider: string;

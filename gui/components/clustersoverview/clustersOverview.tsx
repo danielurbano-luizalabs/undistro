@@ -2,10 +2,11 @@ import * as React from "react";
 import classes from "./clustersOverview.module.css";
 import Clustersoverviewrow from "./clustersOverviewRow";
 import { Clusteroverviewfooter } from "./clustersOverviewNavFooter";
-import { Cluster } from "../../lib/cluster";
-import { createRef, useEffect, useState } from "react";
+import { Cluster, empty } from "../../lib/cluster";
+import { createRef, useEffect, useLayoutEffect, useState } from "react";
 import { useClusters } from "../workspace/clusterctx";
 import { useResizeDetector } from "react-resize-detector";
+import { paginate } from "../../lib/pagination";
 
 type Props = {
   clusters?: Cluster[];
@@ -19,12 +20,14 @@ const Clustersoverview = (props: Props) => {
   const tableRef = createRef<HTMLTableElement>() || undefined;
   const pageFooterRef = createRef<HTMLDivElement>();
   const { clusters, setClusters } = useClusters();
+  const [clustersList, setClustersList] = useState<Cluster[]>([]);
   const [checked, setChecked] = useState<boolean>(false);
-  const [currentExtraRows, setCurrentExtraRows] = useState<number>(0);
   const { height } = useResizeDetector<HTMLDivElement>({
     targetRef: tableContainerRef,
   });
-  const [qtdPages, setQtdPages] = useState<number>(1);
+  const [qtyPages, setQtyPages] = useState<number>(1);
+  const [pageSize, setPageSize] = useState<number>(0);
+  const [initialContainerSize, setInitialContainerSize] = useState<number>(0);
   const changeCheckbox = (checked: boolean) => {
     if (checked) {
       let cls: string[] = [];
@@ -37,46 +40,59 @@ const Clustersoverview = (props: Props) => {
       setChecked(false);
     }
   };
+
   useEffect(() => {
     if (clusters?.length == props.clusters?.length) {
       setChecked(true);
     } else {
       setChecked(false);
     }
+
     if (height) {
-      distanceCalc();
-    }
-  }, [clusters, height]);
-  let pageNumber = parseInt(props.page);
-  const distanceCalc = () => {
-    let table = tableRef?.current;
-    if (currentExtraRows > 0) {
-      let r = currentExtraRows;
-      let tableLength = table?.rows.length;
-      while (r > 0) {
-        table?.deleteRow(tableLength! - 1);
-        tableLength!--;
-        r--;
+      if (initialContainerSize == 0) {
+        setInitialContainerSize(height!);
+        return;
+      }
+      if (initialContainerSize > 0) {
+        pagesCalc();
       }
     }
+  }, [clusters, height, initialContainerSize]);
+  let pageNumber = parseInt(props.page);
+  const pagesCalc = () => {
+    console.log("container ref height");
+    console.log(height!);
+    console.log("initialContainerSize");
+    console.log(initialContainerSize);
+    let table = tableRef?.current;
+    let tableLength = table?.rows.length;
+    console.log("length");
+    console.log(tableLength);
     let pageFooter = pageFooterRef?.current;
-    let tableContainer = tableContainerRef?.current;
-    let tableHeight = table?.getBoundingClientRect().height;
     let pageFooterHeight = pageFooter?.getBoundingClientRect().height;
-    let tableContainerHeight = tableContainer?.getBoundingClientRect().height;
-    if (height) {
-      tableContainerHeight = height;
-    }
-    let diff = tableContainerHeight! - (tableHeight! + pageFooterHeight!);
-    let rows = Math.trunc(diff / rowHeight);
-    if (tableHeight! > 0) {
-      for (let i = 0; i < rows; i++) {
-        let row = table?.insertRow(-1);
-        for (let j = 0; j < columns; j++) {
-          row?.insertCell(j);
+    let pageQtyItems = Math.trunc((height! - pageFooterHeight!) / rowHeight);
+    pageQtyItems = pageQtyItems - 1; // ignore table header
+    console.log("pageSize");
+    console.log(pageQtyItems);
+    setPageSize(pageQtyItems);
+    let qtyPages = Math.ceil(props.clusters?.length! / pageQtyItems);
+    console.log("pages");
+    console.log(qtyPages);
+    let pageLists = paginate(props.clusters!, pageQtyItems);
+    console.log("pages List");
+    console.log(pageLists);
+    console.log("list page");
+    console.log(pageLists[pageNumber - 1]);
+    if (pageLists.length >= pageNumber) {
+      let items = pageLists[pageNumber - 1];
+
+      setClustersList(items);
+      if (items.length < pageQtyItems) {
+        let emptyRows = pageQtyItems - items.length;
+        for (let i = 0; i < emptyRows; i++) {
+          items.push(empty);
         }
       }
-      setCurrentExtraRows(rows);
     }
   };
 
@@ -141,7 +157,7 @@ const Clustersoverview = (props: Props) => {
             </thead>
 
             <tbody>
-              {props.clusters?.map((r, index) => {
+              {clustersList?.map((r, index) => {
                 return (
                   <Clustersoverviewrow
                     key={index + 1}
@@ -157,7 +173,7 @@ const Clustersoverview = (props: Props) => {
             ref={pageFooterRef}
             total={props.clusters?.length || 0}
             currentPage={pageNumber}
-            qtdPages={qtdPages}
+            qtdPages={qtyPages}
           />
         </div>
       </div>
