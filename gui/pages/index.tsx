@@ -29,10 +29,10 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
     }
   }
   let clusters: Cluster[] = [
-    { name: "cluster01", provider: "aws", flavor: "ec2", k8sVersion: "v1.21.2", clusterGroup: "undistro-system", machines: 4, age: "2d4h", status: "ready" },
-    { name: "cluster01", provider: "aws", flavor: "ec2", k8sVersion: "v1.21.2", clusterGroup: "undistro-system", machines: 4, age: "2d4h", status: "ready" },
-    { name: "cluster01", provider: "aws", flavor: "ec2", k8sVersion: "v1.21.2", clusterGroup: "undistro-system", machines: 4, age: "2d4h", status: "ready" },
-    { name: "cluster01", provider: "aws", flavor: "ec2", k8sVersion: "v1.21.2", clusterGroup: "undistro-system", machines: 4, age: "2d4h", status: "ready" }
+    { name: "ztk-supzema-staging-02", provider: "aws", flavor: "ec2", k8sVersion: "v1.21.1", clusterGroup: "staging", machines: 4, age: "2d4h", status: "ready" },
+    { name: "ssaks-azure-dev-03", provider: "google cloud", flavor: "gke", k8sVersion: "v1.21.2", clusterGroup: "development", machines: 4, age: "8d16h", status: "ready" },
+    { name: "kmse-prod-01", provider: "microsoft azure", flavor: "aks", k8sVersion: "v1.21.1", clusterGroup: "undistro-system", machines: 4, age: "36d1h", status: "ready" },
+    { name: "ztk-supzema-staging-03", provider: "aws", flavor: "ec2", k8sVersion: "v1.21.2", clusterGroup: "staging", machines: 4, age: "14d23h", status: "ready" }
   ];
   {/*const kc = new k8s.KubeConfig();
   kc.loadFromFile("/home/felipeweb/projects/undistro/demos/cluster.kubeconfig");

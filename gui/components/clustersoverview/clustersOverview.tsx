@@ -148,6 +148,7 @@ const Clustersoverview = (props: Props) => {
                     cluster={r}
                     disabled={false}
                   ></Clustersoverviewrow>
+                  
                 );
               })}
             </tbody>
