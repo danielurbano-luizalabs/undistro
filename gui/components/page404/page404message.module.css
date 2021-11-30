@@ -1,24 +1,23 @@
-
-
 .page404messageContainer {
     display: flex;
     flex-direction: column;
     width: 476px;
-    height: 100%;
+    height: calc(100vh - 84px);
     justify-content: center;
     align-items: center;
     margin: auto;
-    padding-top: 40px;
+    margin-top: auto;
+    margin-bottom: auto;
 }
 
 
 .page404MonitorMessage {
     width: 432px;
     height: 356px;
-    background-image: url("/img/page404monitor.svg");
+    background-image: url("/img/contentNotFoundmonitor.svg");
     background-repeat: no-repeat;
     background-position: center;
-    margin-bottom: 40px;
+    margin-bottom: 10px;
     flex-wrap: nowrap;
 }
 
@@ -27,7 +26,7 @@
     word-wrap: break-word;
     font-style: normal;
     font-weight: 600;
-    font-size: 28px;
+    font-size: 24px;
     line-height: 32px;
     letter-spacing: 0.06em;
     text-align: center;
@@ -38,7 +37,7 @@
     word-wrap: break-word;
     font-style: normal;
     font-weight: 600;
-    font-size: 28px;
+    font-size: 24px;
     line-height: 32px;
     letter-spacing: -0.03em;
     text-align: center;
@@ -50,7 +49,7 @@
     width: 476px;
     font-style: normal;
     font-weight: normal;
-    font-size: 23px;
+    font-size: 20px;
     line-height: 28px;
     letter-spacing: -0.03em;
     text-align: center;
@@ -59,7 +58,7 @@
 
 .page404SecondaryTextLine1 a {
     text-decoration: underline;
-    font-weight: 500;
+    font-weight: normal;
     color: var(--text-strong);
 }
 
@@ -67,7 +66,7 @@
     width: 476px;
     font-style: normal;
     font-weight: normal;
-    font-size: 23px;
+    font-size: 20px;
     line-height: 28px;
     letter-spacing: 0.05em;
     text-align: center;
