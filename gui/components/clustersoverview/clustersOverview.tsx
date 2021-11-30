@@ -1,10 +1,11 @@
 import * as React from "react";
 import classes from "./clustersOverview.module.css";
 import Clustersoverviewrow from "./clustersOverviewRow";
-import Clustersoverviewnavfooter from "./clustersOverviewNavFooter";
+import { Clusteroverviewfooter } from "./clustersOverviewNavFooter";
 import { Cluster } from "../../lib/cluster";
-import { useEffect, useState } from "react";
+import { createRef, useEffect, useState } from "react";
 import { useClusters } from "../workspace/clusterctx";
+import { useResizeDetector } from "react-resize-detector";
 
 type Props = {
   clusters?: Cluster[];
@@ -14,8 +15,15 @@ type Props = {
 const Clustersoverview = (props: Props) => {
   const rowHeight = 36;
   const columns = 10;
+  const tableContainerRef = createRef<HTMLDivElement>();
+  const tableRef = createRef<HTMLTableElement>() || undefined;
+  const pageFooterRef = createRef<HTMLDivElement>();
   const { clusters, setClusters } = useClusters();
   const [checked, setChecked] = useState<boolean>(false);
+  const [currentExtraRows, setCurrentExtraRows] = useState<number>(0);
+  const { height } = useResizeDetector<HTMLDivElement>({
+    targetRef: tableContainerRef,
+  });
   const [qtdPages, setQtdPages] = useState<number>(1);
   const changeCheckbox = (checked: boolean) => {
     if (checked) {
@@ -35,38 +43,56 @@ const Clustersoverview = (props: Props) => {
     } else {
       setChecked(false);
     }
-    distanceCalc();
-  }, [clusters, props.clusters?.length]);
+    if (height) {
+      distanceCalc();
+    }
+  }, [clusters, height]);
   let pageNumber = parseInt(props.page);
   const distanceCalc = () => {
-    console.log(props.clusters)
-    let table = document.getElementById("table") as HTMLTableElement;
-    let pageFooter = document.getElementById("pageFooter");
-    let tableTop = table?.offsetTop;
-    let pageFooterTop = pageFooter?.offsetTop;
-    let height = props.clusters?.length! * rowHeight;
-    let diff = pageFooterTop! - tableTop!;
-    diff = diff - 36;
-    let pageSize = Math.trunc(diff / rowHeight);
-    let pages = Math.ceil(props.clusters?.length! / pageSize);
-    if (pages > 0) {
-      setQtdPages(pages);
-    }
-    let rows =
-      Math.trunc(diff / rowHeight) - Math.trunc(props.clusters!.length);
-    {/*rows = rows + 1; // plus header row*/}
-    for (let index = 0; index < rows; index++) {
-      let row = table.insertRow(-1); // append
-      for (let index = 0; index < columns; index++) {
-        row.insertCell(index);
+    let table = tableRef?.current;
+    if (currentExtraRows > 0) {
+      let r = currentExtraRows;
+      let tableLength = table?.rows.length;
+      while (r > 0) {
+        table?.deleteRow(tableLength! - 1);
+        tableLength!--;
+        r--;
       }
     }
+    let pageFooter = pageFooterRef?.current;
+    let tableContainer = tableContainerRef?.current;
+    let tableHeight = table?.getBoundingClientRect().height;
+    let pageFooterHeight = pageFooter?.getBoundingClientRect().height;
+    let tableContainerHeight = tableContainer?.getBoundingClientRect().height;
+    if (height) {
+      tableContainerHeight = height;
+    }
+    let diff = tableContainerHeight! - (tableHeight! + pageFooterHeight!);
+    let rows = Math.trunc(diff / rowHeight);
+    if (tableHeight! > 0) {
+      for (let i = 0; i < rows; i++) {
+        let row = table?.insertRow(-1);
+        for (let j = 0; j < columns; j++) {
+          row?.insertCell(j);
+        }
+      }
+      setCurrentExtraRows(rows);
+    }
   };
+
   return (
     <>
       <div className={classes.clustersOverviewContainer}>
-        <div className={classes.clustersOverviewTableContainer}>
-          <table id="table" className={classes.clustersOverviewTable}>
+        <div
+          id="tableContainer"
+          className={classes.clustersOverviewTableContainer}
+          ref={tableContainerRef}
+        >
+          <table
+            ref={tableRef}
+            id="table"
+            className={classes.clustersOverviewTable}
+          >
             <thead>
               <tr>
                 <th>
@@ -121,12 +147,13 @@ const Clustersoverview = (props: Props) => {
                     key={index + 1}
                     cluster={r}
                     disabled={false}
-                  />
+                  ></Clustersoverviewrow>
                 );
               })}
             </tbody>
           </table>
-          <Clustersoverviewnavfooter
+          <Clusteroverviewfooter
+            ref={pageFooterRef}
             total={props.clusters?.length || 0}
             currentPage={pageNumber}
             qtdPages={qtdPages}

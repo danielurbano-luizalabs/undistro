@@ -7,7 +7,21 @@ type Props = {
   total: number;
   currentPage: number;
   qtdPages: number;
+  refer?: React.ForwardedRef<HTMLDivElement>;
 };
+
+export const Clusteroverviewfooter = React.forwardRef<HTMLDivElement, Props>(
+  (props, ref) => {
+    return (
+      <Clustersoverviewnavfooter
+        total={props.total || 0}
+        currentPage={props.currentPage}
+        qtdPages={props.qtdPages}
+        refer={ref}
+      />
+    );
+  }
+);
 
 const Clustersoverviewnavfooter = (props: Props) => {
   const router = useRouter();
@@ -36,7 +50,11 @@ const Clustersoverviewnavfooter = (props: Props) => {
   };
   return (
     <>
-      <div id="pageFooter" className={classes.tableFooterContainer}>
+      <div
+        ref={props.refer}
+        id="pageFooter"
+        className={classes.tableFooterContainer}
+      >
         <div className={classes.tableFooter}>
           <div className={classes.navFooterResults}>
             <a className={classes.navFooterResultsText}>
