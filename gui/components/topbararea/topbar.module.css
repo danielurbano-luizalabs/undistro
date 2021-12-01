@@ -84,3 +84,25 @@
   color: #fff;
   text-decoration: none;
 }
+
+/* TOP MENU BUTTONS WIDTH BY ID */
+
+#menuCreateButton {
+  min-width: 74px !important;
+}
+
+#menuModifyButton {
+  min-width: 76px;
+}
+
+#menuManageButton {
+  min-width: 82px;
+}
+
+#menuAboutButton {
+  min-width: 68px;
+}
+
+#menuPreferencesButton {
+  min-width: 132px !important;
+}

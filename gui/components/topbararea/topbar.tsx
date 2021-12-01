@@ -1,5 +1,5 @@
 import * as React from "react";
-import classes from "./topbar.module.css";
+import styles from "./topbar.module.css";
 import Link from "next/link";
 import TopbarMenuItemButton from "./topbarMenuItemButton";
 import Navbar from "./navbar";
@@ -8,22 +8,22 @@ type Props = {};
 
 const Topbar = (props: Props) => {
   let topBarContainerClasses = [
-    classes.topBarContainer,
+    styles.topBarContainer,
     "responsiveWidth",
   ].join(" ");
-  let topBarMenuAreaClasses = [classes.topBarMenuArea, "responsiveWidth"].join(
+  let topBarMenuAreaClasses = [styles.topBarMenuArea, "responsiveWidth"].join(
     " "
   );
   return (
     <>
-      <header className={classes.teste}>
+      <header className={styles.teste}>
         {/* TOPBAR CONTAINER */}
 
         <div className={topBarContainerClasses}>
           {/* LOGO */}
 
-          <div className={classes.topBarLogoArea}>
-            <div className={classes.topLogo}>
+          <div className={styles.topBarLogoArea}>
+            <div className={styles.topLogo}>
               <img src="/img/logo-topbar.svg" />
             </div>
           </div>
@@ -32,27 +32,24 @@ const Topbar = (props: Props) => {
 
           {/* Divider */}
 
-          <div className={classes.topBarDividerArea}>
-            <div className={classes.topBarDivider}></div>
+          <div className={styles.topBarDividerArea}>
+            <div className={styles.topBarDivider}></div>
           </div>
 
           <div className={topBarMenuAreaClasses}>
-            <TopbarMenuItemButton title="create" id="menuCreateButton" />
-            <TopbarMenuItemButton title="modify" id="menuModifyButton" />
-            <TopbarMenuItemButton title="manage" id="menuManageButton" />
-            <TopbarMenuItemButton
-              title="preferences"
-              id="menuPreferencesButton"
-            />
-            <TopbarMenuItemButton title="about" id="menuAboutButton" />
+            <TopbarMenuItemButton title="create" id={styles.menuCreateButton} />
+            <TopbarMenuItemButton title="modify" id={styles.menuModifyButton} />
+            <TopbarMenuItemButton title="manage" id={styles.menuManageButton} />
+            <TopbarMenuItemButton title="preferences" id={styles.menuPreferencesButton} />
+            <TopbarMenuItemButton title="about" id={styles.menuAboutButton} />
           </div>
 
           {/* LOGOUT */}
 
-          <div className={classes.logoutArea}>
+          <div className={styles.logoutArea}>
             <Link href="/">
-              <div className={classes.logoutMenu}>
-                <a className={classes.logoutText}>logout</a>
+              <div className={styles.logoutMenu}>
+                <a className={styles.logoutText}>logout</a>
               </div>
             </Link>
           </div>

@@ -152,6 +152,6 @@ input[type="checkbox"].tableCheckboxAll::before {
     /*box-shadow: inset 1em 1em var(--form-control-color);*/
   }
 
-  input[type="checkbox"].tableCheckboxAll:checked::before {
+input[type="checkbox"].tableCheckboxAll:checked::before {
     transform: scale(1);
-  }
+}

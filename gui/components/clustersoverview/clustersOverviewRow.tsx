@@ -9,7 +9,7 @@ type Props = {
   disabled: boolean;
 };
 
-const Clustersoverviewrow = (props: Props) => {
+const ClustersOverviewRow = (props: Props) => {
   const { clusters, setClusters } = useClusters();
 
   let tableCellTitleCentered = [classes.tableCellTitle, "textCentered"].join(
@@ -117,4 +117,4 @@ const Clustersoverviewrow = (props: Props) => {
   );
 };
 
-export default Clustersoverviewrow;
+export default ClustersOverviewRow;

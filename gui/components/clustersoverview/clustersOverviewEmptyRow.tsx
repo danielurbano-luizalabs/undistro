@@ -5,7 +5,7 @@ type Props = {
   key: number;
 };
 
-const Clustersoverviewemptyrow = (props: Props) => {
+const ClustersOverviewEmptyRow = (props: Props) => {
   let tableCellTitleCentered = [classes.tableCellTitle, "textCentered"].join(
     " "
   );
@@ -60,4 +60,4 @@ const Clustersoverviewemptyrow = (props: Props) => {
   );
 };
 
-export default Clustersoverviewemptyrow;
+export default ClustersOverviewEmptyRow;

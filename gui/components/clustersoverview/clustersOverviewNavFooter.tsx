@@ -10,10 +10,10 @@ type Props = {
   refer?: React.ForwardedRef<HTMLDivElement>;
 };
 
-export const Clusteroverviewfooter = React.forwardRef<HTMLDivElement, Props>(
+export const ClusterOverviewFooter = React.forwardRef<HTMLDivElement, Props>(
   (props, ref) => {
     return (
-      <Clustersoverviewnavfooter
+      <ClustersOverviewNavFooter
         total={props.total || 0}
         currentPage={props.currentPage}
         qtdPages={props.qtdPages}
@@ -23,7 +23,7 @@ export const Clusteroverviewfooter = React.forwardRef<HTMLDivElement, Props>(
   }
 );
 
-const Clustersoverviewnavfooter = (props: Props) => {
+const ClustersOverviewNavFooter = (props: Props) => {
   const router = useRouter();
 
   const pressEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -118,4 +118,4 @@ const Clustersoverviewnavfooter = (props: Props) => {
   );
 };
 
-export default Clustersoverviewnavfooter;
+export default ClustersOverviewNavFooter;

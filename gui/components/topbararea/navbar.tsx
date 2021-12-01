@@ -62,9 +62,11 @@ const Navbar = (props: Props) => {
   return (
     <>
       <div className={navbarContainerClasses}>
-        <a href="/" className={classes.navbarHomeButtonArea}>
-          <div className={classes.navbarHomeIconArea}></div>
-        </a>
+        <Link href="/">
+          <a className={classes.navbarHomeButtonArea}>
+            <div className={classes.navbarHomeIconArea}></div>
+          </a>
+        </Link>
         <div className={navbarBreadCrumbAreaClasses}>
           <ol className={breadCrumbClasses}>
             <li key="1" className={classes.breadCrumb}>

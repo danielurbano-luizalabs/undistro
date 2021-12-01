@@ -77,30 +77,6 @@ body {
 }
 
 
-/* TOP MENU BUTTONS WIDTH BY ID */
-
-#menuCreateButton {
-  min-width: 74px !important;
-}
-
-#menuModifyButton {
-  min-width: 76px;
-}
-
-#menuManageButton {
-  min-width: 82px;
-}
-
-#menuPreferencesButton {
-  min-width: 132px !important;
-}
-
-#menuAboutButton {
-  min-width: 68px;
-}
-
-
-
 #searchClear::-webkit-search-cancel-button{
   position: relative;
   right: 14px;

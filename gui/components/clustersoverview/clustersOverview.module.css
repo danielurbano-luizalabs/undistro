@@ -152,6 +152,6 @@ input[type="checkbox"].tableCheckboxAll::before {
     background-position: center;
   }
 
-  input[type="checkbox"].tableCheckboxAll:checked::before {
+input[type="checkbox"].tableCheckboxAll:checked::before {
     transform: scale(1);
-  }
+}

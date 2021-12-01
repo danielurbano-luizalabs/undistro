@@ -1,7 +1,7 @@
 import * as k8s from "@kubernetes/client-node";
 import type { GetServerSideProps, NextPage } from "next";
 import React from "react";
-import Clustersoverview from "../components/clustersoverview/clustersOverview";
+import ClustersOverview from "../components/clustersoverview/clustersOverview";
 import Workspace from "../components/workspace/workspace";
 import { Cluster, getAge, getStatusFromConditions } from "../lib/cluster";
 
@@ -28,178 +28,18 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
       selectedClusters = cluster;
     }
   }
-  let clusters: Cluster[] = [
-    {
-      name: "cluster01",
-      provider: "aws",
-      flavor: "ec2",
-      k8sVersion: "v1.21.2",
-      clusterGroup: "undistro-system",
-      machines: 4,
-      age: "2d4h",
-      status: "ready",
-    },
-    {
-      name: "cluster01",
-      provider: "aws",
-      flavor: "ec2",
-      k8sVersion: "v1.21.2",
-      clusterGroup: "undistro-system",
-      machines: 4,
-      age: "2d4h",
-      status: "ready",
-    },
-    {
-      name: "cluster01",
-      provider: "aws",
-      flavor: "ec2",
-      k8sVersion: "v1.21.2",
-      clusterGroup: "undistro-system",
-      machines: 4,
-      age: "2d4h",
-      status: "ready",
-    },
-    {
-      name: "cluster01",
-      provider: "aws",
-      flavor: "ec2",
-      k8sVersion: "v1.21.2",
-      clusterGroup: "undistro-system",
-      machines: 4,
-      age: "2d4h",
-      status: "ready",
-    },
-    {
-      name: "cluster01",
-      provider: "aws",
-      flavor: "ec2",
-      k8sVersion: "v1.21.2",
-      clusterGroup: "undistro-system",
-      machines: 4,
-      age: "2d4h",
-      status: "ready",
-    },
-    {
-      name: "cluster01",
-      provider: "aws",
-      flavor: "ec2",
-      k8sVersion: "v1.21.2",
-      clusterGroup: "undistro-system",
-      machines: 4,
-      age: "2d4h",
-      status: "ready",
-    },
-    {
-      name: "cluster01",
-      provider: "aws",
-      flavor: "ec2",
-      k8sVersion: "v1.21.2",
-      clusterGroup: "undistro-system",
-      machines: 4,
-      age: "2d4h",
-      status: "ready",
-    },
-    {
-      name: "cluster01",
-      provider: "aws",
-      flavor: "ec2",
-      k8sVersion: "v1.21.2",
-      clusterGroup: "undistro-system",
-      machines: 4,
-      age: "2d4h",
-      status: "ready",
-    },
-    {
-      name: "cluster01",
-      provider: "aws",
-      flavor: "ec2",
-      k8sVersion: "v1.21.2",
-      clusterGroup: "undistro-system",
-      machines: 4,
-      age: "2d4h",
-      status: "ready",
-    },
-    {
-      name: "cluster01",
-      provider: "aws",
-      flavor: "ec2",
-      k8sVersion: "v1.21.2",
-      clusterGroup: "undistro-system",
-      machines: 4,
-      age: "2d4h",
-      status: "ready",
-    },
-    {
-      name: "cluster01",
-      provider: "aws",
-      flavor: "ec2",
-      k8sVersion: "v1.21.2",
-      clusterGroup: "undistro-system",
-      machines: 4,
-      age: "2d4h",
-      status: "ready",
-    },
-    {
-      name: "cluster01",
-      provider: "aws",
-      flavor: "ec2",
-      k8sVersion: "v1.21.2",
-      clusterGroup: "undistro-system",
-      machines: 4,
-      age: "2d4h",
-      status: "ready",
-    },
-    {
-      name: "cluster01",
-      provider: "aws",
-      flavor: "ec2",
-      k8sVersion: "v1.21.2",
-      clusterGroup: "undistro-system",
-      machines: 4,
-      age: "2d4h",
-      status: "ready",
-    },
-    {
-      name: "cluster01",
-      provider: "aws",
-      flavor: "ec2",
-      k8sVersion: "v1.21.2",
-      clusterGroup: "undistro-system",
-      machines: 4,
-      age: "2d4h",
-      status: "ready",
-    },
-    {
-      name: "cluster01",
-      provider: "aws",
-      flavor: "ec2",
-      k8sVersion: "v1.21.2",
-      clusterGroup: "undistro-system",
-      machines: 4,
-      age: "2d4h",
-      status: "ready",
-    },
-    {
-      name: "cluster01",
-      provider: "aws",
-      flavor: "ec2",
-      k8sVersion: "v1.21.2",
-      clusterGroup: "undistro-system",
-      machines: 4,
-      age: "2d4h",
-      status: "ready",
-    },
-    {
-      name: "cluster01",
-      provider: "aws",
-      flavor: "ec2",
-      k8sVersion: "v1.21.2",
-      clusterGroup: "undistro-system",
-      machines: 4,
-      age: "2d4h",
-      status: "ready",
-    },
-  ];
+
+  let clusters: Cluster[] = [...Array(25)].map((_, i) => ({
+    name: `cluster${i}`,
+    provider: "aws",
+    flavor: "ec2",
+    k8sVersion: "v1.21.2",
+    clusterGroup: "undistro-system",
+    machines: 4,
+    age: "2d4h",
+    status: "ready",
+  }))
+
   {
     /*const kc = new k8s.KubeConfig();
   kc.loadFromFile("/home/felipeweb/projects/undistro/demos/cluster.kubeconfig");
@@ -247,7 +87,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 const Home: NextPage = (props: Props) => {
   return (
     <Workspace selectedClusters={props.selectedClusters || []}>
-      <Clustersoverview clusters={props.clusters} page={props.page!} />
+      <ClustersOverview clusters={props.clusters} page={props.page!} />
     </Workspace>
   );
 };
