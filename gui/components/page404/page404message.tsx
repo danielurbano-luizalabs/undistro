@@ -23,9 +23,10 @@ const Page404message = (props: Props) => {
   ].join(" ");
   return (
     <>
-      <div className={classes.page404ContainerMessage}>
+      
         <div className={classes.page404messageContainer}>
-          <div className={classes.page404MonitorMessage}></div>
+          <div className={classes.page404MonitorMessage}>
+          </div>
 
           <div className={page404MainTextLine1UpperCase}>
             it seems that one of our
@@ -40,8 +41,9 @@ const Page404message = (props: Props) => {
           <div className={page404SecondaryTextLine2UpperCase}>
             we look for someone to blame
           </div>
+
         </div>
-      </div>
+  
     </>
   );
 };
