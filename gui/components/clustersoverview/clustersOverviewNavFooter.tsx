@@ -64,29 +64,29 @@ const ClustersOverviewNavFooter = (props: Props) => {
               {props.total} Results
             </a>
           </div>
-          {/* {props.qtdPages > 1 ? ( */}
-          <>
-            <div className={classes.navFooterJumpToPage}>
-              <a className={classes.navFooterJumpToPageText}>Jump to page</a>
-            </div>
+          {props.qtdPages > 1 ? (
+            <>
+              <div className={classes.navFooterJumpToPage}>
+                <a className={classes.navFooterJumpToPageText}>Jump to page</a>
+              </div>
 
-            <div className={classes.paginationSearchArea}>
-              <input
-                onKeyPress={(e) => pressEnter(e)}
-                onBlur={(e) => onBlur(e)}
-                className={classes.paginationSearchBox}
-                placeholder={props.currentPage.toString()}
-                type="text"
-              ></input>
-            </div>
-            <Pagination
-              currentPage={props.currentPage}
-              totalCount={props.total}
-              pageSize={props.pageSize}
-              onPageChange={page => console.log(page)}
-            />
-          </>
-          {/* ) : null} */}
+              <div className={classes.paginationSearchArea}>
+                <input
+                  onKeyPress={(e) => pressEnter(e)}
+                  onBlur={(e) => onBlur(e)}
+                  className={classes.paginationSearchBox}
+                  placeholder={props.currentPage.toString()}
+                  type="text"
+                ></input>
+              </div>
+              <Pagination
+                currentPage={props.currentPage}
+                totalCount={props.total}
+                pageSize={props.pageSize}
+                onPageChange={(page) => console.log(page)}
+              />
+            </>
+          ) : null}
         </div>
       </div>
     </>

@@ -22,7 +22,7 @@
 .navFooterResultsText {
     color: var(--text-default);
     font-size: 16px;
-    padding: 0 40px 0 0;
+    padding: 0 16px 0 0;
     font-weight: 500;
 }
 
@@ -35,7 +35,7 @@
 .navFooterJumpToPageText {
     color: var(--text-default);
     font-size: 12px;
-    padding: 0 4px 0 4px;
+    padding: 0 4px 0 28px;
 }
 
 .paginationSearchArea {
