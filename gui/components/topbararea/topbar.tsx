@@ -1,19 +1,17 @@
-import * as React from "react";
-import styles from "./topbar.module.css";
-import Link from "next/link";
-import TopbarMenuItemButton from "./topbarMenuItemButton";
-import Navbar from "./navbar";
+import * as React from 'react'
+import Link from 'next/link'
+import Image from 'next/image'
+import TopbarMenuItemButton from './topbarMenuItemButton'
+import Navbar from './navbar'
+import styles from './topbar.module.css'
 
-type Props = {};
+import topBarLogo from '@/public/img/logo-topbar.svg'
+
+type Props = {}
 
 const Topbar = (props: Props) => {
-  let topBarContainerClasses = [
-    styles.topBarContainer,
-    "responsiveWidth",
-  ].join(" ");
-  let topBarMenuAreaClasses = [styles.topBarMenuArea, "responsiveWidth"].join(
-    " "
-  );
+  let topBarContainerClasses = [styles.topBarContainer, 'responsiveWidth'].join(' ')
+  let topBarMenuAreaClasses = [styles.topBarMenuArea, 'responsiveWidth'].join(' ')
   return (
     <>
       <header className={styles.teste}>
@@ -24,7 +22,7 @@ const Topbar = (props: Props) => {
 
           <div className={styles.topBarLogoArea}>
             <div className={styles.topLogo}>
-              <img src="/img/logo-topbar.svg" />
+              <Image src={topBarLogo} alt="UnDistro Logo" />
             </div>
           </div>
 
@@ -47,7 +45,7 @@ const Topbar = (props: Props) => {
           {/* LOGOUT */}
 
           <div className={styles.logoutArea}>
-            <Link href="/">
+            <Link href="/" passHref>
               <div className={styles.logoutMenu}>
                 <a className={styles.logoutText}>logout</a>
               </div>
@@ -58,7 +56,7 @@ const Topbar = (props: Props) => {
         <Navbar />
       </header>
     </>
-  );
-};
+  )
+}
 
-export default Topbar;
+export default Topbar

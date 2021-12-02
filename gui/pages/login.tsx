@@ -1,7 +1,10 @@
-import type { NextPage } from "next";
-import classes from "./login.module.css";
+import type { NextPage } from 'next'
+import Image from 'next/image'
+import classes from './login.module.css'
+import { logoUnDistroLogin } from '@/public/img/logoUnDistroLogin.svg'
+import { backedByGetup } from '@/public/img/backedByGetup.svg'
 
-type Props = {};
+type Props = {}
 
 const Login: NextPage = (props: Props) => {
   return (
@@ -10,7 +13,7 @@ const Login: NextPage = (props: Props) => {
         <div className={classes.contentTab}>
           <div className={classes.contentTabProviders}>
             <div className={classes.contentTabLogo}>
-              <img src="/img/logoUnDistroLogin.svg" />
+              <Image src={logoUnDistroLogin} alt="UnDistro Logo" />
             </div>
 
             <div className={classes.providersSelection}>
@@ -46,12 +49,12 @@ const Login: NextPage = (props: Props) => {
           </div>
 
           <div className={classes.contentTabFooter}>
-            <img src="./img/backedByGetup.svg" />
+            <Image src={backedByGetup} alt="Backed by GetUp" />
           </div>
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

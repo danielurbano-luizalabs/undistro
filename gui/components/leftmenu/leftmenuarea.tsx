@@ -1,24 +1,52 @@
-import * as React from "react";
-import classes from "./leftmenuarea.module.css";
-import LeftMenuItemButton from "./leftMenuItemButton";
-import Link from "next/link";
+import * as React from 'react'
+import classes from './leftmenuarea.module.css'
+import menuClustersIcon from '@/public/img/menuClustersIcon.svg'
+import menuNodePoolsIcon from '@/public/img/menuNodepoolsIcon.svg'
+import menuSecurityIcon from '@/public/img/menuSecurityIcon.svg'
+import menuLogsIcon from '@/public/img/menuLogsIcon.svg'
 
-type Props = {};
+import LeftMenuItemButton from './leftMenuItemButton'
 
-const Leftmenuarea = (props: Props) => {
-    {/*let navbarContainerClasses = [classes.navbarContainer, "responsiveWidth"].join(" ");*/ }
-    let leftMenuButtonTextClasses = [classes.leftMenuButtonText, "upperCase"].join(" ");
-    return (
-        <>
+type Props = {}
 
-            <div className={classes.leftNav}>
-                <LeftMenuItemButton title="clusters" id="menuClusterButton" />
-            </div>
+const LeftMenuArea = (props: Props) => {
+  {
+    /*let navbarContainerClasses = [classes.navbarContainer, "responsiveWidth"].join(" ");*/
+  }
 
-        </>
-    );
+  const leftMenuItems = [
+    {
+      id: 'menuClusterButton',
+      alt: 'Clusters',
+      src: menuClustersIcon
+    },
+    {
+      id: 'menuNodePoolsButton',
+      alt: 'Node Pools',
+      src: menuNodePoolsIcon
+    },
+    {
+      id: 'menuSecurityButton',
+      alt: 'Security',
+      src: menuSecurityIcon
+    },
+    {
+      id: 'menuLogsButton',
+      alt: 'Logs',
+      src: menuLogsIcon
+    }
+  ]
+
+  // let leftMenuButtonTextClasses = [classes.leftMenuButtonText, 'upperCase'].join(' ')
+  return (
+    <>
+      <div className={classes.leftNav}>
+        {leftMenuItems.map(item => (
+          <LeftMenuItemButton id={item.id} key={`menu-${item.id}`} title={item.alt} item={item} />
+        ))}
+      </div>
+    </>
+  )
 }
 
-export default Leftmenuarea;
-
-
+export default LeftMenuArea

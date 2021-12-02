@@ -1,26 +1,25 @@
-import * as React from "react";
-import classes from "./leftMenuItemButton.module.css";
+import Image from 'next/image'
+import classes from './leftMenuItemButton.module.css'
 
-type Props = {
-  id: string;
-  children?: React.ReactNode;
-  title: string;
-};
+type LeftMenuItemProps = {
+  id: string
+  children?: React.ReactNode
+  title: string
+  item: any
+}
 
-const LeftMenuItemButton = (props: Props) => {
+const LeftMenuItemButton = ({ id, title, item }: LeftMenuItemProps) => {
   return (
     <>
-      <div
-        id={props.id}
-        title={props.title}
-        className={classes.leftMenuButtonContainer}
-      >
+      <div id={id} title={title} className={classes.leftMenuButtonContainer}>
         <button className={classes.leftMenuButton}>
           <div className={classes.leftMenuButton}>
-            <div className={classes.leftMenuButtonIcon}></div>
+            <div className={classes.leftMenuButtonIcon}>
+              <Image src={item.src} alt={item.alt} />
+            </div>
 
             <div className={classes.leftMenuButtonText}>
-              <a className={"upperCase"}>{props.title}</a>
+              <a className={'upperCase'}>{title}</a>
             </div>
 
             <div className={classes.leftMenuButtonArrow}></div>
@@ -28,12 +27,7 @@ const LeftMenuItemButton = (props: Props) => {
         </button>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default LeftMenuItemButton;
-
-
-
-
-
+export default LeftMenuItemButton

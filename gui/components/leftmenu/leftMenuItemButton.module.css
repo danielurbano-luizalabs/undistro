@@ -21,31 +21,36 @@
 }
 
 .leftMenuButton:hover {
-  background-color: var(--background-primary-default);    
+  background-color: var(--background-primary-default);
 }
 
 .leftMenuButton:active {
   background-color: var(--background-primary-default);
 }
 
-
 .leftMenuButtonIcon {
   min-width: 28px;
   height: 28px;
   margin-left: 8px;
-  background-image: url("/img/menuClustersIcon.svg");
+  /* background-image: url('/img/menuClustersIcon.svg'); */
   background-repeat: no-repeat;
   background-position: center;
   transition: 0.3s;
 }
 
+.leftMenuButtonIcon.active {
+  min-width: 50px;
+  height: 50px;
+}
+
+/* 
 .leftMenuButton:hover .leftMenuButtonIcon {
-  background-image: url("/img/menuClustersIconHover.svg");
+  background-image: url('/img/menuClustersIconHover.svg');
 }
 
 .leftMenuButton:active .leftMenuButtonIcon {
-  background-image: url("/img/menuClustersIconHover.svg");
-}
+  background-image: url('/img/menuClustersIconHover.svg');
+} */
 
 .leftMenuButtonText {
   width: 100%;
@@ -71,17 +76,16 @@
 .leftMenuButtonArrow {
   min-width: 28px;
   height: 28px;
-  background-image: url("/img/arrowRight.svg");
+  background-image: url('/img/arrowRight.svg');
   background-repeat: no-repeat;
   background-position: center;
   transition: 0.3s;
 }
 
 .leftMenuButton:hover .leftMenuButtonArrow {
-  background-image: url("/img/arrowRightFocus.svg");
+  background-image: url('/img/arrowRightFocus.svg');
 }
 
 .leftMenuButton:active .leftMenuButtonArrow {
-  background-image: url("/img/arrowDownFocus.svg");
+  background-image: url('/img/arrowDownFocus.svg');
 }
-

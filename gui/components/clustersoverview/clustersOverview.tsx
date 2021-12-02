@@ -1,100 +1,93 @@
-import { useRouter } from "next/router";
-import * as React from "react";
-import { createRef, useEffect, useState } from "react";
-import { useResizeDetector } from "react-resize-detector";
-import { Cluster, empty } from "../../lib/cluster";
-import { paginate } from "../../lib/pagination";
-import Page404message from "../page404/page404message";
-import { useClusters } from "../workspace/clusterctx";
-import classes from "./clustersOverview.module.css";
-import ClustersOverviewEmptyRow from "./clustersOverviewEmptyRow";
-import { ClusterOverviewFooter } from "./clustersOverviewNavFooter";
-import ClustersOverviewRow from "./clustersOverviewRow";
+import { useRouter } from 'next/router'
+import * as React from 'react'
+import { createRef, useEffect, useState } from 'react'
+import { useResizeDetector } from 'react-resize-detector'
+import { Cluster } from '../../lib/cluster'
+import { paginate } from '../../lib/pagination'
+import Page404message from '../page404/page404message'
+import { useClusters } from '../workspace/clusterctx'
+import classes from './clustersOverview.module.css'
+import ClustersOverviewEmptyRow from './clustersOverviewEmptyRow'
+import { ClusterOverviewFooter } from './clustersOverviewNavFooter'
+import ClustersOverviewRow from './clustersOverviewRow'
 
-type Props = {
-  clusters?: Cluster[];
-  page: string;
-};
+type ClusterOverviewProps = {
+  clusters?: Cluster[]
+  page: string
+}
 
-const ClustersOverview = (props: Props) => {
-  const rowHeight = 36;
-  const router = useRouter();
-  const tableContainerRef = createRef<HTMLDivElement>();
-  const tableRef = createRef<HTMLTableElement>() || undefined;
-  const pageFooterRef = createRef<HTMLDivElement>();
-  const { clusters: selectedClusters, setClusters: setSelectedClusters } = useClusters();
-  const [clustersList, setClustersList] = useState<Cluster[]>([]);
-  const [allChecked, setAllChecked] = useState<boolean>(false);
+const ClustersOverview = ({ clusters, page }: ClusterOverviewProps) => {
+  const router = useRouter()
+
+  const { clusters: selectedClusters, setClusters: setSelectedClusters } = useClusters()
+
+  const rowHeight = 36
+  const tableContainerRef = createRef<HTMLDivElement>()
+  const tableRef = createRef<HTMLTableElement>() || undefined
+  const [clustersList, setClustersList] = useState<Cluster[]>([])
+  const [allChecked, setAllChecked] = useState<boolean>(false)
   const { height } = useResizeDetector<HTMLDivElement>({
-    targetRef: tableContainerRef,
-  });
-  const [qtyPages, setQtyPages] = useState<number>(1);
-  const [isValidPage, setValidPage] = useState<boolean>(true);
-  const [pageSize, setPageSize] = useState<number>(0);
-  const [initialContainerSize, setInitialContainerSize] = useState<number>(0);
+    targetRef: tableContainerRef
+  })
+  const [qtyPages, setQtyPages] = useState<number>(1)
+  const [isValidPage, setValidPage] = useState<boolean>(true)
+  const [pageSize, setPageSize] = useState<number>(0)
+  const [initialContainerSize, setInitialContainerSize] = useState<number>(0)
 
-  const columns = [
-    'provider', 'flavor',
-    'k8s version', 'cluster group',
-    'machines', 'age', 'status',
-  ]
+  const columns = ['provider', 'flavor', 'k8s version', 'cluster group', 'machines', 'age', 'status']
 
   const changeCheckbox = (checked: boolean) => {
     if (checked) {
-      let cls: string[] = [];
-      clustersList?.forEach((c) => {
-        cls.push(c.name);
-      });
-      setSelectedClusters(cls);
+      let cls: string[] = []
+      clustersList?.forEach(c => {
+        cls.push(c.name)
+      })
+      setSelectedClusters(cls)
     } else {
-      setSelectedClusters([]);
-      setAllChecked(false);
+      setSelectedClusters([])
+      setAllChecked(false)
     }
-  };
+  }
 
-  let pageNumber = parseInt(props.page);
-  const pagesCalc = () => {
-    let pageFooter = pageFooterRef?.current;
-    let pageFooterHeight = pageFooter?.getBoundingClientRect().height;
-    if (pageFooterHeight === NaN) {
-      pageFooterHeight = 44;
+  let pageNumber = parseInt(page)
+  const pagesCalc = React.useCallback(() => {
+    if (qtyPages && pageNumber > qtyPages) {
+      setValidPage(false)
+    } else {
+      setValidPage(true)
     }
-    let pageQtyItems = Math.trunc((height! - pageFooterHeight!) / rowHeight);
-    pageQtyItems = pageQtyItems - 1; // ignore table header
-    setPageSize(pageQtyItems);
+
+    const pageFooterHeight = 44
+    let pageQtyItems = Math.trunc((height! - pageFooterHeight!) / rowHeight)
+    pageQtyItems = pageQtyItems - 1 // ignore table header
+    setPageSize(pageQtyItems)
 
     if (pageQtyItems > 0) {
-      let qtyPages = Math.ceil(props.clusters?.length! / pageQtyItems);
-      setQtyPages(qtyPages);
+      let qtyPages = Math.ceil(clusters?.length! / pageQtyItems)
+      setQtyPages(qtyPages)
     }
-    let pageLists = paginate(props.clusters!, pageQtyItems);
+    let pageLists = paginate(clusters!, pageQtyItems)
     if (pageLists.length >= pageNumber) {
-      let items = pageLists[pageNumber - 1];
-      setClustersList(items);
+      let items = pageLists[pageNumber - 1]
+      setClustersList(items)
     }
-  };
+  }, [height, pageNumber, qtyPages, clusters])
 
   useEffect(() => {
-    if (qtyPages && pageNumber > qtyPages) {
-      setValidPage(false);
-    } else {
-      setValidPage(true);
-    }
     if (height) {
       if (initialContainerSize == 0) {
-        setInitialContainerSize(height!);
-        return;
+        setInitialContainerSize(height!)
+        return
       }
       if (initialContainerSize > 0) {
-        pagesCalc();
+        pagesCalc()
       }
     }
-  }, [height, initialContainerSize, isValidPage, qtyPages, router]);
+  }, [height, initialContainerSize, isValidPage, qtyPages, router, pagesCalc])
 
   useEffect(() => {
-    pagesCalc();
     setSelectedClusters([])
-  }, [pageNumber])
+  }, [pageNumber, setSelectedClusters])
 
   useEffect(() => {
     let displayedClusters = clustersList.filter(e => e.name != '')
@@ -103,31 +96,23 @@ const ClustersOverview = (props: Props) => {
 
   const renderClusters = () => {
     let clusters = []
-    for (let i = 0; i < (clustersList.length + (pageSize - clustersList.length)); i++) {
+    for (let i = 0; i < clustersList.length + (pageSize - clustersList.length); i++) {
       if (clustersList[i] === undefined) {
-        clusters.push(<ClustersOverviewEmptyRow key={i} />);
+        clusters.push(<ClustersOverviewEmptyRow key={i} />)
       } else {
-        clusters.push(<ClustersOverviewRow key={i} cluster={clustersList[i]} disabled={false} />);
+        clusters.push(<ClustersOverviewRow key={i} cluster={clustersList[i]} disabled={false} />)
       }
     }
-    return clusters;
-  };
+    return clusters
+  }
 
   return (
     <>
       <div className={classes.clustersOverviewContainer}>
-        <div
-          id="tableContainer"
-          className={classes.clustersOverviewTableContainer}
-          ref={tableContainerRef}
-        >
-          {isValidPage ?
+        <div id="tableContainer" className={classes.clustersOverviewTableContainer} ref={tableContainerRef}>
+          {isValidPage ? (
             <>
-              <table
-                ref={tableRef}
-                id="table"
-                className={classes.clustersOverviewTable}
-              >
+              <table ref={tableRef} id="table" className={classes.clustersOverviewTable}>
                 <thead>
                   <tr>
                     <th>
@@ -135,7 +120,7 @@ const ClustersOverview = (props: Props) => {
                         <label className={classes.tableCheckboxControlAll}>
                           <input
                             className={classes.tableCheckboxAll}
-                            onChange={(e) => changeCheckbox(e.target.checked)}
+                            onChange={e => changeCheckbox(e.target.checked)}
                             type="checkbox"
                             name="checkbox"
                             checked={allChecked}
@@ -149,9 +134,7 @@ const ClustersOverview = (props: Props) => {
                       </div>
                     </th>
                     <th className={classes.responsiveTh}>
-                      <div className={classes.tableHeaderTitle}>
-                        clusters
-                      </div>
+                      <div className={classes.tableHeaderTitle}>clusters</div>
                     </th>
                     {columns.map((column, i) => (
                       <th key={i}>
@@ -160,22 +143,22 @@ const ClustersOverview = (props: Props) => {
                     ))}
                   </tr>
                 </thead>
-                <tbody>
-                  {renderClusters()}
-                </tbody>
+                <tbody>{renderClusters()}</tbody>
               </table>
               <ClusterOverviewFooter
-                ref={pageFooterRef}
-                total={props.clusters?.length || 0}
+                total={clusters?.length || 0}
                 currentPage={pageNumber}
                 qtdPages={qtyPages}
                 pageSize={pageSize}
               />
-            </> : <Page404message />}
+            </>
+          ) : (
+            <Page404message />
+          )}
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default ClustersOverview;
+export default ClustersOverview
