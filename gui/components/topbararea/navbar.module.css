@@ -86,7 +86,7 @@ ol.breadCrumb li::after {
     content: "/";
 	padding-left: 8px;
     padding-right: 4px;
-	color: #A9A9A9;
+	color: var(--text-default);
 }
 ol.breadCrumb li:last-child::after {
     content: "";
@@ -94,21 +94,16 @@ ol.breadCrumb li:last-child::after {
     padding-right: 4px;
 }
 ol.breadCrumb li a {
-	color: #A9A9A9;
+	color: var(--text-default);
 	text-decoration: none !important;
 }
 ol.breadCrumb li:last-child a {
-	color: #fff;
+	color: var(--text-strong);
 	text-decoration: none !important;
 }
 ol.breadCrumb li a:hover {
-	color: #fff;
+	color: var(--text-strong);
 	text-decoration: none;
-}
-ol.breadCrumb li h1 {
-	color: #D802C2;
-	text-decoration: none;
-	font-size: 14px !important;
 }
 
 
