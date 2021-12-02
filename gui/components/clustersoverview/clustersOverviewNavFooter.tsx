@@ -2,10 +2,12 @@ import * as React from "react";
 import classes from "./clustersOverviewNavFooter.module.css";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Pagination from "./Pagination";
 
 type Props = {
   total: number;
   currentPage: number;
+  pageSize: number;
   qtdPages: number;
   refer?: React.ForwardedRef<HTMLDivElement>;
 };
@@ -17,6 +19,7 @@ export const ClusterOverviewFooter = React.forwardRef<HTMLDivElement, Props>(
         total={props.total || 0}
         currentPage={props.currentPage}
         qtdPages={props.qtdPages}
+        pageSize={props.pageSize}
         refer={ref}
       />
     );
@@ -76,40 +79,12 @@ const ClustersOverviewNavFooter = (props: Props) => {
                 type="text"
               ></input>
             </div>
-
-            <div className={classes.paginationNavContainer}>
-              {props.currentPage > 1 ? (
-                <Link href={`/?page=${props.currentPage - 1}`}>
-                  <a>
-                    <div className={classes.paginationNavArrowLeft}></div>
-                  </a>
-                </Link>
-              ) : (
-                <a>
-                  <div className={classes.paginationNavArrowLeft}></div>
-                </a>
-              )}
-              <a className={classes.paginationNavPagesText}>1</a>
-              <a className={classes.paginationNavPagesInterval}>...</a>
-              <a className={classes.paginationNavPagesText}>4</a>
-              <a className={classes.paginationNavCurrentPage}>
-                {props.currentPage}
-              </a>
-              <a className={classes.paginationNavPagesText}>6</a>
-              <a className={classes.paginationNavPagesInterval}>...</a>
-              <a className={classes.paginationNavPagesText}>10</a>
-              {props.currentPage < props.qtdPages ? (
-                <Link href={`/?page=${props.currentPage + 1}`}>
-                  <a>
-                    <div className={classes.paginationNavArrowRight}></div>
-                  </a>
-                </Link>
-              ) : (
-                <a>
-                  <div className={classes.paginationNavArrowRight}></div>
-                </a>
-              )}
-            </div>
+            <Pagination
+              currentPage={props.currentPage}
+              totalCount={props.total}
+              pageSize={props.pageSize}
+              onPageChange={page => console.log(page)}
+            />
           </>
           {/* ) : null} */}
         </div>

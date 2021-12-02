@@ -29,7 +29,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
     }
   }
 
-  let clusters: Cluster[] = [...Array(25)].map((_, i) => ({
+  let clusters: Cluster[] = [...Array(100)].map((_, i) => ({
     name: `cluster${i}`,
     provider: "aws",
     flavor: "ec2",

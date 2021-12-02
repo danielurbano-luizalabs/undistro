@@ -75,27 +75,42 @@
 .paginationNavContainer {
     height: 100%;
     /*width: 180px;*/
+    margin: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-right: 16px;
+    list-style: none;
 }
 
-.paginationNavArrowLeft {
+button.paginationNavArrowLeft, button.paginationNavArrowRight {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    display: block;
+    margin: 0;
+    padding: 0;
     width: 36px;
     height: 22px;
+}
+
+button.paginationNavArrowLeft {
     background-image: url("/img/pagNavLeftIcon.svg");
-    background-repeat: no-repeat;
-    background-position: center;
 }
 
-.paginationNavArrowRight {
-    width: 36px;
-    height: 22px;
+button.paginationNavArrowRight {
     background-image: url("/img/pagNavRightIcon.svg");
-    background-repeat: no-repeat;
-    background-position: center;
 }
+
+button.paginationNavArrowLeft:disabled {
+    background-image: url("/img/pagNavLeftIconDisabled.svg");
+}
+
+button.paginationNavArrowRight:disabled {
+    background-image: url("/img/pagNavRightIconDisabled.svg");
+}
+
 
 .paginationNavPagesText {
     color:var(--text-default);
@@ -105,11 +120,22 @@
     line-height: 22px;
 }
 
+.paginationNavPagesText a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.paginationNavPagesText:hover {
+    color: var(--text-strong);
+    font-weight: 600;
+}
+
 .paginationNavPagesInterval {
     color:var(--text-default);
     font-size: 12px;
     line-height: 22px;
     width: 12px;
+    text-align: center;
 }
 
 .paginationNavCurrentPage {

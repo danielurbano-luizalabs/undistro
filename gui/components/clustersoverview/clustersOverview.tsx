@@ -104,6 +104,8 @@ const ClustersOverview = (props: Props) => {
   const renderClusters = () => {
     let clusters = []
 
+    console.log(pageSize)
+
     for (let i = 0; i < (clustersList.length + (pageSize - clustersList.length)); i++) {
       if (clustersList[i] === undefined) {
         clusters.push(<ClustersOverviewEmptyRow key={i} />);
@@ -170,6 +172,7 @@ const ClustersOverview = (props: Props) => {
                 total={props.clusters?.length || 0}
                 currentPage={pageNumber}
                 qtdPages={qtyPages}
+                pageSize={pageSize}
               />
             </> : <Page404message />}
         </div>
