@@ -25,7 +25,6 @@ import (
 	"time"
 
 	"github.com/caarlos0/httperr"
-	"github.com/getupio-undistro/undistro/pkg/fs"
 	"github.com/getupio-undistro/undistro/pkg/undistro/apiserver/health"
 	"github.com/getupio-undistro/undistro/pkg/undistro/apiserver/proxy"
 	"github.com/getupio-undistro/undistro/third_party/pinniped/authnz"
@@ -63,7 +62,7 @@ func NewServer(cfg *rest.Config, in io.Reader, out, errOut io.Writer, healthChec
 		apiServer.HealthHandler.Add(c)
 	}
 	apiServer.routes(router)
-	apiServer.Handler = router
+	apiServer.Handler = http.StripPrefix("/uapi", router)
 	apiServer.Handler = handlers.CombinedLoggingHandler(out, apiServer.Handler)
 	return apiServer
 }
@@ -83,9 +82,8 @@ func (s *Server) routes(router *mux.Router) {
 	router.Handle("/login", loginHandler).Methods(http.MethodGet)
 	router.Handle("/authcluster", authClusterHandler).Methods(http.MethodGet)
 	router.Handle("/logout", logoutHandler).Methods(http.MethodGet)
-	router.PathPrefix("/uapi/v1/namespaces/{namespace}/clusters/{cluster}/proxy/").Handler(proxyHandler)
+	router.PathPrefix("/v1/namespaces/{namespace}/clusters/{cluster}/proxy/").Handler(proxyHandler)
 	router.PathPrefix("/_").Handler(authenticatedProxy)
-	router.PathPrefix("/").Handler(fs.ReactHandler("", "frontend"))
 }
 
 func (s *Server) GracefullyStart(ctx context.Context, addr string) error {
