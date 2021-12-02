@@ -103,9 +103,6 @@ const ClustersOverview = (props: Props) => {
 
   const renderClusters = () => {
     let clusters = []
-
-    console.log(pageSize)
-
     for (let i = 0; i < (clustersList.length + (pageSize - clustersList.length)); i++) {
       if (clustersList[i] === undefined) {
         clusters.push(<ClustersOverviewEmptyRow key={i} />);

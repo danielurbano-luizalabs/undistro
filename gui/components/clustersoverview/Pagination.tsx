@@ -1,4 +1,4 @@
-import React from 'react';
+import React, from 'react';
 import Link from "next/link";
 import classnames from 'classnames';
 import styles from './clustersOverviewNavFooter.module.css';

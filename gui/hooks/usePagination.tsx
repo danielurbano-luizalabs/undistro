@@ -24,8 +24,8 @@ const usePagination = ({
 
     const totalPageCount = Math.ceil(totalCount / pageSize);
     const totalPageNumbers = siblingCount + 5;
-
-    if (totalPageNumbers >= totalPageCount) {
+    
+    if (totalPageNumbers > totalPageCount + 2) {
       return range(1, totalPageCount);
     }
 
@@ -41,8 +41,7 @@ const usePagination = ({
 
     const firstPageIndex = 1;
     const lastPageIndex = totalPageCount;
-    
-    console.log(shouldShowLeftDots, shouldShowRightDots);
+   
     if (!shouldShowLeftDots && shouldShowRightDots) {
       let leftRange = range(Math.max(1, currentPage - 1), currentPage + 1);
       return [...leftRange, DOTS, totalPageCount];
@@ -60,7 +59,6 @@ const usePagination = ({
       let middleRange = range(leftSiblingIndex, rightSiblingIndex);
       return [firstPageIndex, DOTS, ...middleRange, DOTS, lastPageIndex];
     }
-
     return []
   }, [totalCount, pageSize, siblingCount, currentPage]);
 
