@@ -1,8 +1,8 @@
 import type { NextPage } from 'next'
 import Image from 'next/image'
 import classes from './login.module.css'
-import { logoUnDistroLogin } from '@/public/img/logoUnDistroLogin.svg'
-import { backedByGetup } from '@/public/img/backedByGetup.svg'
+import logoUnDistroLogin from '@/public/img/logoUnDistroLogin.svg'
+import backedByGetup from '@/public/img/backedByGetup.svg'
 
 type Props = {}
 
