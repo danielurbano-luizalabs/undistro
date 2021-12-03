@@ -1,10 +1,10 @@
-import * as React from "react";
-import classes from "./workarea.module.css";
-import LeftMenuArea from "../leftmenu/leftmenuarea";
+import * as React from 'react'
+import classes from './Workarea.module.css'
+import LeftMenuArea from '../LeftMenu/LeftMenuArea'
 
 type Props = {
-  children?: React.ReactNode;
-};
+  children?: React.ReactNode
+}
 
 const Workarea = (props: Props) => {
   return (
@@ -16,7 +16,7 @@ const Workarea = (props: Props) => {
         <div className={classes.mainDisplayArea}>{props.children}</div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Workarea;
+export default Workarea

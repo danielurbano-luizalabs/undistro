@@ -1,11 +1,11 @@
 import * as React from 'react'
-import classes from './leftmenuarea.module.css'
+import classes from './LeftMenuArea.module.css'
 import menuClustersIcon from '@/public/img/menuClustersIcon.svg'
 import menuNodePoolsIcon from '@/public/img/menuNodepoolsIcon.svg'
 import menuSecurityIcon from '@/public/img/menuSecurityIcon.svg'
 import menuLogsIcon from '@/public/img/menuLogsIcon.svg'
 
-import LeftMenuItemButton from './leftMenuItemButton'
+import LeftMenuItemButton from './LeftMenuItemButton'
 
 type Props = {}
 

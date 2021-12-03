@@ -1,9 +1,8 @@
 .leftMenuButtonContainer {
   width: 100%;
-  height: 48px;
+  /* height: 48px; */
   margin: 0;
   padding: 0;
-  display: block;
 }
 
 .leftMenuButton {
@@ -82,10 +81,37 @@
   transition: 0.3s;
 }
 
+.leftMenuButtonArrowOpen {
+  transform: rotate(90deg);
+}
+
 .leftMenuButton:hover .leftMenuButtonArrow {
   background-image: url('/img/arrowRightFocus.svg');
 }
 
-.leftMenuButton:active .leftMenuButtonArrow {
-  background-image: url('/img/arrowDownFocus.svg');
+.leftMenuPanelCollapse {
+  max-height: 500px;
+  overflow: hidden;
+  transition: max-height 0.5s ease;
+}
+
+.leftMenuPanelClose {
+  max-height: 0;
+}
+
+.leftMenuPanelList {
+  margin: 0;
+  list-style: none;
+  color: var(--text-default);
+}
+
+.leftMenuPanelListItem {
+  font-size: 14px;
+  padding: 0;
+  display: flex;
+  margin-top: 10px;
+}
+
+.leftMenuPanelListItem:first-of-type {
+  margin-top: 5px;
 }
