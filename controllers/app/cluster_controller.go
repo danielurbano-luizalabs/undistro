@@ -35,6 +35,7 @@ import (
 	"github.com/getupio-undistro/undistro/pkg/template"
 	"github.com/getupio-undistro/undistro/pkg/util"
 	"github.com/go-logr/logr"
+	"github.com/imdario/mergo"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
@@ -181,41 +182,57 @@ func (r *ClusterReconciler) reconcile(ctx context.Context, cl appv1alpha1.Cluste
 	}
 
 	log.Info("Checking if has diff between templates", "spec", cl.Spec, "status", cl.Status)
-	if r.hasDiff(ctx, &cl) {
-		vars, err := r.templateVariables(ctx, r.Client, &cl)
-		if err != nil {
-			return appv1alpha1.ClusterNotReady(cl, meta.TemplateAppliedFailed, err.Error()), ctrl.Result{}, err
-		}
+	vars, err := r.templateVariables(ctx, r.Client, &cl)
+	if err != nil {
+		return appv1alpha1.ClusterNotReady(cl, meta.TemplateAppliedFailed, err.Error()), ctrl.Result{}, err
+	}
 
-		objs, err := template.GetObjs(fs.FS, "clustertemplates", cl.GetTemplate(), vars)
-		if err != nil {
-			return appv1alpha1.ClusterNotReady(cl, meta.TemplateAppliedFailed, err.Error()), ctrl.Result{}, err
-		}
-		for _, o := range objs {
-			if o.GetAPIVersion() == capi.GroupVersion.String() && o.GetKind() == "Cluster" {
-				err = ctrl.SetControllerReference(&cl, &o, scheme.Scheme)
-				if err != nil {
-					return cl, ctrl.Result{}, err
-				}
+	objs, err := template.GetObjs(fs.FS, "clustertemplates", cl.GetTemplate(), vars)
+	if err != nil {
+		return appv1alpha1.ClusterNotReady(cl, meta.TemplateAppliedFailed, err.Error()), ctrl.Result{}, err
+	}
+	for _, o := range objs {
+		if o.GetAPIVersion() == capi.GroupVersion.String() && o.GetKind() == "Cluster" {
+			err = ctrl.SetControllerReference(&cl, &o, scheme.Scheme)
+			if err != nil {
+				return cl, ctrl.Result{}, err
 			}
-			err = retry.WithExponentialBackoff(retry.NewBackoff(), func() error {
-				labels := o.GetLabels()
-				if labels == nil {
-					labels = make(map[string]string)
+		}
+		err = retry.WithExponentialBackoff(retry.NewBackoff(), func() error {
+			u := unstructured.Unstructured{}
+			u.SetGroupVersionKind(o.GetObjectKind().GroupVersionKind())
+			err = r.Get(ctx, client.ObjectKeyFromObject(&o), &u)
+			if err != nil {
+				if client.IgnoreNotFound(err) != nil {
+					return err
 				}
-				labels[meta.LabelUndistro] = ""
-				labels[meta.LabelUndistroClusterName] = cl.Name
-				labels[capi.ClusterLabelName] = cl.Name
-				o.SetLabels(labels)
-				_, err = util.CreateOrUpdate(ctx, r.Client, &o)
+				err = r.Create(ctx, &o)
 				if err != nil {
 					return err
 				}
 				return nil
-			})
-			if err != nil {
-				return cl, ctrl.Result{}, err
 			}
+			oldSpec, _, err := unstructured.NestedMap(u.Object, "spec")
+			if err != nil {
+				return err
+			}
+			newSpec, _, err := unstructured.NestedMap(o.Object, "spec")
+			if err != nil {
+				return err
+			}
+			err = mergo.Merge(&oldSpec, newSpec)
+			if err != nil {
+				return err
+			}
+			err = unstructured.SetNestedMap(u.Object, oldSpec, "spec")
+			if err != nil {
+				return err
+			}
+			_, err = util.CreateOrUpdate(ctx, r.Client, &u)
+			return err
+		})
+		if err != nil {
+			return cl, ctrl.Result{}, err
 		}
 	}
 	cl.Status.KubernetesVersion = cl.Spec.KubernetesVersion

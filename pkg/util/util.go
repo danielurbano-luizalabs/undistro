@@ -35,10 +35,9 @@ import (
 	"helm.sh/helm/v3/pkg/chartutil"
 	"helm.sh/helm/v3/pkg/release"
 	corev1 "k8s.io/api/core/v1"
+	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
-	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
-	"k8s.io/apimachinery/pkg/runtime"
 	apiyaml "k8s.io/apimachinery/pkg/util/yaml"
 	"k8s.io/klog/v2"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -111,47 +110,15 @@ func ReleaseRevision(rel *release.Release) int {
 }
 
 func CreateOrUpdate(ctx context.Context, r client.Client, o client.Object) (bool, error) {
-	uo, ok := o.(*unstructured.Unstructured)
-	if !ok {
-		u := unstructured.Unstructured{}
-		m, err := runtime.DefaultUnstructuredConverter.ToUnstructured(o)
-		if err != nil {
-			return false, err
-		}
-		u.Object = m
-		uo = &u
+	var isNew bool
+	u := unstructured.Unstructured{}
+	u.SetGroupVersionKind(o.GetObjectKind().GroupVersionKind())
+	err := r.Get(ctx, client.ObjectKeyFromObject(o), &u)
+	if apierrors.IsNotFound(err) {
+		isNew = true
 	}
-	old := unstructured.Unstructured{}
-	old.SetGroupVersionKind(uo.GroupVersionKind())
-	nm := client.ObjectKey{
-		Name:      o.GetName(),
-		Namespace: o.GetNamespace(),
-	}
-	err := r.Get(ctx, nm, &old)
-	if err != nil {
-		if client.IgnoreNotFound(err) != nil {
-			return false, err
-		}
-		err = r.Create(ctx, uo)
-		if err != nil {
-			return false, err
-		}
-		return true, nil
-	}
-	uo.SetResourceVersion(old.GetResourceVersion())
-
-	mf := client.MergeFrom(&old)
-
-	byt, err := mf.Data(uo)
-	if err != nil {
-		return false, err
-	}
-
-	err = r.Patch(ctx, uo, mf)
-	if err != nil {
-		return false, err
-	}
-	return len(byt) > 0, nil
+	err = r.Patch(ctx, o, client.Apply, client.FieldOwner("undistro"))
+	return isNew, err
 }
 
 // ToUnstructured takes a YAML and converts it to a list of Unstructured objects
@@ -257,8 +224,8 @@ func RemoveDuplicateTaints(taints []corev1.Taint) []corev1.Taint {
 //// Asserts whether the current cluster is local, and the kind of local cluster. Each type is mapped to the enum <LocalClusterType>.
 func IsLocalCluster(ctx context.Context, c client.Client) (LocalClusterType, error) {
 	nodes := corev1.NodeList{
-		TypeMeta: v1.TypeMeta{},
-		ListMeta: v1.ListMeta{},
+		TypeMeta: metav1.TypeMeta{},
+		ListMeta: metav1.ListMeta{},
 		Items:    []corev1.Node{},
 	}
 	err := c.List(ctx, &nodes)
