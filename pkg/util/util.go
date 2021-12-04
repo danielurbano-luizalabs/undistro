@@ -30,6 +30,7 @@ import (
 	"time"
 
 	"github.com/getupio-undistro/undistro/pkg/retry"
+	"github.com/imdario/mergo"
 	jsoniter "github.com/json-iterator/go"
 	"github.com/pkg/errors"
 	"helm.sh/helm/v3/pkg/chartutil"
@@ -38,6 +39,7 @@ import (
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
+	"k8s.io/apimachinery/pkg/runtime"
 	apiyaml "k8s.io/apimachinery/pkg/util/yaml"
 	"k8s.io/klog/v2"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -111,13 +113,28 @@ func ReleaseRevision(rel *release.Release) int {
 
 func CreateOrUpdate(ctx context.Context, r client.Client, o client.Object) (bool, error) {
 	var isNew bool
+	n, err := runtime.DefaultUnstructuredConverter.ToUnstructured(o)
+	if err != nil {
+		return isNew, err
+	}
+	newObj := unstructured.Unstructured{
+		Object: n,
+	}
 	u := unstructured.Unstructured{}
 	u.SetGroupVersionKind(o.GetObjectKind().GroupVersionKind())
-	err := r.Get(ctx, client.ObjectKeyFromObject(o), &u)
+	err = r.Get(ctx, client.ObjectKeyFromObject(o), &u)
 	if apierrors.IsNotFound(err) {
 		isNew = true
+		err = r.Create(ctx, &newObj)
+		if err != nil {
+			return isNew, err
+		}
 	}
-	err = r.Patch(ctx, o, client.Apply, client.FieldOwner("undistro"))
+	err = mergo.Merge(&newObj, u)
+	if err != nil {
+		return isNew, err
+	}
+	err = r.Patch(ctx, &newObj, client.MergeFrom(&u))
 	return isNew, err
 }
 
