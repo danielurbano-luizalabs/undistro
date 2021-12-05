@@ -72,15 +72,22 @@
     color: var(--text-default);
 }
 
-.paginationNavContainer {
+ul.paginationNavContainer {
     height: 100%;
-    /*width: 180px;*/
-    margin: 0;
+    min-width: 180px;
+    margin: 0 16px 0 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 16px;
     list-style: none;
+    padding-inline-start: 0;
+}
+
+.navigationPages {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: center;
 }
 
 button.paginationNavArrowLeft, button.paginationNavArrowRight {
@@ -91,7 +98,7 @@ button.paginationNavArrowLeft, button.paginationNavArrowRight {
     display: block;
     margin: 0;
     padding: 0;
-    width: 36px;
+    width: 22px;
     height: 22px;
 }
 

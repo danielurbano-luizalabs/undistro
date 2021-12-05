@@ -41,6 +41,7 @@ const Pagination = ({ onPageChange, totalCount, siblingCount = 1, currentPage, p
           </button>
         </Link>
       </li>
+      <div className={styles.navigationPages}>
       {paginationRange.map((pageNumber, i) => {
         if (pageNumber === DOTS) {
           return (
@@ -61,8 +62,10 @@ const Pagination = ({ onPageChange, totalCount, siblingCount = 1, currentPage, p
               <a>{pageNumber}</a>
             </Link>
           </li>
+          
         )
       })}
+      </div>
       <li onClick={onNext}>
         <Link href={`/?page=${currentPage + 1}`} passHref>
           <button disabled={currentPage === lastPage} className={cx(styles.paginationNavArrowRight)}>
