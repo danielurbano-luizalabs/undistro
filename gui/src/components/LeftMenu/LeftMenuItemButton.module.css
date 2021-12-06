@@ -16,14 +16,19 @@
   flex-direction: row;
   text-decoration: none;
   gap: 8px;
-  background-color: var(--background-strong);
+  background-color: inherit;
+  transition: 0.1s;
 }
 
-.leftMenuButton:hover {
+.leftMenuButtonActive {
   background-color: var(--background-primary-default);
 }
 
-.leftMenuButton:active {
+.leftMenuButtonActive .leftMenuButtonText {
+  color: var(--text-selected);
+}
+
+.leftMenuButton:hover {
   background-color: var(--background-primary-default);
 }
 
@@ -101,17 +106,28 @@
 
 .leftMenuPanelList {
   margin: 0;
+  padding: 0;
   list-style: none;
   color: var(--text-default);
 }
 
 .leftMenuPanelListItem {
-  font-size: 14px;
-  padding: 0;
+  align-items: center;
   display: flex;
-  margin-top: 10px;
+  height: 32px;
+  padding-left: 46px;
+  line-height: 20px;
+  font-size: 14px;
+  transition: 60ms;
 }
 
-.leftMenuPanelListItem:first-of-type {
-  margin-top: 5px;
+.leftMenuPanelListItem:hover {
+  background-color: var(--background-strong-hover);
+  color: var(--text-hover);
+  font-size: 16px;
+  font-weight: 600;
 }
+
+/* .leftMenuPanelListItem:first-of-type {
+  margin-top: 5px;
+} */

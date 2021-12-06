@@ -1,4 +1,4 @@
-[data-theme="dark-mode"] {
+[data-theme='dark-mode'] {
   /* workspace */
   --background-default: #191a1d;
   --background-dark: #111214;
@@ -6,9 +6,9 @@
   --background-weak: #373c43;
   --background-light: #656d7a;
   --background-medium: #495059;
-  --background-warning: #F9D58B;
-  --workspace-background-strong-selected: #5c6370;
-  --workspace-background-strong-hover: #5c6370;
+  --background-warning: #f9d58b;
+  --background-strong-selected: #3b434e;
+  --background-strong-hover: #3b434e;
 
   /* primary */
   --background-primary-default: #657f97;
@@ -33,7 +33,7 @@
   --text-disabled: #6c6c6c;
   --text-selected: #ffffff;
   --text-critical: #ff5a60;
-  --text-warning: #F9D58B;
+  --text-warning: #f9d58b;
   --text-success: #39e9aa;
   --text-dark: #191a1d;
 }

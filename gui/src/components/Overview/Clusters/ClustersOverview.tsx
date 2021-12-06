@@ -1,15 +1,15 @@
 import { useRouter } from 'next/router'
 import { createRef, useEffect, useState, useCallback } from 'react'
 import { useResizeDetector } from 'react-resize-detector'
-import { Cluster } from '../../lib/cluster'
-import { paginate } from '../../lib/pagination'
-import { MenuActions } from '../MenuActions/MenuActions'
-import Page404message from '../page404/page404message'
-import { useClusters } from '../workspace/clusterctx'
-import classes from './clustersOverview.module.css'
-import ClustersOverviewEmptyRow from './clustersOverviewEmptyRow'
-import { ClusterOverviewFooter } from './clustersOverviewNavFooter'
-import ClustersOverviewRow from './clustersOverviewRow'
+import { Cluster } from '@/lib/cluster'
+import { paginate } from '@/lib/pagination'
+import { MenuActions } from '@/components/MenuActions/MenuActions'
+import ContentNotFound from '@/components/ContentNotFound/ContentNotFound'
+import { useClusters } from '@/contexts/ClusterContext'
+import classes from './ClustersOverview.module.css'
+import ClustersOverviewEmptyRow from './ClustersOverviewEmptyRow'
+import { ClusterOverviewFooter } from './ClustersOverviewNavFooter'
+import ClustersOverviewRow from './ClustersOverviewRow'
 
 type ClusterOverviewProps = {
   clusters?: Cluster[]
@@ -189,7 +189,7 @@ const ClustersOverview = ({ clusters, page }: ClusterOverviewProps) => {
               />
             </>
           ) : (
-            <Page404message />
+            <ContentNotFound />
           )}
         </div>
       </div>

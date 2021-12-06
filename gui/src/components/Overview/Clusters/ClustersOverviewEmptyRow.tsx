@@ -1,25 +1,15 @@
-import * as React from "react";
-import classes from "./clustersOverviewRow.module.css";
+import classes from './ClustersOverviewRow.module.css'
 
 type Props = {
-  key: number;
-};
+  key: number
+}
 
 const ClustersOverviewEmptyRow = (props: Props) => {
-  let tableCellTitleCentered = [classes.tableCellTitle, "textCentered"].join(
-    " "
-  );
-  let tableCellTitleUpperCaseCentered = [
-    classes.tableCellTitle,
-    "upperCase",
-    "textCentered",
-  ].join(" ");
-  let tableCellTitleUpperCase = [classes.tableCellTitle, "upperCase"].join(" ");
-  let tableCellTitleCriticalCentered = [
-    classes.tableCellTitleWarning,
-    "textCentered",
-  ].join(" ");
-  let statusClass = tableCellTitleCriticalCentered;
+  let tableCellTitleCentered = [classes.tableCellTitle, 'textCentered'].join(' ')
+  let tableCellTitleUpperCaseCentered = [classes.tableCellTitle, 'upperCase', 'textCentered'].join(' ')
+  let tableCellTitleUpperCase = [classes.tableCellTitle, 'upperCase'].join(' ')
+  let tableCellTitleCriticalCentered = [classes.tableCellTitleWarning, 'textCentered'].join(' ')
+  let statusClass = tableCellTitleCriticalCentered
   return (
     <>
       <tr>
@@ -57,7 +47,7 @@ const ClustersOverviewEmptyRow = (props: Props) => {
         </td>
       </tr>
     </>
-  );
-};
+  )
+}
 
-export default ClustersOverviewEmptyRow;
+export default ClustersOverviewEmptyRow

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Image from 'next/image'
 import classes from './LeftMenuItemButton.module.css'
 import classNames from 'classnames'
+import { isUint8ClampedArray } from 'util/types'
 
 type LeftMenuItemProps = {
   id: string
@@ -19,8 +20,12 @@ const LeftMenuItemButton = ({ id, title, item }: LeftMenuItemProps) => {
 
   return (
     <>
-      <div id={id} title={title} className={classes.leftMenuButtonContainer} onClick={toggleState}>
-        <button className={classes.leftMenuButton}>
+      <div id={id} title={title} className={classes.leftMenuButtonContainer}>
+        <button
+          onClick={toggleState}
+          className={classNames(classes.leftMenuButton, {
+            [classes.leftMenuButtonActive]: isOpen
+          })}>
           <div className={classes.leftMenuButton}>
             <div className={classes.leftMenuButtonIcon}>
               <Image src={item.src} alt={item.alt} />
@@ -28,10 +33,13 @@ const LeftMenuItemButton = ({ id, title, item }: LeftMenuItemProps) => {
             <div className={classes.leftMenuButtonText}>
               <a className={'upperCase'}>{title}</a>
             </div>
-            <div
-              className={classNames(classes.leftMenuButtonArrow, {
-                [classes.leftMenuButtonArrowOpen]: isOpen
-              })}></div>
+            {item.actions.length > 0 && (
+              <div
+                className={classNames(classes.leftMenuButtonArrow, {
+                  [classes.leftMenuButtonArrowOpen]: isOpen
+                })}
+              />
+            )}
           </div>
         </button>
         <div
@@ -39,9 +47,11 @@ const LeftMenuItemButton = ({ id, title, item }: LeftMenuItemProps) => {
             [classes.leftMenuPanelClose]: !isOpen
           })}>
           <ol className={classes.leftMenuPanelList}>
-            <li className={classes.leftMenuPanelListItem}>Item 1</li>
-            <li className={classes.leftMenuPanelListItem}>Item 2</li>
-            <li className={classes.leftMenuPanelListItem}>Item 3</li>
+            {item.actions.map((action: string) => (
+              <li key={`action-${id}-${action}`} className={classes.leftMenuPanelListItem}>
+                {action}
+              </li>
+            ))}
           </ol>
         </div>
       </div>

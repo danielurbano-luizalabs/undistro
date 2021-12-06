@@ -1,5 +1,5 @@
-import * as React from 'react'
-import classes from './clustersOverviewNavFooter.module.css'
+import React from 'react'
+import classes from './ClustersOverviewNavFooter.module.css'
 import { useRouter } from 'next/router'
 import Pagination from './Pagination'
 

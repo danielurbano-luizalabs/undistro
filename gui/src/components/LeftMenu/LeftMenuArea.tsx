@@ -18,22 +18,26 @@ const LeftMenuArea = (props: Props) => {
     {
       id: 'menuClusterButton',
       alt: 'Clusters',
-      src: menuClustersIcon
+      src: menuClustersIcon,
+      actions: ['Pause', 'Update K8s', 'Settings', 'Delete']
     },
     {
       id: 'menuNodePoolsButton',
       alt: 'Node Pools',
-      src: menuNodePoolsIcon
+      src: menuNodePoolsIcon,
+      actions: ['Create', 'Settings', 'Delete']
     },
     {
       id: 'menuSecurityButton',
       alt: 'Security',
-      src: menuSecurityIcon
+      src: menuSecurityIcon,
+      actions: ['Create Roles', 'Assign Roles', 'Manage Profiles']
     },
     {
       id: 'menuLogsButton',
       alt: 'Logs',
-      src: menuLogsIcon
+      src: menuLogsIcon,
+      actions: []
     }
   ]
 

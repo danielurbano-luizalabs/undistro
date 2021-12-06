@@ -1,9 +1,8 @@
-import * as React from 'react'
-import { Cluster } from '../../lib/cluster'
-import { useClusters } from '../workspace/clusterctx'
+import { Cluster } from '@/lib/cluster'
+import { useClusters } from '@/contexts/ClusterContext'
 
-import classes from './clustersOverviewRow.module.css'
-import { MenuActions } from '@/components/MenuActions/MenuActions'
+import classes from './ClustersOverviewRow.module.css'
+import classNames from 'classnames'
 
 type Props = {
   cluster: Cluster
@@ -14,13 +13,14 @@ type Props = {
 const ClustersOverviewRow = (props: Props) => {
   const { clusters, setClusters } = useClusters()
 
-  let tableCellTitleCentered = [classes.tableCellTitle, 'textCentered'].join(' ')
-  let tableCellTitleUpperCaseCentered = [classes.tableCellTitle, 'upperCase', 'textCentered'].join(' ')
-  let tableCellTitleUpperCase = [classes.tableCellTitle, 'upperCase'].join(' ')
-  let tableCellTitleWarningCentered = [classes.tableCellTitleWarning, 'textCentered'].join(' ')
-  let tableCellTitleCriticalCentered = [classes.tableCellTitleWarning, 'textCentered'].join(' ')
-  let tableCellTitleSuccessCentered = [classes.tableCellTitleSuccess, 'textCentered'].join(' ')
+  let tableCellTitleCentered = classNames(classes.tableCellTitle, 'textCentered')
+  let tableCellTitleUpperCase = classNames(classes.tableCellTitle, 'upperCase')
+  let tableCellTitleUpperCaseCentered = classNames(classes.tableCellTitle, 'upperCase', 'textCentered')
+  let tableCellTitleWarningCentered = classNames(classes.tableCellTitleWarning, 'textCentered')
+  let tableCellTitleCriticalCentered = classNames(classes.tableCellTitleWarning, 'textCentered')
+  let tableCellTitleSuccessCentered = classNames(classes.tableCellTitleSuccess, 'textCentered')
   let statusClass = tableCellTitleCriticalCentered
+
   if (props.cluster.status.toLowerCase() == 'ready') {
     statusClass = tableCellTitleSuccessCentered
   } else if (
@@ -30,6 +30,7 @@ const ClustersOverviewRow = (props: Props) => {
   ) {
     statusClass = tableCellTitleWarningCentered
   }
+
   const changeCheckbox = (name: string, checked: boolean) => {
     let cls = new Set<string>(clusters)
     if (checked) {
@@ -39,10 +40,12 @@ const ClustersOverviewRow = (props: Props) => {
     }
     setClusters(Array.from(cls.values()))
   }
+
   let machineStr = ''
   if (!props.disabled) {
     machineStr = props.cluster.machines.toString()
   }
+
   return (
     <>
       <tr>

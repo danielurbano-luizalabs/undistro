@@ -1,8 +1,9 @@
-import React from 'react'
 import Link from 'next/link'
-import { usePagination, usePaginationProps, DOTS } from '@/hooks/usePagination'
 import classnames from 'classnames'
-import styles from './clustersOverviewNavFooter.module.css'
+
+import { usePagination, usePaginationProps, DOTS } from '@/hooks/usePagination'
+
+import styles from './ClustersOverviewNavFooter.module.css'
 
 type PaginationProps = usePaginationProps & {
   onPageChange: (page: string | number) => void
@@ -42,29 +43,28 @@ const Pagination = ({ onPageChange, totalCount, siblingCount = 1, currentPage, p
         </Link>
       </li>
       <div className={styles.navigationPages}>
-      {paginationRange.map((pageNumber, i) => {
-        if (pageNumber === DOTS) {
+        {paginationRange.map((pageNumber, i) => {
+          if (pageNumber === DOTS) {
+            return (
+              <li className={styles.paginationNavPagesInterval} key={`dots-${i}`}>
+                &#8230;
+              </li>
+            )
+          }
+
           return (
-            <li className={styles.paginationNavPagesInterval} key={`dots-${i}`}>
-              &#8230;
+            <li
+              key={`page-${pageNumber}`}
+              className={cx(styles.paginationNavPagesText, {
+                [styles.paginationNavCurrentPage]: pageNumber === currentPage
+              })}
+              onClick={() => onPageChange(pageNumber)}>
+              <Link href={`/?page=${pageNumber}`}>
+                <a>{pageNumber}</a>
+              </Link>
             </li>
           )
-        }
-
-        return (
-          <li
-            key={`page-${pageNumber}`}
-            className={cx(styles.paginationNavPagesText, {
-              [styles.paginationNavCurrentPage]: pageNumber === currentPage
-            })}
-            onClick={() => onPageChange(pageNumber)}>
-            <Link href={`/?page=${pageNumber}`}>
-              <a>{pageNumber}</a>
-            </Link>
-          </li>
-          
-        )
-      })}
+        })}
       </div>
       <li onClick={onNext}>
         <Link href={`/?page=${currentPage + 1}`} passHref>

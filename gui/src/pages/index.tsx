@@ -1,44 +1,42 @@
-import * as k8s from "@kubernetes/client-node";
-import type { GetServerSideProps, NextPage } from "next";
-import React from "react";
-import ClustersOverview from "../components/clustersoverview/clustersOverview";
-import Workspace from "../components/workspace/workspace";
-import { Cluster, getAge, getStatusFromConditions } from "../lib/cluster";
+import * as k8s from '@kubernetes/client-node'
+import type { GetServerSideProps, NextPage } from 'next'
+import React from 'react'
+import ClustersOverview from '@/components/Overview/Clusters/ClustersOverview'
+import Workspace from '@/components/workspace/workspace'
+import { Cluster, getAge, getStatusFromConditions } from '@/lib/cluster'
 
 type Props = {
-  clusters?: Cluster[];
-  selectedClusters?: string[];
-  children?: React.ReactNode;
-  page?: string;
-};
+  clusters?: Cluster[]
+  selectedClusters?: string[]
+  children?: React.ReactNode
+  page?: string
+}
 
-export const getServerSideProps: GetServerSideProps<Props> = async (
-  context
-) => {
-  let selectedClusters: string[] = [];
-  const { cluster, page } = context.query;
-  let pageVar = "1";
+export const getServerSideProps: GetServerSideProps<Props> = async context => {
+  let selectedClusters: string[] = []
+  const { cluster, page } = context.query
+  let pageVar = '1'
   if (page != undefined) {
-    pageVar = page as string;
+    pageVar = page as string
   }
   if (cluster != undefined) {
     if (!(cluster instanceof Array)) {
-      selectedClusters = [cluster];
+      selectedClusters = [cluster]
     } else {
-      selectedClusters = cluster;
+      selectedClusters = cluster
     }
   }
 
   let clusters: Cluster[] = [...Array(100)].map((_, i) => ({
     name: `cluster${i}`,
-    provider: "aws",
-    flavor: "ec2",
-    k8sVersion: "v1.21.2",
-    clusterGroup: "undistro-system",
+    provider: 'aws',
+    flavor: 'ec2',
+    k8sVersion: 'v1.21.2',
+    clusterGroup: 'undistro-system',
     machines: 4,
-    age: "2d4h",
-    status: "ready",
-  }));
+    age: '2d4h',
+    status: 'ready'
+  }))
 
   // let clusters = [];
   // {
@@ -82,17 +80,17 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
     props: {
       clusters: clusters,
       selectedClusters: selectedClusters,
-      page: pageVar,
-    },
-  };
-};
+      page: pageVar
+    }
+  }
+}
 
 const Home: NextPage = (props: Props) => {
   return (
     <Workspace selectedClusters={props.selectedClusters || []}>
       <ClustersOverview clusters={props.clusters} page={props.page!} />
     </Workspace>
-  );
-};
+  )
+}
 
-export default Home;
+export default Home
