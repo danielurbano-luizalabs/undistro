@@ -61,7 +61,7 @@ const ClustersOverview = ({ clusters, page }: ClusterOverviewProps) => {
     const pointerOffset = 8
 
     let menuPos = {
-      left: targetRect.left - tableContainerRect.left - pointerOffset,
+      left: targetRect.left - tableContainerRect.left,
       top: pointerOffset + (targetRect.bottom - tableContainerRect.top + (targetRect.top - tableContainerRect.top)) / 2
     }
 
