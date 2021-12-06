@@ -58,15 +58,13 @@ const ClustersOverview = ({ clusters, page }: ClusterOverviewProps) => {
 
     const tableContainer = document.getElementById('tableContainer')
     const tableContainerRect = tableContainer.getBoundingClientRect()
-    const pointerOffset = 8
-
-    let menuPos = {
-      left: targetRect.left - tableContainerRect.left,
-      top: pointerOffset + (targetRect.bottom - tableContainerRect.top + (targetRect.top - tableContainerRect.top)) / 2
-    }
+    const pointerOffset = 4
 
     setIsOpen(true)
-    setMenuPosition(menuPos)
+    setMenuPosition({
+      left: targetRect.left - tableContainerRect.left + pointerOffset,
+      top: targetRect.bottom - tableContainerRect.top + pointerOffset
+    })
   }
 
   const handleUserClick = useCallback(event => {
