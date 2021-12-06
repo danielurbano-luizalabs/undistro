@@ -1,9 +1,9 @@
 import { useRouter } from 'next/router'
-import * as React from 'react'
-import { createRef, useEffect, useState } from 'react'
+import { createRef, useEffect, useState, useCallback } from 'react'
 import { useResizeDetector } from 'react-resize-detector'
 import { Cluster } from '../../lib/cluster'
 import { paginate } from '../../lib/pagination'
+import { MenuActions } from '../MenuActions/MenuActions'
 import Page404message from '../page404/page404message'
 import { useClusters } from '../workspace/clusterctx'
 import classes from './clustersOverview.module.css'
@@ -34,6 +34,9 @@ const ClustersOverview = ({ clusters, page }: ClusterOverviewProps) => {
   const [pageSize, setPageSize] = useState<number>(0)
   const [initialContainerSize, setInitialContainerSize] = useState<number>(0)
 
+  const [isOpen, setIsOpen] = useState<boolean>(false)
+  const [menuPosition, setMenuPosition] = useState({ left: 0, top: 0 })
+
   const columns = ['provider', 'flavor', 'k8s version', 'cluster group', 'machines', 'age', 'status']
 
   const changeCheckbox = (checked: boolean) => {
@@ -49,8 +52,41 @@ const ClustersOverview = ({ clusters, page }: ClusterOverviewProps) => {
     }
   }
 
+  const handleClick = event => {
+    const { target } = event
+    const targetRect = target.getBoundingClientRect()
+
+    const tableContainer = document.getElementById('tableContainer')
+    const tableContainerRect = tableContainer.getBoundingClientRect()
+    const pointerOffset = 8
+
+    let menuPos = {
+      left: targetRect.left - tableContainerRect.left - pointerOffset,
+      top: pointerOffset + (targetRect.bottom - tableContainerRect.top + (targetRect.top - tableContainerRect.top)) / 2
+    }
+
+    setIsOpen(true)
+    setMenuPosition(menuPos)
+  }
+
+  const handleUserClick = useCallback(event => {
+    event.stopPropagation()
+    if (event.target.className.includes('actions')) {
+      handleClick(event)
+    } else {
+      setIsOpen(false)
+    }
+  }, [])
+
+  useEffect(() => {
+    window.addEventListener('click', handleUserClick)
+    return () => {
+      window.removeEventListener('click', handleUserClick)
+    }
+  }, [handleUserClick])
+
   let pageNumber = parseInt(page)
-  const pagesCalc = React.useCallback(() => {
+  const pagesCalc = useCallback(() => {
     if (qtyPages && pageNumber > qtyPages) {
       setValidPage(false)
     } else {
@@ -129,7 +165,7 @@ const ClustersOverview = ({ clusters, page }: ClusterOverviewProps) => {
                       </div>
                     </th>
                     <th>
-                      <div className={classes.tableIconCol}>
+                      <div onClick={handleClick} className={classes.tableIconCol}>
                         <div className={classes.actionsIconAllDisabled}></div>
                       </div>
                     </th>
@@ -143,8 +179,10 @@ const ClustersOverview = ({ clusters, page }: ClusterOverviewProps) => {
                     ))}
                   </tr>
                 </thead>
+
                 <tbody>{renderClusters()}</tbody>
               </table>
+              <MenuActions isOpen={isOpen} position={menuPosition} />
               <ClusterOverviewFooter
                 total={clusters?.length || 0}
                 currentPage={pageNumber}
