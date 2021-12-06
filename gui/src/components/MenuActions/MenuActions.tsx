@@ -1,3 +1,4 @@
+import classNames from 'classnames'
 import styles from './MenuActions.module.css'
 
 const MenuActions = ({ isOpen, position }) => {
@@ -23,7 +24,7 @@ const MenuActions = ({ isOpen, position }) => {
   ]
 
   return isOpen ? (
-    <div style={{ left, top }} className={styles.menuActionsContainer}>
+    <div style={{ left, top }} className={classNames(styles.menuActionsContainer, 'dialogWindowShadow')}>
       <div className={styles.actionsMenu}>
         <ol className={styles.actionsMenuList}>
           {actions.map(action => (

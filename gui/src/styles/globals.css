@@ -1,5 +1,5 @@
-@import "colors-dark.css";
-@import "fonts.css";
+@import 'colors-dark.css';
+@import 'fonts.css';
 
 /* UTILS */
 
@@ -39,7 +39,7 @@ body {
   display: flex;
   min-width: 100% !important;
   min-height: 100% !important;
-  background-color:  lemonchiffon;
+  background-color: lemonchiffon;
 }
 
 .responsiveWidth {
@@ -55,7 +55,7 @@ body {
 }
 
 .upperCase {
-	text-transform: uppercase;
+  text-transform: uppercase;
 }
 
 .belowTopBarArea {
@@ -76,22 +76,25 @@ body {
   justify-content: left;
 }
 
-
-#searchClear::-webkit-search-cancel-button{
+#searchClear::-webkit-search-cancel-button {
   position: relative;
   right: 14px;
   -webkit-appearance: none;
   height: 8px;
   width: 8px;
-  background-image: url("/img/searchClearIcon.svg");
+  background-image: url('/img/searchClearIcon.svg');
   background-repeat: no-repeat;
   background-position: center;
 }
 
-#searchClear::-webkit-search-cancel-button:hover{
+#searchClear::-webkit-search-cancel-button:hover {
   height: 10px;
   width: 10px;
-  background-image: url("/img/searchClearIconFocus.svg");
+  background-image: url('/img/searchClearIconFocus.svg');
   background-repeat: no-repeat;
   background-position: center;
+}
+
+.dialogWindowShadow {
+  box-shadow: 12px 12px 20px rgba(0, 0, 0, 0.15);
 }
