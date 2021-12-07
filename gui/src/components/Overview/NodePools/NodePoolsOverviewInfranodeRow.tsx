@@ -1,40 +1,37 @@
-import * as React from 'react'
-import classes from './NodePoolsOverviewInfranodeRow.module.css'
+import styles from './NodePoolsOverviewInfranodeRow.module.css'
 
-type Props = {}
-
-const Nodepooloverviewinfranoderow = (props: Props) => {
-  let tableCellTitleCentered = [classes.tableCellTitle, 'textCentered'].join(' ')
-  let tableCellTitleUpperCaseCentered = [classes.tableCellTitle, 'upperCase', 'textCentered'].join(' ')
-  let tableCellTitleWarningCentered = [classes.tableCellTitleWarning, 'textCentered'].join(' ')
-  let tableCellTitleSuccessCentered = [classes.tableCellTitleSuccess, 'textCentered'].join(' ')
-  let tableCellTitleCriticalCentered = [classes.tableCellTitleCritical, 'textCentered'].join(' ')
+const NodePoolOverviewInfranodeRow = () => {
+  let tableCellTitleCentered = [styles.tableCellTitle, 'textCentered'].join(' ')
+  let tableCellTitleUpperCaseCentered = [styles.tableCellTitle, 'upperCase', 'textCentered'].join(' ')
+  let tableCellTitleWarningCentered = [styles.tableCellTitleWarning, 'textCentered'].join(' ')
+  let tableCellTitleSuccessCentered = [styles.tableCellTitleSuccess, 'textCentered'].join(' ')
+  let tableCellTitleCriticalCentered = [styles.tableCellTitleCritical, 'textCentered'].join(' ')
   return (
     <>
       <tr>
         <td>
-          <div className={classes.tableCheckboxIconContainer}>
-            <label className={classes.tableCheckboxControl}>
-              <input className={classes.tableCheckbox} type="checkbox" name="checkbox" />
+          <div className={styles.tableCheckboxIconContainer}>
+            <label className={styles.tableCheckboxControl}>
+              <input className={styles.tableCheckbox} type="checkbox" name="checkbox" />
             </label>
           </div>
         </td>
         <td>
-          <div className={classes.tableActionsIconContainer}>
-            <div className={classes.actionsIcon}></div>
+          <div className={styles.tableActionsIconContainer}>
+            <div className={styles.actionsIcon}></div>
           </div>
         </td>
         <td>
-          <div className={classes.tableCellTitle}>nodepool-01</div>
+          <div className={styles.tableCellTitle}>nodepool-01</div>
         </td>
         <td>
-          <div className={classes.tableCellTitle}>infranode</div>
+          <div className={styles.tableCellTitle}>infranode</div>
         </td>
         <td>
           <div className={tableCellTitleCentered}>3</div>
         </td>
         <td>
-          <div className={classes.tableCellTitle}>v.1.17.7</div>
+          <div className={styles.tableCellTitle}>v.1.17.7</div>
         </td>
         <td>
           <div className={tableCellTitleCentered}>1</div>
@@ -53,4 +50,4 @@ const Nodepooloverviewinfranoderow = (props: Props) => {
   )
 }
 
-export default Nodepooloverviewinfranoderow
+export default NodePoolOverviewInfranodeRow

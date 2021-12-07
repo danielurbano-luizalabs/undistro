@@ -3,7 +3,7 @@ import classnames from 'classnames'
 
 import { usePagination, usePaginationProps, DOTS } from '@/hooks/usePagination'
 
-import styles from './ClustersOverviewNavFooter.module.css'
+import styles from './Pagination.module.css'
 
 type PaginationProps = usePaginationProps & {
   onPageChange: (page: string | number) => void

@@ -1,5 +1,3 @@
-import * as React from 'react'
-import classes from './LeftMenuArea.module.css'
 import menuClustersIcon from '@/public/img/menuClustersIcon.svg'
 import menuNodePoolsIcon from '@/public/img/menuNodepoolsIcon.svg'
 import menuSecurityIcon from '@/public/img/menuSecurityIcon.svg'
@@ -7,13 +5,9 @@ import menuLogsIcon from '@/public/img/menuLogsIcon.svg'
 
 import LeftMenuItemButton from './LeftMenuItemButton'
 
-type Props = {}
+import styles from './LeftMenuArea.module.css'
 
-const LeftMenuArea = (props: Props) => {
-  {
-    /*let navbarContainerClasses = [classes.navbarContainer, "responsiveWidth"].join(" ");*/
-  }
-
+const LeftMenuArea = () => {
   const leftMenuItems = [
     {
       id: 'menuClusterButton',
@@ -41,10 +35,9 @@ const LeftMenuArea = (props: Props) => {
     }
   ]
 
-  // let leftMenuButtonTextClasses = [classes.leftMenuButtonText, 'upperCase'].join(' ')
   return (
     <>
-      <div className={classes.leftNav}>
+      <div className={styles.leftNav}>
         {leftMenuItems.map(item => (
           <LeftMenuItemButton id={item.id} key={`menu-${item.id}`} title={item.alt} item={item} />
         ))}

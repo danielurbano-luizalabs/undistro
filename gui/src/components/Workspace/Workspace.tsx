@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import Topbar from '../topbararea/topbar'
-import Workarea from '../workarea/Workarea'
+
+import Topbar from '@/components/Topbar/Topbar'
+import Workarea from '@/components/Workarea/Workarea'
 import { ClusterContext } from '@/contexts/ClusterContext'
 
 type Props = {

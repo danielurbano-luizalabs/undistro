@@ -1,8 +1,8 @@
-import '../styles/globals.css'
+import '@/styles/globals.css'
 import { ThemeProvider } from "next-themes";
 import type { AppProps } from 'next/app'
 
-function MyApp({ Component, pageProps }: AppProps) {
+function UndistroDashBoard({ Component, pageProps }: AppProps) {
   return (
 
     <ThemeProvider defaultTheme="dark-mode" themes={["dark-mode"]}>
@@ -14,4 +14,4 @@ function MyApp({ Component, pageProps }: AppProps) {
   );
 }
 
-export default MyApp
+export default UndistroDashBoard

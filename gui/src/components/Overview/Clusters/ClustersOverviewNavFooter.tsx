@@ -1,7 +1,9 @@
 import React from 'react'
-import classes from './ClustersOverviewNavFooter.module.css'
 import { useRouter } from 'next/router'
-import Pagination from './Pagination'
+
+import Pagination from '@/components/Pagination/Pagination'
+
+import styles from './ClustersOverviewNavFooter.module.css'
 
 type Props = {
   total: number
@@ -49,24 +51,25 @@ const ClustersOverviewNavFooter = (props: Props) => {
   }
   return (
     <>
-      <div ref={props.refer} id="pageFooter" className={classes.tableFooterContainer}>
-        <div className={classes.tableFooter}>
-          <div className={classes.navFooterResults}>
-            <a className={classes.navFooterResultsText}>{props.total} Results</a>
+      <div ref={props.refer} id="pageFooter" className={styles.tableFooterContainer}>
+        <div className={styles.tableFooter}>
+          <div className={styles.navFooterResults}>
+            <a className={styles.navFooterResultsText}>{props.total} Results</a>
           </div>
           {props.qtdPages > 1 ? (
             <>
-              <div className={classes.navFooterJumpToPage}>
-                <a className={classes.navFooterJumpToPageText}>Jump to page</a>
+              <div className={styles.navFooterJumpToPage}>
+                <a className={styles.navFooterJumpToPageText}>Jump to page</a>
               </div>
 
-              <div className={classes.paginationSearchArea}>
+              <div className={styles.paginationSearchArea}>
                 <input
                   onKeyPress={e => pressEnter(e)}
                   onBlur={e => onBlur(e)}
-                  className={classes.paginationSearchBox}
+                  className={styles.paginationSearchBox}
                   placeholder={props.currentPage.toString()}
-                  type="text"></input>
+                  type="text"
+                ></input>
               </div>
               <Pagination
                 currentPage={props.currentPage}

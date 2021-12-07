@@ -1,8 +1,9 @@
+import classNames from 'classnames'
+
 import { Cluster } from '@/lib/cluster'
 import { useClusters } from '@/contexts/ClusterContext'
 
-import classes from './ClustersOverviewRow.module.css'
-import classNames from 'classnames'
+import styles from './ClustersOverviewRow.module.css'
 
 type Props = {
   cluster: Cluster
@@ -13,12 +14,12 @@ type Props = {
 const ClustersOverviewRow = (props: Props) => {
   const { clusters, setClusters } = useClusters()
 
-  let tableCellTitleCentered = classNames(classes.tableCellTitle, 'textCentered')
-  let tableCellTitleUpperCase = classNames(classes.tableCellTitle, 'upperCase')
-  let tableCellTitleUpperCaseCentered = classNames(classes.tableCellTitle, 'upperCase', 'textCentered')
-  let tableCellTitleWarningCentered = classNames(classes.tableCellTitleWarning, 'textCentered')
-  let tableCellTitleCriticalCentered = classNames(classes.tableCellTitleWarning, 'textCentered')
-  let tableCellTitleSuccessCentered = classNames(classes.tableCellTitleSuccess, 'textCentered')
+  let tableCellTitleCentered = classNames(styles.tableCellTitle, 'textCentered')
+  let tableCellTitleUpperCase = classNames(styles.tableCellTitle, 'upperCase')
+  let tableCellTitleUpperCaseCentered = classNames(styles.tableCellTitle, 'upperCase', 'textCentered')
+  let tableCellTitleWarningCentered = classNames(styles.tableCellTitleWarning, 'textCentered')
+  let tableCellTitleCriticalCentered = classNames(styles.tableCellTitleWarning, 'textCentered')
+  let tableCellTitleSuccessCentered = classNames(styles.tableCellTitleSuccess, 'textCentered')
   let statusClass = tableCellTitleCriticalCentered
 
   if (props.cluster.status.toLowerCase() == 'ready') {
@@ -50,10 +51,10 @@ const ClustersOverviewRow = (props: Props) => {
     <>
       <tr>
         <td>
-          <div className={classes.tableCheckboxIconContainer}>
-            <label className={classes.tableCheckboxControl}>
+          <div className={styles.tableCheckboxIconContainer}>
+            <label className={styles.tableCheckboxControl}>
               <input
-                className={classes.tableCheckbox}
+                className={styles.tableCheckbox}
                 onChange={e => changeCheckbox(props.cluster.name, e.target.checked)}
                 type="checkbox"
                 name="checkbox"
@@ -64,12 +65,12 @@ const ClustersOverviewRow = (props: Props) => {
           </div>
         </td>
         <td>
-          <div className={classes.tableActionsIconContainer}>
-            <div className={classes.actionsIcon}></div>
+          <div className={styles.tableActionsIconContainer}>
+            <div className={styles.actionsIcon}></div>
           </div>
         </td>
         <td>
-          <div className={classes.tableCellTitle}>{props.cluster.name}</div>
+          <div className={styles.tableCellTitle}>{props.cluster.name}</div>
         </td>
         <td>
           <div className={tableCellTitleUpperCase}>{props.cluster.provider}</div>
@@ -78,10 +79,10 @@ const ClustersOverviewRow = (props: Props) => {
           <div className={tableCellTitleUpperCaseCentered}>{props.cluster.flavor}</div>
         </td>
         <td>
-          <div className={classes.tableCellTitle}>{props.cluster.k8sVersion}</div>
+          <div className={styles.tableCellTitle}>{props.cluster.k8sVersion}</div>
         </td>
         <td>
-          <div className={classes.tableCellTitle}>{props.cluster.clusterGroup}</div>
+          <div className={styles.tableCellTitle}>{props.cluster.clusterGroup}</div>
         </td>
         <td>
           <div className={tableCellTitleCentered}>{machineStr}</div>

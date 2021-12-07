@@ -2,7 +2,7 @@ import * as k8s from '@kubernetes/client-node'
 import type { GetServerSideProps, NextPage } from 'next'
 import React from 'react'
 import ClustersOverview from '@/components/Overview/Clusters/ClustersOverview'
-import Workspace from '@/components/workspace/workspace'
+import Workspace from '@/components/Workspace/Workspace'
 import { Cluster, getAge, getStatusFromConditions } from '@/lib/cluster'
 
 type Props = {

@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import Image from 'next/image'
-import classes from './LeftMenuItemButton.module.css'
 import classNames from 'classnames'
-import { isUint8ClampedArray } from 'util/types'
+
+import styles from './LeftMenuItemButton.module.css'
 
 type LeftMenuItemProps = {
   id: string
@@ -19,43 +19,43 @@ const LeftMenuItemButton = ({ id, title, item }: LeftMenuItemProps) => {
   }
 
   return (
-    <>
-      <div id={id} title={title} className={classes.leftMenuButtonContainer}>
-        <button
-          onClick={toggleState}
-          className={classNames(classes.leftMenuButton, {
-            [classes.leftMenuButtonActive]: isOpen
-          })}>
-          <div className={classes.leftMenuButton}>
-            <div className={classes.leftMenuButtonIcon}>
-              <Image src={item.src} alt={item.alt} />
-            </div>
-            <div className={classes.leftMenuButtonText}>
-              <a className={'upperCase'}>{title}</a>
-            </div>
-            {item.actions.length > 0 && (
-              <div
-                className={classNames(classes.leftMenuButtonArrow, {
-                  [classes.leftMenuButtonArrowOpen]: isOpen
-                })}
-              />
-            )}
+    <div id={id} title={title} className={styles.leftMenuButtonContainer}>
+      <button
+        onClick={toggleState}
+        className={classNames(styles.leftMenuButton, {
+          [styles.leftMenuButtonActive]: isOpen
+        })}
+      >
+        <div className={styles.leftMenuButton}>
+          <div className={styles.leftMenuButtonIcon}>
+            <Image src={item.src} alt={item.alt} />
           </div>
-        </button>
-        <div
-          className={classNames(classes.leftMenuPanelCollapse, {
-            [classes.leftMenuPanelClose]: !isOpen
-          })}>
-          <ol className={classes.leftMenuPanelList}>
-            {item.actions.map((action: string) => (
-              <li key={`action-${id}-${action}`} className={classes.leftMenuPanelListItem}>
-                {action}
-              </li>
-            ))}
-          </ol>
+          <div className={styles.leftMenuButtonText}>
+            <a className={'upperCase'}>{title}</a>
+          </div>
+          {item.actions.length > 0 && (
+            <div
+              className={classNames(styles.leftMenuButtonArrow, {
+                [styles.leftMenuButtonArrowOpen]: isOpen
+              })}
+            />
+          )}
         </div>
+      </button>
+      <div
+        className={classNames(styles.leftMenuPanelCollapse, {
+          [styles.leftMenuPanelClose]: !isOpen
+        })}
+      >
+        <ol className={styles.leftMenuPanelList}>
+          {item.actions.map((action: string) => (
+            <li key={`action-${id}-${action}`} className={styles.leftMenuPanelListItem}>
+              {action}
+            </li>
+          ))}
+        </ol>
       </div>
-    </>
+    </div>
   )
 }
 
