@@ -1,4 +1,4 @@
-.page404messageContainer {
+.ContentNotFoundContainer {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -11,7 +11,7 @@
   position: absolute;
 }
 
-.page404MonitorMessage {
+.ContentNotFoundMonitorMessage {
   width: 432px;
   height: 356px;
   background-image: url('/img/contentNotFoundmonitor.svg');
@@ -21,7 +21,7 @@
   flex-wrap: nowrap;
 }
 
-.page404MainTextLine1 {
+.ContentNotFoundMainTextLine1 {
   width: 476px;
   word-wrap: break-word;
   font-style: normal;
@@ -32,7 +32,7 @@
   text-align: center;
   color: var(--text-critical);
 }
-.page404MainTextLine2 {
+.ContentNotFoundMainTextLine2 {
   width: 476px;
   word-wrap: break-word;
   font-style: normal;
@@ -45,7 +45,7 @@
   margin-bottom: 16px;
 }
 
-.page404SecondaryTextLine1 {
+.ContentNotFoundSecondaryTextLine1 {
   width: 476px;
   font-style: normal;
   font-weight: normal;
@@ -56,13 +56,13 @@
   color: var(--text-default);
 }
 
-.page404SecondaryTextLine1 a {
+.ContentNotFoundSecondaryTextLine1 a {
   text-decoration: underline;
   font-weight: normal;
   color: var(--text-strong);
 }
 
-.page404SecondaryTextLine2 {
+.ContentNotFoundSecondaryTextLine2 {
   width: 476px;
   font-style: normal;
   font-weight: normal;
