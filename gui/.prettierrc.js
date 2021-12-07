@@ -10,6 +10,5 @@ module.exports = {
   singleQuote: true,
   trailingComma: 'none',
   quoteProps: 'as-needed',
-  jsxBracketSameLine: true,
   jsxSingleQuote: false
 }
