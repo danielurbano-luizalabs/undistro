@@ -1,17 +1,15 @@
-import '@/styles/globals.css'
-import { ThemeProvider } from "next-themes";
+import { AppProviders } from '@/contexts'
 import type { AppProps } from 'next/app'
+import '@/styles/globals.css'
 
 function UndistroDashBoard({ Component, pageProps }: AppProps) {
   return (
-
-    <ThemeProvider defaultTheme="dark-mode" themes={["dark-mode"]}>
-      <div className="backgroundDefault responsiveScreenHeight">   
+    <AppProviders>
+      <div className="backgroundDefault responsiveScreenHeight">
         <Component {...pageProps} />
       </div>
-    </ThemeProvider>
-    
-  );
+    </AppProviders>
+  )
 }
 
 export default UndistroDashBoard
