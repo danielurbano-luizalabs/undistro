@@ -4,9 +4,8 @@ import Link from 'next/link'
 
 import { useClusters } from '@/contexts/ClusterContext'
 
-import classes from './navbar.module.css'
+import styles from './navbar.module.css'
 
-type Props = {}
 
 export interface Breadcrumb {
   /** Breadcrumb title. Example: 'blog-entries' */
@@ -16,7 +15,7 @@ export interface Breadcrumb {
   href: string
 }
 
-const Navbar = (props: Props) => {
+const Navbar = () => {
   const router = useRouter()
   const { clusters, setClusters } = useClusters()
   const [breadcrumbs, setBreadcrumbs] = useState<Array<Breadcrumb> | null>(null)
@@ -44,9 +43,9 @@ const Navbar = (props: Props) => {
   if (!breadcrumbs) {
     return null
   }
-  let navbarContainerClasses = [classes.navbarContainer, 'responsiveWidth'].join(' ')
-  let breadCrumbClasses = [classes.breadCrumb, 'upperCase'].join(' ')
-  let navbarBreadCrumbAreaClasses = [classes.navbarBreadCrumbArea, 'responsiveWidth'].join(' ')
+  let navbarContainerClasses = [styles.navbarContainer, 'responsiveWidth'].join(' ')
+  let breadCrumbClasses = [styles.breadCrumb, 'upperCase'].join(' ')
+  let navbarBreadCrumbAreaClasses = [styles.navbarBreadCrumbArea, 'responsiveWidth'].join(' ')
   let selectedMessage = `multiple clusters selected`
   if (clustersName?.length === 1) {
     selectedMessage = clustersName[0]
@@ -57,19 +56,19 @@ const Navbar = (props: Props) => {
     <>
       <div className={navbarContainerClasses}>
         <Link href="/">
-          <a className={classes.navbarHomeButtonArea}>
-            <div className={classes.navbarHomeIconArea}></div>
+          <a className={styles.navbarHomeButtonArea}>
+            <div className={styles.navbarHomeIconArea}></div>
           </a>
         </Link>
         <div className={navbarBreadCrumbAreaClasses}>
           <ol className={breadCrumbClasses}>
-            <li key="1" className={classes.breadCrumb}>
+            <li key="1" className={styles.breadCrumb}>
               <Link href="/">
-                <a className={classes.breadCrumb}>clusters</a>
+                <a className={styles.breadCrumb}>clusters</a>
               </Link>
             </li>
             <li key="2">
-              <a className={classes.breadCrumbSelObject}>{selectedMessage}</a>
+              <a className={styles.breadCrumbSelObject}>{selectedMessage}</a>
             </li>
             {breadcrumbs.map((breadcrumb, index) => {
               if (index == 0 && breadcrumb.breadcrumb == '') {
@@ -93,9 +92,9 @@ const Navbar = (props: Props) => {
             })}
           </ol>
         </div>
-        <div className={classes.navbarSearchArea}>
-          <input id="searchClear" className={classes.navbarSearchBox} type="search"></input>
-          <div className={classes.navbarSearchBoxIcon}></div>
+        <div className={styles.navbarSearchArea}>
+          <input id="searchClear" className={styles.navbarSearchBox} type="search"></input>
+          <div className={styles.navbarSearchBoxIcon}></div>
         </div>
       </div>
     </>

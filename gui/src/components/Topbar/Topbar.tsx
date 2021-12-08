@@ -1,17 +1,17 @@
-import * as React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import TopbarMenuItemButton from './topbarMenuItemButton'
-import Navbar from './navbar'
-import styles from './topbar.module.css'
 
 import topBarLogo from '@/public/img/logo-topbar.svg'
+import Navbar from './Navbar'
 
-type Props = {}
+import TopbarMenuItemButton from './TopbarMenuItemButton'
+import styles from './Topbar.module.css'
 
-const Topbar = (props: Props) => {
+
+const Topbar = () => {
   let topBarContainerClasses = [styles.topBarContainer, 'responsiveWidth'].join(' ')
   let topBarMenuAreaClasses = [styles.topBarMenuArea, 'responsiveWidth'].join(' ')
+
   return (
     <>
       <header className={styles.teste}>

@@ -1,52 +1,53 @@
-import classes from './ClustersOverviewRow.module.css'
+import classNames from 'classnames'
+
+import styles from './ClustersOverviewRow.module.css'
 
 type Props = {
   key: number
 }
 
-const ClustersOverviewEmptyRow = (props: Props) => {
-  let tableCellTitleCentered = [classes.tableCellTitle, 'textCentered'].join(' ')
-  let tableCellTitleUpperCaseCentered = [classes.tableCellTitle, 'upperCase', 'textCentered'].join(' ')
-  let tableCellTitleUpperCase = [classes.tableCellTitle, 'upperCase'].join(' ')
-  let tableCellTitleCriticalCentered = [classes.tableCellTitleWarning, 'textCentered'].join(' ')
+const ClustersOverviewEmptyRow = ({ key }: Props) => {
+  let tableCellTitleCentered = classNames(styles.tableCellTitle, 'textCentered')
+  let tableCellTitleUpperCaseCentered = classNames(styles.tableCellTitle, 'upperCase', 'textCentered')
+  let tableCellTitleUpperCase = classNames(styles.tableCellTitle, 'upperCase')
+  let tableCellTitleCriticalCentered = classNames(styles.tableCellTitleWarning, 'textCentered')
   let statusClass = tableCellTitleCriticalCentered
+
   return (
-    <>
-      <tr>
-        <td>
-          <div className={classes.tableCheckboxIconContainer}>
-            <label className={classes.tableCheckboxControl}></label>
-          </div>
-        </td>
-        <td>
-          <div className={classes.tableActionsIconContainer}></div>
-        </td>
-        <td>
-          <div className={classes.tableCellTitle}></div>
-        </td>
-        <td>
-          <div className={tableCellTitleUpperCase}></div>
-        </td>
-        <td>
-          <div className={tableCellTitleUpperCaseCentered}></div>
-        </td>
-        <td>
-          <div className={classes.tableCellTitle}></div>
-        </td>
-        <td>
-          <div className={classes.tableCellTitle}></div>
-        </td>
-        <td>
-          <div className={tableCellTitleCentered}></div>
-        </td>
-        <td>
-          <div className={tableCellTitleCentered}></div>
-        </td>
-        <td>
-          <div className={statusClass}></div>
-        </td>
-      </tr>
-    </>
+    <tr key={key}>
+      <td>
+        <div className={styles.tableCheckboxIconContainer}>
+          <label className={styles.tableCheckboxControl}></label>
+        </div>
+      </td>
+      <td>
+        <div className={styles.tableActionsIconContainer}></div>
+      </td>
+      <td>
+        <div className={styles.tableCellTitle}></div>
+      </td>
+      <td>
+        <div className={tableCellTitleUpperCase}></div>
+      </td>
+      <td>
+        <div className={tableCellTitleUpperCaseCentered}></div>
+      </td>
+      <td>
+        <div className={styles.tableCellTitle}></div>
+      </td>
+      <td>
+        <div className={styles.tableCellTitle}></div>
+      </td>
+      <td>
+        <div className={tableCellTitleCentered}></div>
+      </td>
+      <td>
+        <div className={tableCellTitleCentered}></div>
+      </td>
+      <td>
+        <div className={statusClass}></div>
+      </td>
+    </tr>
   )
 }
 

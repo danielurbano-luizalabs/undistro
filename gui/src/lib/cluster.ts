@@ -1,5 +1,5 @@
 import * as k8s from "@kubernetes/client-node";
-import { formatDuration, getTimeDiffFromNow } from "./time";
+import { formatDuration, getTimeDiffFromNow } from "@/helpers/time";
 
 export const empty: Cluster = {
     name: "",

@@ -1,12 +1,14 @@
-import { useRouter } from 'next/router'
 import { createRef, useEffect, useState, useCallback } from 'react'
+import { useRouter } from 'next/router'
 import { useResizeDetector } from 'react-resize-detector'
-import { Cluster } from '@/lib/cluster'
-import { paginate } from '@/lib/pagination'
+
 import { MenuActions } from '@/components/MenuActions/MenuActions'
 import ContentNotFound from '@/components/ContentNotFound/ContentNotFound'
 import { useClusters } from '@/contexts/ClusterContext'
-import classes from './ClustersOverview.module.css'
+import { paginate } from '@/helpers/pagination'
+import { Cluster } from '@/lib/cluster'
+
+import styles from './ClustersOverview.module.css'
 import ClustersOverviewEmptyRow from './ClustersOverviewEmptyRow'
 import { ClusterOverviewFooter } from './ClustersOverviewNavFooter'
 import ClustersOverviewRow from './ClustersOverviewRow'
@@ -142,18 +144,18 @@ const ClustersOverview = ({ clusters, page }: ClusterOverviewProps) => {
 
   return (
     <>
-      <div className={classes.clustersOverviewContainer}>
-        <div id="tableContainer" className={classes.clustersOverviewTableContainer} ref={tableContainerRef}>
+      <div className={styles.clustersOverviewContainer}>
+        <div id="tableContainer" className={styles.clustersOverviewTableContainer} ref={tableContainerRef}>
           {isValidPage ? (
             <>
-              <table ref={tableRef} id="table" className={classes.clustersOverviewTable}>
+              <table ref={tableRef} id="table" className={styles.clustersOverviewTable}>
                 <thead>
                   <tr>
                     <th>
-                      <div className={classes.tableCheckboxAllIconContainer}>
-                        <label className={classes.tableCheckboxControlAll}>
+                      <div className={styles.tableCheckboxAllIconContainer}>
+                        <label className={styles.tableCheckboxControlAll}>
                           <input
-                            className={classes.tableCheckboxAll}
+                            className={styles.tableCheckboxAll}
                             onChange={e => changeCheckbox(e.target.checked)}
                             type="checkbox"
                             name="checkbox"
@@ -163,16 +165,16 @@ const ClustersOverview = ({ clusters, page }: ClusterOverviewProps) => {
                       </div>
                     </th>
                     <th>
-                      <div onClick={handleClick} className={classes.tableIconCol}>
-                        <div className={classes.actionsIconAllDisabled}></div>
+                      <div onClick={handleClick} className={styles.tableIconCol}>
+                        <div className={styles.actionsIconAllDisabled}></div>
                       </div>
                     </th>
-                    <th className={classes.responsiveTh}>
-                      <div className={classes.tableHeaderTitle}>clusters</div>
+                    <th className={styles.responsiveTh}>
+                      <div className={styles.tableHeaderTitle}>clusters</div>
                     </th>
                     {columns.map((column, i) => (
                       <th key={i}>
-                        <div className={classes.tableHeaderTitle}>{column}</div>
+                        <div className={styles.tableHeaderTitle}>{column}</div>
                       </th>
                     ))}
                   </tr>
