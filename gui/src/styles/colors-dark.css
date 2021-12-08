@@ -36,4 +36,11 @@
   --text-warning: #f9d58b;
   --text-success: #39e9aa;
   --text-dark: #191a1d;
+
+  /* border */
+  --border-default: #d7d7d7;
+  --border-success: #39e9aa;
+  --border-warning: #f9d58b;
+  --border-critical: #ff5a60;
+  
 }
