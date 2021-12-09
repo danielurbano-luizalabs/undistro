@@ -289,7 +289,7 @@ func (h HandlerState) handleAuthCodeCallback(w http.ResponseWriter, r *http.Requ
 	if err != nil {
 		return err
 	}
-	fmt.Fprintln(w, "login completed you can close this window")
+	fmt.Fprintln(w, "<script>window.close();</script>")
 	return nil
 }
 

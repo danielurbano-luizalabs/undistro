@@ -6,7 +6,7 @@ type Props = {
   key: number
 }
 
-const ClustersOverviewEmptyRow = ({ key }: Props) => {
+const ClustersOverviewEmptyRow = (props: Props) => {
   let tableCellTitleCentered = classNames(styles.tableCellTitle, 'textCentered')
   let tableCellTitleUpperCaseCentered = classNames(styles.tableCellTitle, 'upperCase', 'textCentered')
   let tableCellTitleUpperCase = classNames(styles.tableCellTitle, 'upperCase')
@@ -14,7 +14,7 @@ const ClustersOverviewEmptyRow = ({ key }: Props) => {
   let statusClass = tableCellTitleCriticalCentered
 
   return (
-    <tr key={key}>
+    <tr {...props}>
       <td>
         <div className={styles.tableCheckboxIconContainer}>
           <label className={styles.tableCheckboxControl}></label>

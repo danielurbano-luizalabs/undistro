@@ -54,7 +54,7 @@ const ClustersOverviewNavFooter = (props: Props) => {
       <div ref={props.refer} id="pageFooter" className={styles.tableFooterContainer}>
         <div className={styles.tableFooter}>
           <div className={styles.navFooterResults}>
-            <a className={styles.navFooterResultsText}>{props.total} Results</a>
+            <a className={styles.navFooterResultsText}>{props.total} {props.total > 1 ? 'Results' : 'Result'}</a>
           </div>
           {props.qtdPages > 1 ? (
             <>

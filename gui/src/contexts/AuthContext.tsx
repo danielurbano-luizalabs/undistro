@@ -1,6 +1,7 @@
 import type { FunctionComponent } from 'react'
 import { createContext, useContext } from 'react'
 import { useQueryClient } from 'react-query'
+import { fetchProviders } from '@/lib/auth'
 
 const AuthContext = createContext(null)
 
@@ -15,7 +16,6 @@ export const AuthProvider: FunctionComponent = ({ children }) => {
     // TODO: implement logout logic
     queryClient.clear()
   }
-
   // TODO: pass auth lib functions as value
-  return <AuthContext.Provider value={{}}>{children}</AuthContext.Provider>
+  return <AuthContext.Provider value={{ fetchProviders }}>{children}</AuthContext.Provider>
 }

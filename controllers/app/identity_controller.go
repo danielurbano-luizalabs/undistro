@@ -170,7 +170,7 @@ func (r *IdentityReconciler) reconcile(ctx context.Context, instance appv1alpha1
 	if util.IsMgmtCluster(instance.Spec.ClusterName) {
 		log.Info("Installing Pinniped components in cluster ", "cluster-name", instance.Spec.ClusterName)
 		// regex to get ip or dns names
-		callbackURL := fmt.Sprintf("https://%s/callback", hostFromURL(issuer))
+		callbackURL := fmt.Sprintf("https://%s/uapi/callback", hostFromURL(issuer))
 		values["config"] = map[string]interface{}{
 			"callbackURL": callbackURL,
 		}
