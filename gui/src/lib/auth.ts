@@ -47,10 +47,10 @@ function setAuthCredentials(ca, clientCertificateData, clientKeyData, endpoint) 
     key: clientKeyData
   })
 
-  Cookies.set('undistro-ca', ca)
-  Cookies.set('undistro-cert', clientCertificateData)
-  Cookies.set('undistro-key', clientKeyData)
-  Cookies.set(AUTH_KEY, btoa(authToken))
+  Cookies.set('undistro-ca', ca, { secure: true })
+  Cookies.set('undistro-cert', clientCertificateData, { secure: true })
+  Cookies.set('undistro-key', clientKeyData, { secure: true })
+  Cookies.set(AUTH_KEY, btoa(authToken), { secure: true })
 }
 
 export async function fetchUserCertificates() {
