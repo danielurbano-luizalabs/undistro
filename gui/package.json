@@ -3,17 +3,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "dev:secure": "node server.js",
+    "dev:secure": "node server.ts",
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
     "lint:fix": "eslint --fix .",
-    "format": "pretty-quick --staged"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "yarn run lint && yarn run format"
-    }
+    "format": "pretty-quick --staged",
+    "prepare": "cd ../ && husky install ./gui/.husky"
   },
   "dependencies": {
     "@kubernetes/client-node": "^0.16.1",
