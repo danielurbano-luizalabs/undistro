@@ -1,4 +1,6 @@
 import Axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
+import { getToken } from '@/lib/auth'
+import { btoa } from '@/helpers/encoding'
 
 export interface ErrorMessage {
   type: 'error'
@@ -20,8 +22,11 @@ const instance = Axios.create({
 })
 
 instance.interceptors.request.use((config: AxiosRequestConfig) => {
-  // if needed
-  // Do something before request is sent
+  const token = getToken()
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`
+  }
+  
   return config
 })
 

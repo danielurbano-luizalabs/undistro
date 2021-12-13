@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 import { useClusters } from '@/contexts/ClusterContext'
 
-import styles from './navbar.module.css'
+import styles from './Navbar.module.css'
 
 
 export interface Breadcrumb {

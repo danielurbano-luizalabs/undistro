@@ -12,13 +12,15 @@ import styles from './ClustersOverview.module.css'
 import ClustersOverviewEmptyRow from './ClustersOverviewEmptyRow'
 import { ClusterOverviewFooter } from './ClustersOverviewNavFooter'
 import ClustersOverviewRow from './ClustersOverviewRow'
+import { useFetch } from '@/hooks/query'
+import { clusterDataHandler } from '@/helpers/dataFetching'
 
 type ClusterOverviewProps = {
   clusters?: Cluster[]
   page: string
 }
 
-const ClustersOverview = ({ clusters, page }: ClusterOverviewProps) => {
+const ClustersOverview = ({ page }: ClusterOverviewProps) => {
   const router = useRouter()
 
   const { clusters: selectedClusters, setClusters: setSelectedClusters } = useClusters()
@@ -40,6 +42,11 @@ const ClustersOverview = ({ clusters, page }: ClusterOverviewProps) => {
   const [menuPosition, setMenuPosition] = useState({ left: 0, top: 0 })
 
   const columns = ['provider', 'flavor', 'k8s version', 'cluster group', 'machines', 'age', 'status']
+
+  const { data: clusters, isLoading } = useFetch<Cluster[]>(
+    '/uapi/_/apis/app.undistro.io/v1alpha1/clusters',
+    clusterDataHandler
+  )
 
   const changeCheckbox = (checked: boolean) => {
     if (checked) {
@@ -86,7 +93,10 @@ const ClustersOverview = ({ clusters, page }: ClusterOverviewProps) => {
   }, [handleUserClick])
 
   let pageNumber = parseInt(page)
+
   const pagesCalc = useCallback(() => {
+    if (isLoading) return
+
     if (qtyPages && pageNumber > qtyPages) {
       setValidPage(false)
     } else {
@@ -107,7 +117,7 @@ const ClustersOverview = ({ clusters, page }: ClusterOverviewProps) => {
       let items = pageLists[pageNumber - 1]
       setClustersList(items)
     }
-  }, [height, pageNumber, qtyPages, clusters])
+  }, [height, pageNumber, qtyPages, clusters, isLoading])
 
   useEffect(() => {
     if (height) {

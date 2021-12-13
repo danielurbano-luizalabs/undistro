@@ -175,7 +175,7 @@ func handleAuthRequestForOIDCUpstream(
 		Endpoint: oauth2.Endpoint{
 			AuthURL: oidcUpstream.GetAuthorizationURL().String(),
 		},
-		RedirectURL: fmt.Sprintf("%s/callback", downstreamIssuer),
+		RedirectURL: fmt.Sprintf("%s/uapi/callback", downstreamIssuer),
 		Scopes:      oidcUpstream.GetScopes(),
 	}
 

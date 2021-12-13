@@ -1,8 +1,8 @@
 import { useQuery, useQueryClient, useMutation } from 'react-query'
 import api, { ErrorMessage } from '@/lib/axios'
 
-export function useFetch<T>(url: string) {
-  return useQuery<T, ErrorMessage>(url)
+export function useFetch<T>(url: string, dataHandling?: (data: any) => T) {
+  return useQuery<T, ErrorMessage>(url, { select: dataHandling })
 }
 
 export function useMutate<T, R>({

@@ -31,7 +31,7 @@ spec:
           -
             backend:
               service:
-                name: undistro-webhok-service
+                name: undistro-webhook-service
                 port:
                   number: 2020
             path: /uapi
