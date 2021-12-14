@@ -35,7 +35,7 @@ metadata:
   labels:
     app: pinniped-concierge
 data:
-  pinniped.yaml: "discovery:\n  url: null\napi:\n  servingCertificate:\n    durationSeconds: 2592000\n    renewBeforeSeconds: 2160000\napiGroupSuffix: pinniped.dev\nnames:\n  servingCertificateSecret: pinniped-concierge-api-tls-serving-certificate\n  credentialIssuer: pinniped-concierge-config\n  apiService: pinniped-concierge-api\n  impersonationLoadBalancerService: pinniped-concierge-impersonation-proxy-load-balancer\n  impersonationClusterIPService: pinniped-concierge-impersonation-proxy-cluster-ip\n  impersonationTLSCertificateSecret: pinniped-concierge-impersonation-proxy-tls-serving-certificate\n  impersonationCACertificateSecret: pinniped-concierge-impersonation-proxy-ca-certificate\n  impersonationSignerSecret: pinniped-concierge-impersonation-proxy-signer-ca-certificate\n  agentServiceAccount: pinniped-concierge-kube-cert-agent\nlabels: {\"app\":\"pinniped-concierge\"}\nkubeCertAgent:\n  namePrefix: pinniped-concierge-kube-cert-agent-\n  \n  \n  image: registry.undistro.io/dockerhub/getpinniped/pinniped-server:v0.10.0\n  \n  \n  \n\nlogLevel: debug\n\n"
+  pinniped.yaml: "discovery:\n  url: null\napi:\n  servingCertificate:\n    durationSeconds: 2592000\n    renewBeforeSeconds: 2160000\napiGroupSuffix: pinniped.dev\n# aggregatedAPIServerPort may be set here, although other YAML references to the default port (10250) may also need to be updated\n# impersonationProxyServerPort may be set here, although other YAML references to the default port (8444) may also need to be updated\nnames:\n  servingCertificateSecret: pinniped-concierge-api-tls-serving-certificate\n  credentialIssuer: pinniped-concierge-config\n  apiService: pinniped-concierge-api\n  impersonationLoadBalancerService: pinniped-concierge-impersonation-proxy-load-balancer\n  impersonationClusterIPService: pinniped-concierge-impersonation-proxy-cluster-ip\n  impersonationTLSCertificateSecret: pinniped-concierge-impersonation-proxy-tls-serving-certificate\n  impersonationCACertificateSecret: pinniped-concierge-impersonation-proxy-ca-certificate\n  impersonationSignerSecret: pinniped-concierge-impersonation-proxy-signer-ca-certificate\n  agentServiceAccount: pinniped-concierge-kube-cert-agent\nlabels: {\"app\":\"pinniped-concierge\"}\nkubeCertAgent:\n  namePrefix: pinniped-concierge-kube-cert-agent-\n  \n  \n  image: registry.undistro.io/dockerhub/getpinniped/pinniped-server:v0.12.0\n  \n  \n  \n\nlogLevel: debug\n\n"
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -45,7 +45,7 @@ metadata:
   labels:
     app: pinniped-concierge
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: pinniped-concierge
@@ -53,17 +53,20 @@ spec:
     metadata:
       labels:
         app: pinniped-concierge
+        deployment.pinniped.dev: concierge
       annotations:
         scheduler.alpha.kubernetes.io/critical-pod: ""
     spec:
       securityContext:
-        runAsUser: 1001
-        runAsGroup: 1001
+        runAsUser: 65532
+        runAsGroup: 65532
       serviceAccountName: pinniped-concierge
       containers:
       - name: pinniped-concierge
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        image: registry.undistro.io/dockerhub/getpinniped/pinniped-server:v0.12.0
         imagePullPolicy: IfNotPresent
+        securityContext:
+          readOnlyRootFilesystem: true
         resources:
           requests:
             cpu: 100m
@@ -72,21 +75,26 @@ spec:
             cpu: 100m
             memory: 128Mi
         command:
-        - /usr/local/bin/pinniped-concierge
-        args:
+        - pinniped-concierge
         - --config=/etc/config/pinniped.yaml
         - --downward-api-path=/etc/podinfo
         volumeMounts:
+        - name: tmp
+          mountPath: /tmp
         - name: config-volume
           mountPath: /etc/config
+          readOnly: true
         - name: podinfo
           mountPath: /etc/podinfo
+          readOnly: true
         - name: impersonation-proxy
           mountPath: /var/run/secrets/impersonation-proxy.concierge.pinniped.dev/serviceaccount
+          readOnly: true
+        env: []
         livenessProbe:
           httpGet:
             path: /healthz
-            port: 8443
+            port: 10250
             scheme: HTTPS
           initialDelaySeconds: 2
           timeoutSeconds: 15
@@ -95,13 +103,17 @@ spec:
         readinessProbe:
           httpGet:
             path: /healthz
-            port: 8443
+            port: 10250
             scheme: HTTPS
           initialDelaySeconds: 2
           timeoutSeconds: 3
           periodSeconds: 10
           failureThreshold: 3
       volumes:
+      - name: tmp
+        emptyDir:
+          medium: Memory
+          sizeLimit: 100Mi
       - name: config-volume
         configMap:
           name: pinniped-concierge-config
@@ -135,7 +147,7 @@ spec:
             podAffinityTerm:
               labelSelector:
                 matchLabels:
-                  app: pinniped-concierge
+                  deployment.pinniped.dev: concierge
               topologyKey: kubernetes.io/hostname
 ---
 apiVersion: v1
@@ -145,14 +157,16 @@ metadata:
   namespace: undistro-system
   labels:
     app: pinniped-concierge
+  annotations:
+    kapp.k14s.io/disable-default-label-scoping-rules: ""
 spec:
   type: ClusterIP
   selector:
-    app: pinniped-concierge
+    deployment.pinniped.dev: concierge
   ports:
   - protocol: TCP
     port: 443
-    targetPort: 8443
+    targetPort: 10250
 ---
 apiVersion: v1
 kind: Service
@@ -161,10 +175,12 @@ metadata:
   namespace: undistro-system
   labels:
     app: pinniped-concierge
+  annotations:
+    kapp.k14s.io/disable-default-label-scoping-rules: ""
 spec:
   type: ClusterIP
   selector:
-    app: pinniped-concierge
+    deployment.pinniped.dev: concierge
   ports:
   - protocol: TCP
     port: 443
