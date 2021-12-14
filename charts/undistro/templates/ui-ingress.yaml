@@ -28,14 +28,6 @@ spec:
                   number: 3000
             path: /
             pathType: Prefix
-          -
-            backend:
-              service:
-                name: undistro-webhook-service
-                port:
-                  number: 2020
-            path: /uapi
-            pathType: Prefix
   tls:
     -
       hosts:

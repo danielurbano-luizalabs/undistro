@@ -46,19 +46,19 @@ spec:
             value: {{ .Values.identity.enabled }}
           {{ if .Values.identity.enabled }}
           - name: IDENTITY_PROVIDER
-            value: {{ .Values.identity.provider.issuer.name }}
+            value: {{ .Values.identity.oidc.provider.issuer.name }}
           {{end}}
-          {{ if eq .Values.identity.provider.issuer.name "gitlab"}}
+          {{ if eq .Values.identity.oidc.provider.issuer.name "gitlab"}}
           - name: GITLAB_ID
-            value: {{ .Values.identity.provider.credentials.clientID }}
+            value: {{ .Values.identity.oidc.provider.credentials.clientID }}
           - name: GITLAB_SECRET
-            value: {{ .Values.identity.provider.credentials.clientSecret }}
+            value: {{ .Values.identity.oidc.provider.credentials.clientSecret }}
           {{ end }}
-          {{ if eq .Values.identity.provider.issuer.name "google"}}
+          {{ if eq .Values.identity.oidc.provider.issuer.name "google"}}
           - name: GOOGLE_ID
-            value: {{ .Values.identity.provider.credentials.clientID }}
+            value: {{ .Values.identity.oidc.provider.credentials.clientID }}
           - name: GOOGLE_SECRET
-            value: {{ .Values.identity.provider.credentials.clientSecret }}
+            value: {{ .Values.identity.oidc.provider.credentials.clientSecret }}
           {{ end }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         livenessProbe:

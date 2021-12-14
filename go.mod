@@ -7,15 +7,12 @@ require (
 	github.com/Masterminds/semver/v3 v3.1.1
 	github.com/Masterminds/sprig/v3 v3.2.2
 	github.com/aws/aws-sdk-go v1.40.32
-	github.com/caarlos0/httperr v1.1.0
 	github.com/coreos/go-oidc/v3 v3.0.0
 	github.com/go-ldap/ldap/v3 v3.4.1
 	github.com/go-logr/logr v0.4.0
 	github.com/go-logr/stdr v0.4.0
 	github.com/go-task/slim-sprig v2.20.0+incompatible
 	github.com/gofrs/flock v0.8.1
-	github.com/gorilla/handlers v1.5.1
-	github.com/gorilla/mux v1.8.0
 	github.com/gorilla/securecookie v1.1.1
 	github.com/gorilla/sessions v1.1.3
 	github.com/json-iterator/go v1.1.11
@@ -125,6 +122,7 @@ require (
 	github.com/google/uuid v1.2.0 // indirect
 	github.com/googleapis/gnostic v0.5.5 // indirect
 	github.com/gorilla/context v1.1.1 // indirect
+	github.com/gorilla/mux v1.8.0 // indirect
 	github.com/gorilla/websocket v1.4.2 // indirect
 	github.com/gosuri/uitable v0.0.4 // indirect
 	github.com/gregjones/httpcache v0.0.0-20180305231024-9cad4c3443a7 // indirect
@@ -164,7 +162,6 @@ require (
 	github.com/monochromegane/go-gitignore v0.0.0-20200626010858-205db1a8cc00 // indirect
 	github.com/morikuni/aec v1.0.0 // indirect
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
-	github.com/mxk/go-flowrate v0.0.0-20140419014527-cca7078d478f // indirect
 	github.com/nxadm/tail v1.4.8 // indirect
 	github.com/opencontainers/go-digest v1.0.0 // indirect
 	github.com/opencontainers/image-spec v1.0.2 // indirect

@@ -17,7 +17,6 @@ limitations under the License.
 package main
 
 import (
-	"context"
 	"flag"
 	"os"
 
@@ -32,7 +31,6 @@ import (
 	"github.com/getupio-undistro/undistro/pkg/record"
 	"github.com/getupio-undistro/undistro/pkg/scheme"
 	"github.com/getupio-undistro/undistro/pkg/undistro"
-	"github.com/getupio-undistro/undistro/pkg/undistro/apiserver"
 	"github.com/getupio-undistro/undistro/pkg/version"
 	// +kubebuilder:scaffold:imports
 )
@@ -144,29 +142,10 @@ func main() {
 		setupLog.Error(err, "unable to set up ready check")
 		os.Exit(1)
 	}
-	cerr := make(chan error)
-	done := make(chan struct{})
-	go func(ctx context.Context) {
-		setupLog.Info("Starting UnDistro API Server", "version", version.Get())
-		server := apiserver.NewServer(cfg, os.Stdin, os.Stdout, os.Stderr)
-		if err := server.GracefullyStart(ctx, undistroApiAddr); err != nil {
-			cerr <- err
-			return
-		}
-		done <- struct{}{}
-	}(ctx)
-	go func(ctx context.Context) {
-		setupLog.Info("Starting Manager", "version", version.Get())
-		if err := mgr.Start(ctx); err != nil {
-			cerr <- err
-			return
-		}
-		done <- struct{}{}
-	}(ctx)
-
-	select {
-	case err := <-cerr:
+	setupLog.Info("Starting Manager", "version", version.Get())
+	err = mgr.Start(ctx)
+	if err != nil {
 		setupLog.Error(err, "failed to start UnDistro")
-	case <-done:
+		os.Exit(1)
 	}
 }
