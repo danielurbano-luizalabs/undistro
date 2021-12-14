@@ -1,6 +1,4 @@
 import Axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
-import { getToken } from '@/lib/auth'
-import { btoa } from '@/helpers/encoding'
 
 export interface ErrorMessage {
   type: 'error'
@@ -15,18 +13,12 @@ export function handleAxiosError(error: AxiosError): ErrorMessage {
 }
 
 const instance = Axios.create({
-  baseURL: process.env.UNDISTRO_API_URL,
   headers: {
     'Content-Type': 'application/json'
   }
 })
 
 instance.interceptors.request.use((config: AxiosRequestConfig) => {
-  const token = getToken()
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`
-  }
-  
   return config
 })
 

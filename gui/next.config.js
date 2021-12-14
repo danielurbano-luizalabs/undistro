@@ -5,6 +5,6 @@ module.exports = {
     ignoreBuildErrors: true
   },
   env: {
-    'UNDISTRO_API_URL': process.env.UNDISTRO_API_URL,
+    IDENTITY_ENABLED: process.env.IDENTITY_ENABLED
   }
 }

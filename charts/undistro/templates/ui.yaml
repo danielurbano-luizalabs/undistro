@@ -41,6 +41,25 @@ spec:
         args:
           - start
         image: "{{ .Values.global.undistroRepository}}/undistro-gui:{{ .Values.global.undistroVersion }}"
+        env:
+          - name: IDENTITY_ENABLED
+            value: {{ .Values.identity.enabled }}
+          {{ if .Values.identity.enabled }}
+          - name: IDENTITY_PROVIDER
+            value: {{ .Values.identity.provider.issuer.name }}
+          {{end}}
+          {{ if eq .Values.identity.provider.issuer.name "gitlab"}}
+          - name: GITLAB_ID
+            value: {{ .Values.identity.provider.credentials.clientID }}
+          - name: GITLAB_SECRET
+            value: {{ .Values.identity.provider.credentials.clientSecret }}
+          {{ end }}
+          {{ if eq .Values.identity.provider.issuer.name "google"}}
+          - name: GOOGLE_ID
+            value: {{ .Values.identity.provider.credentials.clientID }}
+          - name: GOOGLE_SECRET
+            value: {{ .Values.identity.provider.credentials.clientSecret }}
+          {{ end }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         livenessProbe:
           httpGet:
