@@ -37,27 +37,40 @@ import (
 var _ = Describe("Create EC2 cluster 1.19", func() {
 	var (
 		clusterClient client.Client
+		writer = GinkgoWriter
 	)
+
 	It("Should generate recommend cluster spec 1.19", func() {
 		cmd := exec.NewCommand(
 			exec.WithCommand("undistro"),
 			exec.WithArgs("create", "cluster", "ec2-19-e2e", "-n", "e2e", "--infra", "aws", "--flavor", "ec2", "--ssh-key-name", "undistro", "--generate-file"),
 		)
+		fmt.Fprintf(writer, "Command to run: %s\n", cmd.Cmd)
 		_, _, err := cmd.Run(context.Background())
+		if err != nil {
+			fmt.Fprintf(writer, "Error: %s\n", err.Error())
+		}
 		Expect(err).ToNot(HaveOccurred())
 		_, err = os.Stat("ec2-19-e2e.yaml")
+		if err != nil {
+			fmt.Fprintf(writer, "Error: %s\n", err.Error())
+		}
 		Expect(err).ToNot(HaveOccurred())
-
 	})
+
 	It("Should create EC2 cluster 1.19", func() {
 		cmd := exec.NewCommand(
 			exec.WithCommand("undistro"),
 			exec.WithArgs("apply", "-f", "../../testdata/ec2-19.yaml"),
 		)
+		fmt.Fprintf(writer, "Command to run: %s\n", cmd.Cmd)
 		out, _, err := cmd.Run(context.Background())
-		fmt.Println(err)
+		if err != nil {
+			fmt.Fprintf(writer, "error: %s\n", err.Error())
+		}
 		Expect(err).ToNot(HaveOccurred())
-		fmt.Println(string(out))
+		fmt.Fprintf(writer, "output: %s\n", string(out))
+
 		Eventually(func() bool {
 			cl := appv1alpha1.Cluster{}
 			key := client.ObjectKey{
@@ -66,28 +79,39 @@ var _ = Describe("Create EC2 cluster 1.19", func() {
 			}
 			err = k8sClient.Get(context.Background(), key, &cl)
 			if err != nil {
-				fmt.Println(err)
+				fmt.Fprintf(writer, "error: %s", err.Error())
 				return false
 			}
-			fmt.Println(cl)
+			fmt.Fprintf(writer, "output: %v", cl)
 			return meta.InReadyCondition(cl.Status.Conditions)
-		}, 240*time.Minute, 2*time.Minute).Should(BeTrue())
-		fmt.Println("Get Kubeconfig")
+		}, 120*time.Minute, 2*time.Minute).Should(BeTrue())
+
+		fmt.Fprintf(writer, "%s\n", "Retrieving kubeconfig")
 		cmd = exec.NewCommand(
 			exec.WithCommand("undistro"),
 			exec.WithArgs("get", "kubeconfig", "ec2-19-e2e", "-n", "e2e", "--admin"),
 		)
+		fmt.Fprintf(writer, "Command to run: %s\n", cmd.Cmd)
 		out, _, err = cmd.Run(context.Background())
+		if err != nil {
+			fmt.Fprintf(writer, "error: %s\n", err.Error())
+		}
+
 		Expect(err).ToNot(HaveOccurred())
 		getter := kube.NewMemoryRESTClientGetter(out, "")
 		cfg, err := getter.ToRESTConfig()
+
 		Expect(err).ToNot(HaveOccurred())
+
 		Expect(cfg).ToNot(BeNil())
 		clusterClient, err = client.New(cfg, client.Options{
 			Scheme: scheme.Scheme,
 		})
+
 		Expect(err).ToNot(HaveOccurred())
+
 		Expect(clusterClient).ToNot(BeNil())
+
 		Eventually(func() []corev1.Node {
 			nodes := corev1.NodeList{}
 			err = clusterClient.List(context.Background(), &nodes)
@@ -98,6 +122,7 @@ var _ = Describe("Create EC2 cluster 1.19", func() {
 			fmt.Println(len(nodes.Items))
 			return nodes.Items
 		}, 240*time.Minute, 2*time.Minute).Should(HaveLen(7))
+
 		Eventually(func() []corev1.Node {
 			cpNodes := make([]corev1.Node, 0)
 			nodes := corev1.NodeList{}
@@ -121,6 +146,7 @@ var _ = Describe("Create EC2 cluster 1.19", func() {
 			fmt.Println(len(cpNodes))
 			return cpNodes
 		}, 240*time.Minute, 2*time.Minute).Should(HaveLen(3))
+
 		fmt.Println("check kyverno")
 		Eventually(func() []unstructured.Unstructured {
 			list := unstructured.UnstructuredList{}
@@ -148,6 +174,7 @@ var _ = Describe("Create EC2 cluster 1.19", func() {
 			}
 			return list.Items
 		}, 240*time.Minute, 2*time.Minute).Should(HaveLen(16))
+
 		podList := corev1.PodList{}
 		err = clusterClient.List(context.Background(), &podList, client.InNamespace("kube-system"))
 		Expect(err).ToNot(HaveOccurred())

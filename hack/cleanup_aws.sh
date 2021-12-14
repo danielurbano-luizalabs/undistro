@@ -16,8 +16,6 @@
 
 set -o nounset
 
-# list of all the resources to be deleted in order
-
 # get autoscaling group name for the given e2e test
 function get_autoscaling_group_name() {
   local test_name=$1
@@ -123,3 +121,17 @@ function delete_resources() {
   aws ec2 release-address \
     --allocation-ids "${ips}"
 }
+
+define_params() {
+    case $1 in
+        --remove-all | -rm) shift
+        delete_resources "$@"
+            ;;
+        -h | --help | *)
+            usage;
+            exit 0;
+            ;;
+    esac
+}
+
+define_params "$@"
