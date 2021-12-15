@@ -91,6 +91,8 @@
     font-style: normal;
 }
 
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu+Mono:ital@0;1&display=swap');
+
 
 /* UTILS */
 
@@ -287,13 +289,13 @@ html, body {
 .leftButtonContainer {
     display:flex;
     flex-direction: row;
-    width: 50%;
+    width: 100%;
 }
 
 .rightButtonContainer {
     display:flex;
     flex-direction: row-reverse;
-    width: 50%;
+    width: 100%;
 }
 
 .modalInputArea {
@@ -310,6 +312,14 @@ html, body {
     width: 480px;
     height: 100%;
     margin: 0 auto 0 auto;
+}
+
+.modalProgressArea {
+    display: flex;
+    flex-direction: column;
+    margin-top: 32px;
+    width: 100%;
+    height: 100%;
 }
 
 .modalControlPlaneBlock {
@@ -366,6 +376,19 @@ html, body {
 .modalDeleteTableItemContainer {
     height: 20px;
     width: 20px;
+}
+
+.progressBarContainer {
+    height: 6px;
+    width: 100%;
+    background-color: var(--background-weak);
+}
+
+.progressDialogContainer {
+    height: 376px;
+    width: 100%;
+    padding: 24px;
+    background-color: var(--background-default);
 }
 
 /* titles */
@@ -846,6 +869,36 @@ table.modalWorkersTable td a {
 
 .modalTableItem {
     width: 100%;
+}
+
+/* progress bar */
+
+.progressBar {
+    height: 6px;
+    width: 35%;
+    background-color: var(--success-background-default);
+}
+
+/* progress dialog */
+
+ol.progressDialog {
+    width: 100%;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+ol.progressDialog li {
+    height: 24px;
+}
+
+ol.progressDialog li a {
+    font-family: "Ubuntu Mono", monospace;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 16px;
+    color: var(--text-default);
 }
 
 
