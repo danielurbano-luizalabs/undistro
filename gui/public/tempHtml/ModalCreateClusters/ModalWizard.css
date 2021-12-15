@@ -298,9 +298,13 @@ html, body {
     width: 100px;
     height: 100px;
     background-color: var(--background-medium);
-    background-image: url("img/createClusterWizardIcon.svg");
+    background-image: url("./img/createClusterWizardIcon.svg");
     background-repeat: no-repeat;
     background-position: center;
+}
+
+.createClusterWizardContainer:hover .wizardIconContainer {
+    background-image: url("./img/createClusterWizardIconHover.svg");
 }
 
 .wizardTitlesContainer {
@@ -335,9 +339,13 @@ html, body {
     width: 100px;
     height: 100px;
     background-color: var(--background-medium);
-    background-image: url("img/createClusterAdvancedIcon.svg");
+    background-image: url("./img/createClusterAdvancedIcon.svg");
     background-repeat: no-repeat;
     background-position: center;
+}
+
+.createClusterAdvancedContainer:hover .advancedIconContainer {
+    background-image: url("./img/createClusterAdvancedIconHover.svg");
 }
 
 .advancedTitlesContainer {

@@ -11,6 +11,9 @@
   --background-strong-selected: #3b434e;
   --background-strong-hover: #3b434e;
   --background-dialog: #22262B;
+  --background-offwhite: #d7d7d7;
+  --background-white: #ffffff;
+  --background-black: #000000;
 
   /* primary */
   --background-primary-default: #657f97;
@@ -44,6 +47,8 @@
   --border-success: #39e9aa;
   --border-warning: #f9d58b;
   --border-critical: #ff5a60;
+  --border-light: #656D7A;
   --border-light-hover: #7f8996;
+  --border-medium: #495059;
   
 }
