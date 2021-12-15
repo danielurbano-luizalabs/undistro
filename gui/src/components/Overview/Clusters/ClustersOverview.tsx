@@ -43,10 +43,7 @@ const ClustersOverview = ({ page }: ClusterOverviewProps) => {
 
   const columns = ['provider', 'flavor', 'k8s version', 'cluster group', 'machines', 'age', 'status']
 
-  const { data: clusters, isLoading } = useFetch<Cluster[]>(
-    '/uapi/_/apis/app.undistro.io/v1alpha1/clusters',
-    clusterDataHandler
-  )
+  const { data: clusters, isLoading } = useFetch<Cluster[]>('/api/clusters')
 
   const changeCheckbox = (checked: boolean) => {
     if (checked) {
@@ -95,7 +92,10 @@ const ClustersOverview = ({ page }: ClusterOverviewProps) => {
   let pageNumber = parseInt(page)
 
   const pagesCalc = useCallback(() => {
-    if (isLoading) return
+    if (isLoading) {
+      setClustersList([])
+      return
+    }
 
     if (qtyPages && pageNumber > qtyPages) {
       setValidPage(false)
@@ -112,7 +112,7 @@ const ClustersOverview = ({ page }: ClusterOverviewProps) => {
       let qtyPages = Math.ceil(clusters?.length! / pageQtyItems)
       setQtyPages(qtyPages)
     }
-    let pageLists = paginate(clusters!, pageQtyItems)
+    let pageLists = paginate(clusters, pageQtyItems)
     if (pageLists.length >= pageNumber) {
       let items = pageLists[pageNumber - 1]
       setClustersList(items)
@@ -141,15 +141,15 @@ const ClustersOverview = ({ page }: ClusterOverviewProps) => {
   }, [clustersList, selectedClusters])
 
   const renderClusters = () => {
-    let clusters = []
+    let cls = []
     for (let i = 0; i < clustersList.length + (pageSize - clustersList.length); i++) {
       if (clustersList[i] === undefined) {
-        clusters.push(<ClustersOverviewEmptyRow key={i} />)
+        cls.push(<ClustersOverviewEmptyRow key={i} />)
       } else {
-        clusters.push(<ClustersOverviewRow key={i} cluster={clustersList[i]} disabled={false} />)
+        cls.push(<ClustersOverviewRow key={i} cluster={clustersList[i]} disabled={false} />)
       }
     }
-    return clusters
+    return cls
   }
 
   return (

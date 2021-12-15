@@ -6,7 +6,8 @@ import Navbar from './Navbar'
 
 import TopbarMenuItemButton from './TopbarMenuItemButton'
 import styles from './Topbar.module.css'
-
+import { signOut } from 'next-auth/react'
+import { isIdentityEnabled } from '@/helpers/identity'
 
 const Topbar = () => {
   let topBarContainerClasses = [styles.topBarContainer, 'responsiveWidth'].join(' ')
@@ -44,13 +45,13 @@ const Topbar = () => {
 
           {/* LOGOUT */}
 
-          <div className={styles.logoutArea}>
-            <Link href="/" passHref>
-              <div className={styles.logoutMenu}>
+          {isIdentityEnabled() && (
+            <div className={styles.logoutArea}>
+              <div onClick={() => signOut({ redirect: true, callbackUrl: '/login' })} className={styles.logoutMenu}>
                 <a className={styles.logoutText}>logout</a>
               </div>
-            </Link>
-          </div>
+            </div>
+          )}
         </div>
 
         <Navbar />
