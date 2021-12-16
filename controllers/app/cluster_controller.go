@@ -492,7 +492,7 @@ func (r *ClusterReconciler) reconcileClusterAutoscaler(ctx context.Context, cl *
 	values := map[string]interface{}{
 		"clusterName": cl.Name,
 	}
-	release, err = hr.Prepare(chartName, "undistro-system", cl.GetNamespace(), chartVersion, cl.Name, values)
+	release, err = hr.Prepare(chartName, cl.GetNamespace(), cl.GetNamespace(), chartVersion, cl.Name, values)
 	if err != nil {
 		return err
 	}
