@@ -108,7 +108,7 @@ cloudConfigPath: /etc/gce.conf
 # Currently only `gce`, `aws`, `azure` and `magnum` are supported.
 # `aws` supported for AWS. `gce` for GCE. `azure` for Azure AKS.
 # `magnum` for OpenStack Magnum.
-cloudProvider: cluster-api
+cloudProvider: clusterapi
 
 # containerSecurityContext -- [Security context for container](https://kubernetes.io/docs/tasks/configure-pod-container/security-context/)
 containerSecurityContext: {}

@@ -59,7 +59,7 @@ spec:
               - --node-group-auto-discovery=mig:namePrefix={{ .name }},min={{ .minSize }},max={{ .maxSize }}
               {{- end }}
             {{- end }}
-          {{- else if eq .Values.cloudProvider "cluster-api" }}
+          {{- else if eq .Values.cloudProvider "clusterapi" }}
             - --kubeconfig=/etc/kubeconfig/value
             # - --cloud-config=/etc/kubeconfig/cloud.kubeconfig
             - --expander=random
@@ -204,7 +204,7 @@ spec:
               mountPath: {{ required "Must specify mountPath!" $value.mountPath }}
               readOnly: true
           {{- end }}
-          {{- if eq .Values.cloudProvider "cluster-api" }}
+          {{- if eq .Values.cloudProvider "clusterapi" }}
             - name: autoscaler-config
               mountPath: /etc/kubeconfig
               readOnly: true
@@ -247,7 +247,7 @@ spec:
             {{- toYaml $value.items | nindent 14 }}
             {{- end }}
       {{- end }}
-      {{- if eq .Values.cloudProvider "cluster-api" }}
+      {{- if eq .Values.cloudProvider "clusterapi" }}
         - name: autoscaler-config
           secret:
             secretName: {{ .Values.clusterName }}-kubeconfig
